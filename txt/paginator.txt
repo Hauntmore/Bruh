@@ -1,0 +1,10 @@
+const paginator = require('directory-to-paginator');
+const { MessageEmbed } = require('discord.js');
+
+const embed1 = new MessageEmbed()
+    .setDescription('embed 1');
+
+const embed2 = new MessageEmbed()
+    .setDescription('embed 2');
+
+paginator(message.client, message.channel, [embed1, embed2]);

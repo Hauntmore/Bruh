@@ -1,0 +1,74 @@
+[
+	{
+		"question": "What color is the sky?",
+		"answers": ["blue"]
+	},
+	{
+		"question": "How many letters are there in the alphabet?",
+		"answers": ["26", "twenty-six", "twenty six", "twentysix"]
+	},
+    {
+        "question": "Is beast pog?",
+        "answers": ["yes", "absolutely", "ofc", "ye"]
+    },
+    {
+        "question": "What is eighteen thousandths written as, in the form of a decimal?",
+        "answers": ["0.0018", ".0018"]
+    },
+    {
+        "question": "Who is the developer of the bot?",
+        "answers": ["hauntless", "hauntless#3212", "haunt"]
+    },
+    {
+        "question": "In what year was the first-ever Wimbledon Championship held? ",
+        "answers": ["1877", "eighteen seventyseven"]
+    },
+    {
+        "question": "Hg is the chemical symbol of which element?",
+        "answers": ["mercury"]
+    },
+    {
+        "question": "Which email service is owned by Microsoft?",
+        "answers": ["hotmail", "hot-mail", "hot mail"]
+    },
+    {
+        "question": "Which country produces the most coffee in the world?",
+        "answers": ["brazil"]
+    },
+    {
+        "question": "In which city was Jim Morrison buried?",
+        "answers": ["paris"]
+    },
+    {
+        "question": "How long is an Olympic swimming pool (in meters)?",
+        "answers": ["50", "50 meters", "fifty", "fifty meters"]
+    },
+    {
+        "question": "Which country do cities of Perth, Adelade & Brisbane belong to?",
+        "answers": ["australia"]
+    },
+    {
+        "question": "Who named the Pacific Ocean?",
+        "answers": ["ferdinand magellan"]
+    },
+    {
+        "question": "How many languages are written from right to left?",
+        "answers": ["twelve", "12"]
+    },
+    {
+        "question": "Which monarch officially made Valentine's Day a holiday in 1537?",
+        "answers": ["henry viii", "henry the eighth"]
+    },
+    {
+        "question": "Who was the first woman to win a Nobel Prize (in 1903)?",
+        "answers": ["marie curie"]
+    },
+    {
+        "question": "What is the name of the man who launched eBay back in 1995?",
+        "answers": ["pierre omidyar"]
+    },
+    {
+        "question": "What is the name of the biggest technology company in South Korea?",
+        "answers": ["samsung"]
+    }
+]
