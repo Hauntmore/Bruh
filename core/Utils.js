@@ -264,7 +264,7 @@ const timeleft = (timestamp) => {
 /**
  * Shows the number of bytes and size.
  * @param {number} bytes - The number of bytes.
- * @returns - Number with byte size.
+ * @returns {string}
  */
 const formatBytes = (bytes) => {
 	if (bytes === 0) return '0 Bytes';
@@ -277,7 +277,7 @@ const formatBytes = (bytes) => {
  * Formats the given array.
  * @param {array} array - The array.
  * @param {type} type - Type.
- * @returns - The array in a format.
+ * @returns {array}
  */
 const formatArray = (array, type = 'conjunction') => {
 	return new Intl.ListFormat('en-GB', { style: 'short', type: type }).format(array);
@@ -286,7 +286,7 @@ const formatArray = (array, type = 'conjunction') => {
 /**
  * Removes a duplicated object.
  * @param {array} arr - The array.
- * @returns - Removes the duplicated object.
+ * @returns {array}
  */
 const removeDuplicates = (arr) => {
 	return [...new Set(arr)];
@@ -295,7 +295,7 @@ const removeDuplicates = (arr) => {
 /**
  * This will delay a certain amount of miliseconds.
  * @param {number} ms - The time in miliseconds.
- * @returns A delayed function.
+ * @returns - Delayed function.
  */
 const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
@@ -312,4 +312,58 @@ const pluralize = (num, unitSingular, unitplural) => {
 	return text;
 };
 
-module.exports = { parseCommand, findAll, parseArgs, parseCode, formatPerm, trim, random, timeit, timeleft, capitalize, formatBytes, formatArray, removeDuplicates, typeName, checkOrCross, flip, delay, pluralize, generateString };
+// From Dauntless7's GitHub repository: https://github.com/Dauntless7/CommunityBot/blob/main/src/utils/parse.js
+/**
+ * Parse a time.
+ * @param {string} time - The time.
+ * @returns {string}
+ */
+const parseTime = (time) => {
+	const methods = [
+		{ name: 'd', count: 86400 },
+		{ name: 'h', count: 3600 },
+		{ name: 'm', count: 60 },
+		{ name: 's', count: 1 },
+	];
+
+	const timeStr = [
+		Math.floor(time / methods[0].count).toString() + methods[0].name,
+	];
+	for (let i = 0; i < 3; i++) {
+		timeStr.push(
+			Math.floor(
+				(time % methods[i].count) / methods[i + 1].count,
+			).toString() + methods[i + 1].name,
+		);
+	}
+	return timeStr.filter((t) => !t.startsWith('0')).join(' ');
+};
+
+// From Dauntless7's GitHub repository: https://github.com/Dauntless7/CommunityBot/blob/main/src/utils/parse.js
+/**
+ * Parse a date.
+ * @param {string} date - The date.
+ * @returns {string}
+ */
+const parseDate = (date) => {
+	date.toLocaleString('utc', {
+		hour: 'numeric',
+		minute: 'numeric',
+		weekday: 'long',
+		day: 'numeric',
+		year: 'numeric',
+		month: 'long',
+	});
+};
+
+/**
+ * Easily setup hyperlinks.
+ * @param {string} name - The hyperlink name.
+ * @param {string} url - A URL.
+ * @returns The hyperlink
+ */
+const link = (name, url) => {
+	return `[${name}](${url})`;
+};
+
+module.exports = { parseCommand, findAll, parseArgs, parseCode, formatPerm, trim, random, timeit, timeleft, capitalize, formatBytes, formatArray, removeDuplicates, typeName, checkOrCross, flip, delay, pluralize, generateString, parseTime, parseDate, link };

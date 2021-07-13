@@ -17,7 +17,7 @@ module.exports = {
 		const dump = role.members.map((m) => `${m.user.tag} (${m.user.id})`).join('\n');
 		if (dump.length > 1969) {
 			const result = new MessageAttachment(Buffer.from(dump), `${message.guild.name}-dump.txt`);
-			message.reply({ content: `Users with the "${role.name}" role.\n\n`, files: [result] });
-		} else {message.channel.send({ content: `Users with the "${role.name}" role.\n\n${dump}` });}
+			message.reply({ content: `Users with the [${role.name}] role.\n\n`, files: [result] });
+		} else {message.channel.send({ content: `Users with the [${role.name}] role.\n\n${dump}` });}
 	},
 };

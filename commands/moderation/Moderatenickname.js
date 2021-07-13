@@ -20,7 +20,7 @@ module.exports = {
 		}
 		if (member.roles.highest.position >= message.guild.me.roles.highest.position) return message.reply({ embeds: [errorEmbed('I can\'t ban this member due to my position being equal or lower to them.')] });
 
-		const finalNickname = 'Name-Moderated-User' + client.utils.generateString(5);
+		const finalNickname = 'Name-Moderated-User ' + client.utils.generateString(5);
 
 		const cancel = new MessageButton()
 			.setCustomId('1')
@@ -37,7 +37,7 @@ module.exports = {
 		const msg = await message.reply({ content: `Are you sure you would like to moderate ${member.user.tag}'s nickname?`, allowedMention: { repliedUser: true }, components: [[cancel, confirm]] });
 
 		const filter = interaction => (interaction.customId === '1' || interaction.customId === '2') && interaction.user.id === message.author.id;
-		msg.awaitMessageComponent({ filter, time: 10000 })
+		msg.awaitMessageComponent({ filter, time: 15000 })
 			.then(async (interaction) => {
 				if (interaction.customId === '1') {
 					msg.edit({ content: 'You have canceled this action.', components: [] });

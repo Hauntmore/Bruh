@@ -21,7 +21,7 @@ module.exports = {
 		const msg = await message.reply({ embeds: [embed], allowedMentions: { repliedUser: true }, components: [[button]] });
 
 		const filter = (interaction) => interaction.customId === '1' && interaction.user.id === message.author.id;
-		msg.awaitMessageComponent({ filter, time: 15000 })
+		msg.awaitMessageComponent({ filter, time: 20000 })
 			.then(() => {
 				msg.delete();
 				message.delete();

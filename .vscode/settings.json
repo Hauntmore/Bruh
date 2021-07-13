@@ -3,4 +3,5 @@
       "source.fixAll.eslint": true
     },
     "eslint.validate": ["javascript"],
+    "editor.tabSize": 4
 }

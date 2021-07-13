@@ -16,7 +16,7 @@ pids
 .DS_Store
 
 # testing
-/commands/general/test.js
+/commands/developer/Test.js
 
 # typescript complied file(s) and folder(s)
 dist/

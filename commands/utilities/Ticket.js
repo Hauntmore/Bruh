@@ -6,41 +6,25 @@ const ticketWebhook = new WebhookClient(process.env.TICKETWEBHOOKID, process.env
 module.exports = {
 	name: 'ticket',
 	description: 'Do ticket stuff.',
-	usage: '<view=ticketID|create=content>',
-	example: ['ticket create bad user scammed 10mil', 'ticket uNjjd'],
+	usage: '<view=ticketID|create=content|delete=ticketID|list=userID>',
+	example: ['ticket create bad user scammed 10mil', 'ticket delete uNjjd', 'ticket view jsd8i', 'ticket list 431468909045219339'],
 	botPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS', 'READ_MESSAGE_HISTORY'],
 	args: true,
 	cooldown: 10,
 	async execute(message, { args }) {
 		const { client } = message;
 		const errorEmbed = (msg) => client.makeEmbed({ description: msg, timestamp: message.createdAt });
-		if (!['create', 'view', 'list'].includes(args[0].toLowerCase())) return message.reply({ embeds: [errorEmbed('The inputed parameter is invalid, please try again.')] });
+		if (!['create', 'view', 'list', 'delete'].includes(args[0].toLowerCase())) return message.reply({ embeds: [errorEmbed('The inputed parameter is invalid, please try again.')] });
 
 		if (args[0].toLowerCase() === 'create') {
 			const ticketId = client.utils.generateString(5);
 			const content = args.slice(1).join(' ');
 			if (!content) return message.reply({ embeds: [errorEmbed('You need to add a ticket query, or else opening a ticket is useless.')] });
-			const ticket = await new Ticket({
-				id: message.author.id,
-				ticketContent: content,
-				ticketID: ticketId,
-			});
 
-			await User.findOne({ id: message.author.id }, async (err, data) => {
-				if (err) throw err;
-				if (data) {
-					data.ticketsCreated.push(ticketId);
-					await data.save();
-				} else if (!data) {
-					const newUser = new User({
-						id: message.author.id,
-						ticketsCreated: data?.ticketsCreated.push(ticketId),
-					});
-					await newUser.save();
-				}
-			});
+			client.db.createUserTicket(message.author.id, content, ticketId);
 
-			await ticket.save().catch(err => console.log(err));
+			client.db.addUserTicketsCreated(message.author.id, ticketId);
+
 			message.channel.send({ content: `You have successfully opened a query ticket. Your ticket ID is \`${ticketId}\`.` });
 			ticketWebhook.send({ embeds: [new MessageEmbed().setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true })).setDescription(`${message.author.tag} (${message.author.id}) has created a ticket with ${client.user}.`).addField('Created at', `${new Date()}`, true).addField('Ticket Query', `${content}`, true).addField('Ticket ID', `\`${ticketId}\``, true).setTimestamp().setColor('RANDOM')] });
 
@@ -77,6 +61,19 @@ module.exports = {
 				.setFooter(`User ID: ${user.id}`)
 				.setTimestamp();
 			message.channel.send({ embeds: [embed] });
+		} else if (args[0].toLowerCase() === 'delete' && client.botmoderators.includes(message.author.id)) {
+			const ticketID = args[1];
+			const ticket = await Ticket.findOne({
+				ticketID: ticketID,
+			});
+
+			if (!ticket) {
+				message.reply({ embeds: [errorEmbed(`No ticket was found with the ID: \`${ticketID}\`. I'm trying to calculate your dumbass logic right now..`)] });
+			} else {
+				await ticket.deleteOne();
+				message.channel.send({ content: `You have successfully deleted the ticket with the assigned ID \`${ticketID}\`!` });
+				ticketWebhook.send({ content: `${message.author.tag} (${message.author.id}) has deleted the ticket \`${ticketID}\`.` });
+			}
 		}
 	},
 };

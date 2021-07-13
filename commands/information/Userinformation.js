@@ -14,12 +14,6 @@ const flags = {
 	VERIFIED_BOT: 'Verified Bot',
 	VERIFIED_DEVELOPER: 'Verified Bot Developer',
 };
-const userPresence = {
-	online: 'Online',
-	dnd: 'Do Not Disturb',
-	idle: 'Idle',
-	offline: 'Offline',
-};
 
 module.exports = {
 	name: 'userinformation',
@@ -30,9 +24,10 @@ module.exports = {
 	botPermissions: ['SEND_MESSAGES', 'EMBED_LINKS', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	cooldown: 2,
 	execute(message, { args }) {
-		const target = args[0];
-		const member = message.mentions.members.last() || message.guild.members.cache.get(target) || message.member;
+		const { client } = message;
+		const member = message.mentions.members.last() || message.guild.members.cache.get(args[0]) || message.member;
 		const userFlags = member.user.flags.toArray();
+
 		const embed = new MessageEmbed()
 			.setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
 			.setColor(member.displayHexColor || 'RANDOM')
@@ -41,7 +36,7 @@ module.exports = {
 			.addField('**❯ Username -**', `${member.user.tag}`, false)
 			.addField('**❯ Badges -**', `${userFlags.length ? userFlags.map(flag => flags[flag]).join(', ') : 'None'}`, false)
 			.addField('**❯ Created at -**', `${member.user.createdAt.toUTCString().substr(0, 16)}`, false)
-			.addField('**❯ Precense -**', `${userPresence[member.user.presence.status]}`, false)
+			.addField('**❯ Bot -**', `${client.utils.checkOrCross(member.user.bot)}`, false)
 			.addField('**❯ Nickname -**', `${member.nickname ? member.nickname : 'No nickname.'}`, false)
 			.addField('**❯ Joined at -**', `${member.joinedAt.toUTCString().substr(0, 16)}`, false)
 			.addField('**❯ Hoisted Role -**', `${member.roles.hoist ? member.roles.hoist.name : 'None'}`, false);

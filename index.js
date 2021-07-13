@@ -1,22 +1,40 @@
-const { Collection, MessageEmbed, WebhookClient, Permissions } = require('discord.js');
+const { Intents, Collection, MessageEmbed, WebhookClient, Permissions } = require('discord.js');
 const { stripIndents } = require('common-tags');
+const { Manager } = require('erela.js');
 
 const Client = require('./structures/Client');
 const mongoose = require('mongoose');
 const Guild = require('./models/Guild');
-const User = require('./models/User');
+const Tags = require('./models/Tags');
+const config = require('./lib/json/config.json');
 const chalk = require('chalk');
 
 require('./core/Extentions');
 require('dotenv').config();
 
 const errorWebhook = new WebhookClient(process.env.ERRORWEBHOOKID, process.env.ERRORWEBHOOKTOKEN);
+const nodeWebhook = new WebhookClient(process.env.NODEWEBHOOKID, process.env.NODEWEBHOOKTOKEN);
 
 const client = new Client({
-	intents: 32767,
+	intents: [
+		Intents.FLAGS.GUILDS,
+		Intents.FLAGS.GUILD_MEMBERS,
+		Intents.FLAGS.GUILD_BANS,
+		Intents.FLAGS.GUILD_EMOJIS,
+		Intents.FLAGS.GUILD_INTEGRATIONS,
+		Intents.FLAGS.GUILD_WEBHOOKS,
+		Intents.FLAGS.GUILD_INVITES,
+		Intents.FLAGS.GUILD_VOICE_STATES,
+		Intents.FLAGS.GUILD_PRESENCES,
+		Intents.FLAGS.GUILD_MESSAGES,
+		Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+		Intents.FLAGS.GUILD_MESSAGE_TYPING,
+		Intents.FLAGS.DIRECT_MESSAGES,
+		Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+		Intents.FLAGS.DIRECT_MESSAGE_TYPING,
+	],
 	allowedMentions: { parse: ['users', 'roles'], repliedUser: false },
 	partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER'],
-	fetchAllMembers: true,
 });
 
 process.on('unhandledRejection', (err) => {
@@ -24,8 +42,41 @@ process.on('unhandledRejection', (err) => {
 	errorWebhook.send(`**__An Unhandled Promise Rejection happened with ${client.user}:__** ` + err.stack);
 });
 
-client.once('ready', () => {
-	mongoose.connect(`mongodb+srv://${process.env.MONGODBUSER}:${process.env.MONGODBPASS}@${process.env.MONGODBNAME}.5urdg.mongodb.net/Data`, {
+client.manager = new Manager({
+	nodes: [
+		{
+			host: 'localhost',
+			port: 2333,
+			password: 'youshallnotpass',
+		},
+	],
+	send(id, payload) {
+		const guild = client.guilds.cache.get(id);
+		if (guild) guild.shard.send(payload);
+	},
+})
+	.on('nodeConnect', (node) => {
+		console.log(`Node ${node.options.identifier} has connected.`);
+		nodeWebhook.send(`Node ${node.options.identifier} has connected.`);
+	})
+	.on('nodeError', (node, error) => {
+		console.log(`Node ${node.options.identifier} emitted an error:\n${error.message}`);
+		nodeWebhook.send(`Node ${node.options.identifier} emitted an error:\n${error.message}`);
+	})
+	.on('trackStart', (player, track) => {
+		client.channels.cache
+			.get(player.textChannel)
+			.send(`Now playing: ${track.title}.`);
+	})
+	.on('queueEnd', (player) => {
+		client.channels.cache
+			.get(player.textChannel)
+			.send('The queue has ended.');
+		player.destroy();
+	});
+
+client.once('ready', async () => {
+	await mongoose.connect(`mongodb+srv://${process.env.MONGODBUSER}:${process.env.MONGODBPASS}@${process.env.MONGODBNAME}.5urdg.mongodb.net/Data`, {
 		keepAlive: true,
 		useCreateIndex: true,
 		useNewUrlParser: true,
@@ -33,7 +84,9 @@ client.once('ready', () => {
 		useFindAndModify: false,
 	});
 
-	mongoose.connection.on('error', (error) => console.log(error));
+	client.manager.init(client.user.id);
+
+	mongoose.connection.on('error', (error) => console.log(`A mongoose error has occurred!\n${error}`));
 
 	mongoose.connection.on('disconnected', () => console.log('The client has disconnected from the database.'));
 
@@ -46,21 +99,61 @@ client.once('ready', () => {
 	console.log(`Logged in as ${client.user.tag}.`);
 });
 
+client.on('messageUpdate', async (oldMessage, newMessage) => {
+	if (newMessage.author?.bot || !newMessage.guild || newMessage.attachments.size >= 1 || newMessage.embeds.size >= 1) return;
+
+	const guildDB = await client.db.guildDB(newMessage.guild.id);
+
+	const embed = new MessageEmbed()
+		.setAuthor(newMessage.author?.tag, newMessage.author?.displayAvatarURL({ dynamic: true, size: 1024 }))
+		.setDescription(`**Message edited at ${newMessage.channel.name}**\n[${client.utils.link('Jump to Message', newMessage.url)}]`)
+		.addField('**Before**:', `${oldMessage.content}`, false)
+		.addField('**After**:', `${newMessage.content}`, false)
+		.setColor('BLUE')
+		.setFooter(`ID: ${newMessage.author.id}`);
+	const channel = newMessage.guild.channels.cache.get(guildDB.messageLogsChannel);
+	if (channel) {channel.send({ embeds: [embed] });}
+});
+
+client.on('messageDelete', async (message) => {
+	if (message.author?.bot || !message.guild || message.attachments.size >= 1 || message.embeds.size >= 1) return;
+
+	const guildDB = await client.db.guildDB(message.guild.id);
+
+	const embed = new MessageEmbed()
+		.setAuthor(message.author?.tag, message.author?.displayAvatarURL({ dynamic: true, size: 1024 }))
+		.setDescription(`**Message deleted at ${message.channel.name}**`)
+		.addField('**Content**:', `${message.content}`, false)
+		.setColor('BLUE')
+		.setFooter(`ID: ${message.author.id}`);
+	const channel = message.guild.channels.cache.get(guildDB.messageLogsChannel);
+	if (channel) {channel.send({ embeds: [embed] });}
+});
+
 client.on('interactionCreate', async (interaction) => {
 	if (interaction.isButton()) {console.log('A button interaction was triggered.');}
+	if (interaction.inGuild()) {console.log('An interaction was triggered in a guild.');}
+	if (interaction.isCommand()) {console.log('A command interaction was triggered.');}
+	if (interaction.isMessageComponent()) {console.log('A message component interaction was triggered.');}
+	if (interaction.isSelectMenu()) {console.log('A select menu interaction was triggered.');}
+});
+
+client.on('guildMemberAdd', async (member) => {
+	const guildDB = await client.db.guildDB(member.guild.id);
+
+	let msg = guildDB.joinLogsMessage;
+	msg = msg.replaceAll('{user.tag}', `${member.user.tag}`);
+	msg = msg.replaceAll('{user.mention}', `${member}`);
+	msg = msg.replaceAll('{guild.name}', `${member.guild.name}`);
+	msg = msg.replaceAll('{guild.memberCount}', `${member.guild.members.cache.size.toLocaleString()}`);
+	const channel = client.channels.cache.get(guildDB.joinLogsChannel);
+	if (channel) {channel.send({ content: msg });}
 });
 
 client.on('messageCreate', async (message) => {
 	if (message.author.bot || !message.guild) return;
 
-	const user = await User.findOne({ id: message.author.id });
-	if (!user) await new User({ id: message.author.id });
-
 	const guild = await Guild.findOne({ id: message.guild.id });
-	if (!guild) await new Guild({ id: message.guild.id });
-
-	if (user?.blacklisted) return;
-	if (guild?.blacklisted) return;
 
 	if (guild?.autoResponse) {
 		if (message.content.match(new RegExp(/^imagine/i))) message.channel.send({ content: 'I can\'t even ' + message.content + ', bro.' });
@@ -68,8 +161,7 @@ client.on('messageCreate', async (message) => {
 		if (message.content.match(new RegExp(/^f$|f in chat$|f in the chat$/i))) message.channel.send({ content: 'f' });
 		if (message.content.match(new RegExp(/^(one sec$|one second|sec$|1 second$|1 sec$)/i))) message.channel.send({ content: 'It\'s been one second.' });
 		if (message.content.match(new RegExp(/^(ree)/i))) message.channel.send({ content: `R${'E'.repeat(message.content.split(/ +g/)[0].length)}` });
-		if (message.content.match(new RegExp(/^(no (?=u{1,}$))/i))) message.channel.send({ content: 'no u' });
-		if (message.content.match(new RegExp(/^(no (?=you{1,}$))/i))) message.channel.send({ content: 'no u' });
+		if (message.content.match(new RegExp(/^(no (?=u{1,}$))|(no (?=you{1,}$))/i))) message.channel.send({ content: 'no u' });
 	}
 
 	const embed = new MessageEmbed()
@@ -101,38 +193,61 @@ client.on('messageCreate', async (message) => {
 	const command = client.commands.get(commandName)
         || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
+	const data = await Tags.findOne({ id: message.guild.id, cmd: cmd });
+	if (data) {
+		let msg = data.response;
+		msg = msg.replaceAll('{user.tag}', `${message.author.tag}`);
+		msg = msg.replaceAll('{user.username}', `${message.author.username}`);
+		msg = msg.replaceAll('{user.mention}', `${message.author}`);
+		msg = msg.replaceAll('{guild.name}', `${message.guild.name}`);
+		msg = msg.replaceAll('{guild.memberCount}', `${message.guild.members.cache.size.toLocaleString()}`);
+		msg = msg.replaceAll('{message.channel}', `${message.channel.name}`);
+		msg = msg.replaceAll('{user.nickname}', `${message.member.nickname}`);
+		message.channel.send({ content: msg });
+	}
+
 	if (!command) return;
 
 	const errorEmbed = (msg) => client.makeEmbed({ description: msg, timestamp: message.createdAt });
 
 	if (command.developer && !client.owners.includes(message.author.id)) {
-		return message.reply({ embeds: [errorEmbed('Only the bot owners can execute this command!')] });
+		return message.channel.send({ embeds: [errorEmbed('Only the bot owners can execute this command!')] });
 	}
 
+	if (!client.owners.includes(message.author.id) && config.disabledCommands.includes(command.name)) return message.channel.send({ content: 'Globally disabled command moment normies:' });
+
 	if (command.botModerator && !client.botmoderators.includes(message.author.id)) {
-		return message.reply({ embeds: [errorEmbed('Only the bot\'s bot moderators can execute this command!')] });
+		return message.channel.send({ embeds: [errorEmbed('Only the bot\'s bot moderators can execute this command!')] });
+	}
+
+	if (command.privateServer && message.guild.id !== config.HauntingDevelopment.id) {
+		return message.channel.send({ embeds: [errorEmbed('This command can only be executed in Haunting Development!')] });
 	}
 
 	if (command.userPermissions && !message.member.permissions.any(command.userPermissions.map(perm => Permissions.FLAGS[perm.toUpperCase()]).filter(perm => perm !== undefined), { checkAdmin: true, checkOwner: true })) {
-		return message.reply({ embeds: [errorEmbed(stripIndents`
+		return message.channel.send({ embeds: [errorEmbed(stripIndents`
             You are missing the required permissions to execute this command.
             Required Permissions: ${command.userPermissions.map(p => client.utils.formatPerm(p)).join(', ')}`,
-		)], allowedMentions: { repliedUser: true } });
+		)] });
 	}
 
 	if (command.botPermissions && !message.guild.me.permissions.any(command.botPermissions.map(perm => Permissions.FLAGS[perm.toUpperCase()]).filter(perm => perm !== undefined), { checkAdmin: true, checkOwner: true })) {
-		return message.reply({ embeds: [errorEmbed(stripIndents`
+		return message.channel.send({ embeds: [errorEmbed(stripIndents`
             I am missing the required permissions to execute this command.
             Required Permissions: ${command.botPermissions.map(p => client.utils.formatPerm(p)).join(', ')}`,
-		)], allowedMentions: { repliedUser: true } });
+		)] });
 	}
 
 	if (command.args && !input.args.length) {
-		return message.reply({ embeds: [errorEmbed(`You are missing an argument!\nUsage: ${client.user} ${command.usage}`)], allowedMentions: { repliedUser: true } });
+		return message.channel.send({ embeds: [errorEmbed(`You are missing an argument!\nUsage: ${client.user} ${command.usage}`)] });
+	}
+
+	if (command.guildPremium && !guild?.premium) {
+		return message.channel.send({ embeds: [errorEmbed('This command can only be executed in premium servers.')] });
 	}
 
 	if (command.nsfw && !message.channel.nsfw) {
-		return message.reply({ embeds: [errorEmbed('This command can only be executed in a NSFW channel.').setImage('https://images-ext-2.discordapp.net/external/hiWbEzhiEXfFaza5khoxg3mR3OWeugZwWo8vGxK8LzA/https/i.imgur.com/oe4iK5i.gif')], allowedMentions: { repliedUser: true } });
+		return message.channel.send({ embeds: [errorEmbed('This command can only be executed in a NSFW channel.').setImage('https://images-ext-2.discordapp.net/external/hiWbEzhiEXfFaza5khoxg3mR3OWeugZwWo8vGxK8LzA/https/i.imgur.com/oe4iK5i.gif')] });
 	}
 
 	const { cooldowns } = client;
@@ -152,7 +267,7 @@ client.on('messageCreate', async (message) => {
 			const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 			if (now < expirationTime) {
 				const timeLeft = client.utils.timeleft(expirationTime);
-				return message.reply({ embeds: [errorEmbed(`You are on a cooldown of ${timeLeft}!`)], allowedMentions: { repliedUser: true } });
+				return message.channel.send({ content: `<@!${message.author.id}>`, embeds: [errorEmbed(`You are on a cooldown of ${timeLeft}!`)] });
 			}
 		}
 	}
@@ -169,7 +284,7 @@ client.on('messageCreate', async (message) => {
 		command.execute(message, input);
 	} catch (error) {
 		console.error(error);
-		message.reply({ embeds: [errorEmbed('Something went wrong while executing the command! The bot developers will investigate this issue.')], allowedMentions: { repliedUser: true } });
+		message.channel.send({ embeds: [errorEmbed('Something went wrong while executing the command!')] });
 		errorWebhook.send({ content: `An error occured with ${client.user} at ${message.guild.name} (${message.guild.id}).\n\nTime: ${new Date()}\n\n${message.author.tag} (${message.author.id}) was the user that tried to execute the command.\n\nCommand name: ${client.utils.capitalize(command.name)}\n\nMessage content: ${message.content}\n\n\n**Error:**\n\`\`\`js\n${error}\n\`\`\`` });
 	}
 });

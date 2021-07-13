@@ -33,8 +33,8 @@ module.exports = {
 			const error = clean(err);
 			if (err.length > 1900) {
 				const result = new MessageAttachment(Buffer.from(error), 'error.js');
-				message.reply({ content: '**An error occured:**', files: [result] });
-			} else {message.reply({ content: `**An error occured:**\n\`\`\`js\n${error}\`\`\`` });}
+				message.reply({ content: '**An error has occured:**', files: [result] });
+			} else {message.reply({ content: `**An error has occured:**\n\`\`\`js\n${error}\`\`\`` });}
 			throw err;
 		}
 	},

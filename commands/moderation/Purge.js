@@ -36,7 +36,7 @@ module.exports = {
 			.then(async (interaction) => {
 				if (interaction.customId === '1') {
 					const msgs = await message.channel.bulkDelete(messages, { filterOld: true }).catch(error => console.log(error));
-					confirmation.edit({ content: `${message.author}, You have bulk deleted ${msgs.size - 1} messages in this channel!`, components: [] });
+					confirmation.edit({ content: `${message.author}, You have bulk deleted ${msgs.size - 1} messages!`, components: [] });
 					client.setTimeout(() => confirmation.delete(), 5000);
 				} else if (interaction.customId === '2') {
 					confirmation.edit({ content: 'You have canceled this action.', components: [] });

@@ -28,7 +28,6 @@ module.exports = {
 		const { client } = message;
 		const roles = message.guild.roles.cache.sort((a, b) => b.position - a.position).map(role => role.toString());
 		const members = message.guild.members.cache;
-		const channels = message.guild.channels.cache;
 		const emojis = message.guild.emojis.cache;
 		const guildOwner = await message.guild.fetchOwner();
 		const embed = client.makeEmbed()
@@ -47,8 +46,7 @@ module.exports = {
 			.addField('**❯ Total Members -**', `${message.guild.memberCount.toLocaleString()}`, false)
 			.addField('**❯ Humans -**', `${members.filter(member => !member.user.bot).size.toLocaleString()}`, false)
 			.addField('**❯ Bots -**', `${members.filter(member => member.user.bot).size}`, false)
-			.addField('**❯ Text Channels -**', `${channels.filter(channel => channel.type === 'text').size}`, false)
-			.addField('**❯ Voice Channels -**', `${channels.filter(channel => channel.type === 'voice').size}`, false)
+			.addField('**❯ Text Channels -**', `${message.guild.channels.cache.size}`, false)
 			.setFooter(`ID: ${message.guild.id} | ${client.user.tag}`)
 			.setTimestamp();
 		message.channel.send({ embeds: [embed] });
