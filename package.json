@@ -6,6 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "engines": {
+    "node": "16.4.2",
+    "npm": "*"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hauntmore/Bruh.git"
