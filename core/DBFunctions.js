@@ -24,10 +24,9 @@ class DBFunctions {
 			const messageLogsChannel = newGuild.messageLogsChannel;
 			const joinLogsChannel = newGuild.joinLogsChannel;
 			const joinLogsMessage = newGuild.joinLogsMessage;
-			const disabledCommands = newGuild.disabledCommands;
 
 			await newGuild.save().catch(err => console.log(err));
-			return { prefixes, autoResponse, premium, messageLogsChannel, joinLogsChannel, joinLogsMessage, disabledCommands };
+			return { prefixes, autoResponse, premium, messageLogsChannel, joinLogsChannel, joinLogsMessage };
 		} else {
 			const prefixes = guild.prefixes;
 			const autoResponse = guild.autoResponse;
@@ -35,9 +34,8 @@ class DBFunctions {
 			const messageLogsChannel = guild.messageLogsChannel;
 			const joinLogsChannel = guild.joinLogsChannel;
 			const joinLogsMessage = guild.joinLogsMessage;
-			const disabledCommands = guild.disabledCommands;
 
-			return { prefixes, autoResponse, premium, messageLogsChannel, joinLogsChannel, joinLogsMessage, disabledCommands };
+			return { prefixes, autoResponse, premium, messageLogsChannel, joinLogsChannel, joinLogsMessage };
 		}
 	}
 
