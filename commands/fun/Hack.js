@@ -2,7 +2,7 @@ module.exports = {
 	name: 'hack',
 	description: 'Hack a user. (For Discord API Terms of Service reasons, yes this is a joke). Also found and modified from [Dank Memer v5 Source Code](https://dankmemer.lol/source).',
 	usage: '<member|text>',
-	example: ['hack @Hauntless#3212', 'hack @Polaris#0525'],
+	example: ['hack @Hauntless#3212', 'hack @Polaris#0525', 'hack some normie'],
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	args: true,
 	cooldown: 5,
@@ -16,7 +16,7 @@ module.exports = {
 			hacked = args.slice(0).join(' ');
 		}
 		const prompt = await message.channel.send({ content: `Hacking ${user ? hacked.user.username : hacked} now...` });
-		await client.utils.delay(1000);
+		await client.utils.delay(1500);
 		if (user) {
 			await prompt.edit('Finding Discord login (attempting to bypass 2FA)...');
 			await client.utils.delay(1700);
@@ -34,7 +34,15 @@ module.exports = {
 			await client.utils.delay(1000);
 			await prompt.edit('Source user token has been fetched.');
 			await client.utils.delay(1000);
+			await prompt.edit('Inspecting all of the user\'s developer apps..');
+			await client.utils.delay(5000);
 		}
+		await prompt.edit('Awaiting to fetch all findable passwords.');
+		await client.utils.delay(4000);
+		await prompt.edit('Passwords found.. Copying data..');
+		await client.utils.delay(3500);
+		await prompt.edit('Importing dangerous jar files and IP grabbers into the user\'s operating system..');
+		await client.utils.delay(3000);
 		await prompt.edit('Stealing social security number.....');
 		await client.utils.delay(1500);
 		await prompt.edit('Finding used condom website viruses.');

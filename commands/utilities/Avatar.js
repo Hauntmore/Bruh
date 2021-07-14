@@ -13,6 +13,6 @@ module.exports = {
 			.setTitle(user.tag + '\'s Avatar')
 			.setImage(user.displayAvatarURL({ dynamic: true, size: 1024 }))
 			.setDescription(`**Link as:**\n[png](${user.displayAvatarURL({ format : 'png' })}) | [gif](${user.displayAvatarURL({ format : 'gif' })}) | [jpg](${user.displayAvatarURL({ format : 'jpg' })}) | [webp](${user.displayAvatarURL({ format : 'webp' })})`);
-		message.channel.send({ embeds: [embed] });
+		message.reply({ embeds: [embed] });
 	},
 };

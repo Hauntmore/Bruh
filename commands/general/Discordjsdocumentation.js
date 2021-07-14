@@ -11,7 +11,7 @@ module.exports = {
 	args: true,
 	async execute(message, { content }) {
 		const query = encodeURIComponent(content);
-		let embed = await fetch(`https://djsdocs.sorta.moe/v2/embed?src=stable&q=${query}`);
+		let embed = await fetch(`https://djsdocs.sorta.moe/v2/embed?src=master&q=${query}`);
 		embed = await embed.json();
 		embed['color'] = 0x5865F2;
 		const button = new MessageButton()
