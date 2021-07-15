@@ -4,7 +4,7 @@ const { MessageButton, MessageActionRow } = require('discord.js');
 module.exports = {
 	name: 'discordjsdocumentation',
 	aliases: ['djsdocs', 'djsdoc', 'discordjsdocs', 'discordjsdoc', 'djs'],
-	description: 'Search the discord.js documentation for a query.',
+	description: 'Search the discord.js documentation for a query using this API: `https://djsdocs.sorta.moe/v2/embed?src=${project}&q=${Query}`.\nProject options: `stable`, `master`, `rpc`, `commando`, `akairo` or `akairo-master`.\nQuery: Input your documentation query.',
 	usage: '<query>',
 	example: ['djs Client', 'djsdocs client.ws.ping'],
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
