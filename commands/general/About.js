@@ -4,7 +4,7 @@ module.exports = {
 	name: 'about',
 	description: 'Look at the about information of the bot.',
 	botPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS', 'READ_MESSAGE_HISTORY'],
-	execute(message, { args }) {
+	execute(message) {
 		const { client } = message;
 
 		const embed = client.makeEmbed()
@@ -16,12 +16,5 @@ module.exports = {
 			.addField('**❯ Check out Bro Bot -**', '<@!543624467398524935> <:h_stonks:818000429094141962>\n[Mobile Device Bot Invite](https://discordapp.com/oauth2/authorize?client_id=543624467398524935&scope=bot&permissions=2146958591)\n[Bot Invite](https://discord.com/oauth2/authorize?client_id=543624467398524935&scope=bot&permissions=2146958591)\n[Land of Nothingness](https://discord.gg/PTrPAE6J4F)\n[Bro Community](https://discord.gg/cTRAaKfCYe)', false)
 			.setTimestamp();
 		message.channel.send({ embeds: [embed] });
-		console.log(args.slice(1)
-			.join(' ')
-			.replace(/c/gi, 'k')
-			.replace(/v/gi, 'c')
-			.split('')
-			.map((c, i) => i % 2 ? c.toUpperCase() : c)
-			.join(''));
 	},
 };

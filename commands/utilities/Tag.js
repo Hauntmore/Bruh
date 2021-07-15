@@ -31,8 +31,8 @@ module.exports = {
 			if (!args[1]) return message.channel.send({ content: 'You cannot view the raw content of a tag if you don\'t give me something to fetch!' });
 			const data = await Tags.findOne({ id: message.guild.id, cmd: args[1] });
 			if (!data) return message.channel.send({ content: 'You idiot! This tag does not exist.' });
-			if (data.length >= 1970) return message.channel.send({ content: 'Sad this tag content is longer than the threshold amount of 1970 characters. :(' });
-			message.channel.send({ content: `Here is the raw tag content of ${args[1]}\n\n${data.response}` });
+			if (data.length > 1970) return message.channel.send({ content: 'Sad this tag content is longer than the threshold amount of 1970 characters. :(' });
+			message.channel.send({ content: `Here is the raw tag content of \`${args[1]}\`.\n\n${data.response}` });
 		}
 
 		if (args[0].toLowerCase() === 'list') {

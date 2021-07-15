@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { MessageButton } = require('discord.js');
+const { MessageButton, MessageActionRow } = require('discord.js');
 
 module.exports = {
 	name: 'discordjsdocumentation',
@@ -14,11 +14,11 @@ module.exports = {
 		let embed = await fetch(`https://djsdocs.sorta.moe/v2/embed?src=master&q=${query}`);
 		embed = await embed.json();
 		embed['color'] = 0x5865F2;
-		const button = new MessageButton()
-			.setCustomId('1')
-			.setLabel('🗑️')
-			.setStyle('SECONDARY');
-		const msg = await message.reply({ embeds: [embed], allowedMentions: { repliedUser: true }, components: [[button]] });
+
+		const ButtonRow = new MessageActionRow()
+			.addComponents(new MessageButton().setCustomId('1').setLabel('🗑️').setStyle('SECONDARY'));
+
+		const msg = await message.reply({ content: 'test', embeds: [embed], allowedMentions: { repliedUser: true }, components: [ButtonRow] });
 
 		const filter = (interaction) => interaction.customId === '1' && interaction.user.id === message.author.id;
 		msg.awaitMessageComponent({ filter, time: 20000 })

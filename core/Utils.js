@@ -1,5 +1,6 @@
 const { performance } = require('perf_hooks');
 const { plsParseArgs } = require('plsargs');
+const fetch = require('node-fetch');
 const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 const letters = {
 	// Lowercase
@@ -366,4 +367,25 @@ const link = (name, url) => {
 	return `[${name}](${url})`;
 };
 
-module.exports = { parseCommand, findAll, parseArgs, parseCode, formatPerm, trim, random, timeit, timeleft, capitalize, formatBytes, formatArray, removeDuplicates, typeName, checkOrCross, flip, delay, pluralize, generateString, parseTime, parseDate, link };
+const hastebin = async (input, options = {}) => {
+	if (!input) throw new TypeError('The input is a required argument.');
+
+	if (typeof options === 'string') options = { url: 'https://hastebin.com', extension: options };
+
+	const url = 'url' in options ? options.url : 'https://hastebin.com';
+	const extension = 'extension' in options ? options.extension : 'js';
+
+	const res = await fetch(`${url}/documents`, {
+		method: 'POST',
+		body: input,
+		headers: { 'Content-Type': 'text/plain' },
+	});
+
+	if (!res.ok) throw new Error(res.statusText);
+
+	const { key } = await res.json();
+
+	return `${url}/${key}.${extension}`;
+};
+
+module.exports = { parseCommand, findAll, parseArgs, parseCode, formatPerm, trim, random, timeit, timeleft, capitalize, formatBytes, formatArray, removeDuplicates, typeName, checkOrCross, flip, delay, pluralize, generateString, parseTime, parseDate, link, hastebin };

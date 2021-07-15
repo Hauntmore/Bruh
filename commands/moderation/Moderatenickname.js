@@ -1,4 +1,4 @@
-const { MessageButton } = require('discord.js');
+const { MessageButton, MessageActionRow } = require('discord.js');
 
 module.exports = {
 	name: 'moderatenickname',
@@ -34,7 +34,10 @@ module.exports = {
 			.setEmoji('<a:hb_check:814637252759912478>')
 			.setStyle('SUCCESS');
 
-		const msg = await message.reply({ content: `Are you sure you would like to moderate ${member.user.tag}'s nickname?`, allowedMention: { repliedUser: true }, components: [[cancel, confirm]] });
+		const ButtonRow = new MessageActionRow()
+			.addComponents(cancel, confirm);
+
+		const msg = await message.reply({ content: `Are you sure you would like to moderate ${member.user.tag}'s nickname?`, allowedMention: { repliedUser: true }, components: [ButtonRow] });
 
 		const filter = interaction => (interaction.customId === '1' || interaction.customId === '2') && interaction.user.id === message.author.id;
 		msg.awaitMessageComponent({ filter, time: 15000 })

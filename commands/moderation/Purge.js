@@ -1,4 +1,4 @@
-const { MessageButton } = require('discord.js');
+const { MessageButton, MessageActionRow } = require('discord.js');
 
 module.exports = {
 	name: 'purge',
@@ -17,6 +17,7 @@ module.exports = {
 
 		const messages = await message.channel.messages.fetch({ limit: amount + 1 });
 		if (messages.size === 0) return message.reply({ embeds: [errorEmbed('I am unable to find any messages!')] });
+
 		const confirm = new MessageButton()
 			.setCustomId('1')
 			.setLabel('Continue')
@@ -29,9 +30,12 @@ module.exports = {
 			.setEmoji('<a:hb_cross:823305093452529674>')
 			.setStyle('DANGER');
 
+		const ButtonRow = new MessageActionRow()
+			.addComponents(cancel, confirm);
+
 		const filter = interaction => (interaction.customId === '1' || interaction.customId === '2') && interaction.user.id === message.author.id;
 
-		const confirmation = await message.channel.send({ content: `Are you sure you would like to bulk delete ${amount} messages in this channel?`, components: [[cancel, confirm]] });
+		const confirmation = await message.channel.send({ content: `Are you sure you would like to bulk delete ${amount} messages in this channel?`, components: [ButtonRow] });
 		confirmation.awaitMessageComponent({ filter, time: 10000 })
 			.then(async (interaction) => {
 				if (interaction.customId === '1') {

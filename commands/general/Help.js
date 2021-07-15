@@ -1,4 +1,4 @@
-const { MessageButton } = require('discord.js');
+const { MessageButton, MessageActionRow } = require('discord.js');
 
 module.exports = {
 	name: 'help',
@@ -36,6 +36,7 @@ module.exports = {
 			embed.addField('⚙️ Configure', `\`${client.defaultPrefix} help configure\``, true);
 			embed.addField('😁 Fun', `\`${client.defaultPrefix} help fun\``, true);
 			embed.addField('🔗 General', `\`${client.defaultPrefix} help general\``, true);
+			embed.addField('📷 Image', `\`${client.defaultPrefix}help image\``, true);
 			embed.addField('ℹ️ Information', `\`${client.defaultPrefix} help information\``, true);
 			embed.addField('🔨 Moderation', `\`${client.defaultPrefix} help moderation\``, true);
 			embed.addField('💻 Reddit', `\`${client.defaultPrefix} help reddit\``, true);
@@ -71,12 +72,10 @@ module.exports = {
 			);
 		} else {return message.reply({ content: 'My god is it that hard for you to give me a query that exists?' });}
 
-		const button = new MessageButton()
-			.setCustomId('1')
-			.setLabel('🗑️')
-			.setStyle('SECONDARY');
+		const ButtonRow = new MessageActionRow()
+			.addComponents(new MessageButton().setCustomId('1').setLabel('🗑️').setStyle('SECONDARY'));
 
-		const msg = await message.reply({ embeds: [embed], components: [[button]] });
+		const msg = await message.reply({ embeds: [embed], components: [ButtonRow] });
 
 		const filter = (interaction) => interaction.customId === '1' && interaction.user.id === message.author.id;
 		msg.awaitMessageComponent({ filter, time: 30000 })

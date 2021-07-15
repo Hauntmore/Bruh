@@ -72,7 +72,9 @@ client.manager = new Manager({
 		client.channels.cache
 			.get(player.textChannel)
 			.send('The queue has ended.');
-		player.destroy();
+		player.destroy().then(() => {
+			nodeWebhook.send('The player has been destroyed.');
+		});
 	});
 
 client.once('ready', async () => {

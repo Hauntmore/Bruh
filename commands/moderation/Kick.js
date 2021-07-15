@@ -1,4 +1,4 @@
-const { MessageButton } = require('discord.js');
+const { MessageButton, MessageActionRow } = require('discord.js');
 
 module.exports = {
 	name: 'kick',
@@ -42,7 +42,10 @@ module.exports = {
 			.setEmoji('<a:hb_cross:823305093452529674>')
 			.setStyle('DANGER');
 
-		const msg = await message.reply({ content: `Are you sure you would like to kick ${member.user.tag} from ${message.guild.name}?`, components: [[cancel, confirm]] });
+		const ButtonRow = new MessageActionRow()
+			.addComponents(cancel, confirm);
+
+		const msg = await message.reply({ content: `Are you sure you would like to kick ${member.user.tag} from ${message.guild.name}?`, components: [ButtonRow] });
 
 		const filter = interaction => (interaction.customId === '1' || interaction.customId === '2') && interaction.user.id === message.author.id;
 		msg.awaitMessageComponent({ filter, time: 15000 })
