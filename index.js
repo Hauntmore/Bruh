@@ -5,6 +5,7 @@ const { Manager } = require('erela.js');
 const Client = require('./structures/Client');
 const mongoose = require('mongoose');
 const Guild = require('./models/Guild');
+const User = require('./models/User');
 const Tags = require('./models/Tags');
 const config = require('./lib/json/config.json');
 const chalk = require('chalk');
@@ -175,6 +176,34 @@ client.on('messageCreate', async (message) => {
 		.setColor(0xA1F4CA);
 
 	if (message.content.match(RegExp(`^<@!?${client.user.id}>$`))) message.reply({ embeds: [embed], allowedMentions: { repliedUser: true } });
+
+	const userDB = await client.db.userDB(message.author.id);
+
+	if (userDB.afk) {
+		if (await User.findOne({ id: message.author.id })) {
+			const afkProfile = await User.findOne({ id: message.author.id });
+			if (afkProfile.afkMessagesLeft == 0) {
+				await client.db.setAFK(message.author.id, 'false', 'null');
+				await User.findOneAndUpdate({ id: message.author.id }, { afkMessagesLeft: afkProfile.afkMessagesLeft + 10 });
+				message.channel.send({ content: `${message.author.tag}, You are no longer AFK.` });
+			} else {
+				await User.findOneAndUpdate({ id: message.author.id }, { afkMessagesLeft: afkProfile.afkMessagesLeft - 1 });
+			}
+		}
+	}
+
+	message.mentions.members.forEach(async (m) => {
+		const userDB = await client.db.userDB(m.user.id);
+
+		const embed = client.makeEmbed()
+			.setTitle('AFK')
+			.setAuthor(m.user.tag, m.user.displayAvatarURL({ dynamic: true, size: 1024 }))
+			.setDescription(userDB.afkMessage)
+			.setTimestamp();
+		if (userDB.afk) {
+			try {message.channel.send({ embeds: [embed] });} catch (err) {console.log(err);}
+		}
+	});
 
 	const prefixes = (client.prefixCache[message.guild.id]
         || (await Guild.findOne({ id: message.guild.id }))?.prefixes
