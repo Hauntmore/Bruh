@@ -85,7 +85,7 @@ module.exports = {
 				message.delete();
 			})
 			.catch(() => {
-				msg.edit({ embeds: [embed], components: [] });
+				msg.edit({ components: [] });
 			});
 	},
 };

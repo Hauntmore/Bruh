@@ -184,16 +184,18 @@ class DBFunctions {
 			const afk = newUser.afk;
 			const afkMessage = newUser.afkMessage;
 			const afkMessagesLeft = newUser.afkMessagesLeft;
+			const premium = newUser.premium;
 
 			await newUser.save().catch(err => console.log(err));
-			return { ticketsCreated, afk, afkMessage, afkMessagesLeft };
+			return { ticketsCreated, afk, afkMessage, afkMessagesLeft, premium };
 		} else {
 			const ticketsCreated = user.ticketsCreated;
 			const afk = user.afk;
 			const afkMessage = user.afkMessage;
 			const afkMessagesLeft = user.afkMessagesLeft;
+			const premium = user.premium;
 
-			return { ticketsCreated, afk, afkMessage, afkMessagesLeft };
+			return { ticketsCreated, afk, afkMessage, afkMessagesLeft, premium };
 		}
 	}
 
@@ -227,6 +229,34 @@ class DBFunctions {
 			}
 			await user.save().catch(err => console.log(err));
 			return { toggle, afkMessage };
+		}
+	}
+
+	static async userPremium(userID, toggle) {
+		if (!userID) throw new TypeError('A user ID was not specified.');
+		if (!toggle) throw new TypeError('A toggle was not specified.');
+
+		const user = await User.findOne({ id: userID });
+
+		if (!user) {
+			const newUser = new User({ id: userID });
+			if (toggle == 'true') {
+				newUser.premium = true;
+			} else {
+				newUser.premium = false;
+			}
+
+			await newUser.save().catch(error => console.log(error));
+			return { toggle };
+		} else {
+			if (toggle == 'true') {
+				user.premium = true;
+			} else {
+				user.premium = false;
+			}
+
+			await user.save().catch(error => console.log(error));
+			return { toggle };
 		}
 	}
 

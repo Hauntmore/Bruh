@@ -8,7 +8,7 @@ module.exports = {
 	example: ['asktrump Do you like pie?', 'asktrump am I sus?'],
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	args: true,
-	cooldown: 7,
+	cooldown: 10,
 	execute(message, { args }) {
 		const { client } = message;
 		const embed = client.makeEmbed()

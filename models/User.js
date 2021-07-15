@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema({
 	afk: { type: Boolean, default: false },
 	afkMessage: { type: String, default: 'null' },
 	afkMessagesLeft: { type: Number, default: 10 },
+	premium: { type: Boolean, default: false },
 });
 
 module.exports = mongoose.model('users', UserSchema);

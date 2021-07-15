@@ -18,7 +18,7 @@ module.exports = {
 		const ButtonRow = new MessageActionRow()
 			.addComponents(new MessageButton().setCustomId('1').setLabel('🗑️').setStyle('SECONDARY'));
 
-		const msg = await message.reply({ content: 'test', embeds: [embed], allowedMentions: { repliedUser: true }, components: [ButtonRow] });
+		const msg = await message.reply({ embeds: [embed], allowedMentions: { repliedUser: true }, components: [ButtonRow] });
 
 		const filter = (interaction) => interaction.customId === '1' && interaction.user.id === message.author.id;
 		msg.awaitMessageComponent({ filter, time: 20000 })
@@ -27,7 +27,7 @@ module.exports = {
 				message.delete();
 			})
 			.catch(() => {
-				msg.edit({ embeds: [embed], components: [] });
+				msg.edit({ components: [] });
 			});
 	},
 };

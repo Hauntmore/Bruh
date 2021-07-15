@@ -289,11 +289,18 @@ client.on('messageCreate', async (message) => {
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.name);
 	const cooldownAmount = (command.cooldown || 3) * 1000;
+	const pcooldownAmount = (command.cooldown || 3) * 1000 / 2;
 	const ocooldownAmount = (command.cooldown || 0) * 0;
 
 	if (timestamps.has(message.author.id)) {
 		if (client.owners.includes(message.author.id)) {
 			timestamps.get(message.author.id) + ocooldownAmount;
+		} else if (userDB.premium) {
+			const expirationTime = timestamps.get(message.author.id) + pcooldownAmount;
+			if (now < expirationTime) {
+				const timeLeft = client.utils.timeleft(expirationTime);
+				return message.channel.send({ content: `<@!${message.author.id}>`, embeds: [errorEmbed(`You are on a premium cooldown of ${timeLeft}!`)] });
+			}
 		} else {
 			const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 			if (now < expirationTime) {
@@ -306,6 +313,9 @@ client.on('messageCreate', async (message) => {
 	if (client.owners.includes(message.author.id)) {
 		timestamps.set(message.author.id, now);
 		setTimeout(() => timestamps.delete(message.author.id), ocooldownAmount);
+	} else if (userDB.premium) {
+		timestamps.set(message.author.id, now);
+		setTimeout(() => timestamps.delete(message.author.id), pcooldownAmount);
 	} else {
 		timestamps.set(message.author.id, now);
 		setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);

@@ -4,6 +4,7 @@ module.exports = {
 	name: 'about',
 	description: 'Look at the about information of the bot.',
 	botPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS', 'READ_MESSAGE_HISTORY'],
+	cooldown: 2,
 	execute(message) {
 		const { client } = message;
 
