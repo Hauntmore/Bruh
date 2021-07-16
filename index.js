@@ -40,7 +40,7 @@ const client = new Client({
 
 process.on('unhandledRejection', (err) => {
 	console.error(`${chalk.red.bold('Unhandled Promise Rejection:')}\n${err.stack}`);
-	errorWebhook.send(`**__An Unhandled Promise Rejection happened with ${client.user}:__** ` + err.stack);
+	// errorWebhook.send(`**__An Unhandled Promise Rejection happened with ${client.user}:__** ` + err.stack);
 });
 
 client.manager = new Manager({
