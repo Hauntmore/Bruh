@@ -47,7 +47,7 @@ client.manager = new Manager({
 	nodes: [
 		{
 			host: process.env.LAVALINKHOST,
-			port: process.env.LAVALINKPORT,
+			port: 2333,
 			password: process.env.LAVALINKPASSWORD,
 		},
 	],
