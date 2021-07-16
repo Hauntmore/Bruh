@@ -25,6 +25,7 @@ module.exports = {
 	cooldown: 2,
 	execute(message, { args }) {
 		const { client } = message;
+
 		const member = message.mentions.members.last() || message.guild.members.cache.get(args[0]) || message.member;
 		const userFlags = member.user.flags.toArray();
 
@@ -39,7 +40,8 @@ module.exports = {
 			.addField('**❯ Bot -**', `${client.utils.checkOrCross(member.user.bot)}`, false)
 			.addField('**❯ Nickname -**', `${member.nickname ? member.nickname : 'No nickname.'}`, false)
 			.addField('**❯ Joined at -**', `${member.joinedAt.toUTCString().substr(0, 16)}`, false)
-			.addField('**❯ Hoisted Role -**', `${member.roles.hoist ? member.roles.hoist.name : 'None'}`, false);
+			.addField('**❯ Hoisted Role -**', `${member.roles.hoist ? member.roles.hoist.name : 'None'}`, false)
+			.addField('**❯ Permissions -**', `${member.permissions.toArray().map(p => client.utils.formatPerm(p)).join(', ').title()}`);
 		message.channel.send({ embeds: [embed] });
 	},
 };
