@@ -46,9 +46,9 @@ process.on('unhandledRejection', (err) => {
 client.manager = new Manager({
 	nodes: [
 		{
-			host: 'localhost',
-			port: 2333,
-			password: 'youshallnotpass',
+			host: process.env.LAVALINKHOST,
+			port: process.env.LAVALINKPORT,
+			password: process.env.LAVALINKPASSWORD,
 		},
 	],
 	send(id, payload) {
@@ -79,6 +79,7 @@ client.manager = new Manager({
 	});
 
 client.once('ready', async () => {
+	// MongoDB URL login and constructor (You can also remove all three variables and replace it with one entire URL string).
 	await mongoose.connect(`mongodb+srv://${process.env.MONGODBUSER}:${process.env.MONGODBPASS}@${process.env.MONGODBNAME}.5urdg.mongodb.net/Data`, {
 		keepAlive: true,
 		useCreateIndex: true,
@@ -290,7 +291,7 @@ client.on('messageCreate', async (message) => {
 	const timestamps = cooldowns.get(command.name);
 	const cooldownAmount = (command.cooldown || 3) * 1000;
 	const pcooldownAmount = (command.cooldown || 3) * 1000 / 2;
-	const ocooldownAmount = (command.cooldown || 0) * 0;
+	const ocooldownAmount = (command.cooldown || 3) * 0;
 
 	if (timestamps.has(message.author.id)) {
 		if (client.owners.includes(message.author.id)) {
