@@ -34,6 +34,7 @@ module.exports = {
 			embed.setTitle(client.user.username);
 			embed.setDescription('You can join the very messy testing server at [this server](https://discord.gg/gE6KcBHRqE), and we do ask however that you use common sense at the server.');
 			embed.addField('⚙️ Configure', `\`${client.defaultPrefix} help configure\``, true);
+			embed.addField('💰 Currency', `\`${client.defaultPrefix} help currency\``, true);
 			embed.addField('😁 Fun', `\`${client.defaultPrefix} help fun\``, true);
 			embed.addField('🔗 General', `\`${client.defaultPrefix} help general\``, true);
 			embed.addField('📷 Image', `\`${client.defaultPrefix} help image\``, true);

@@ -241,6 +241,16 @@ client.on('messageCreate', async (message) => {
 
 	if (!command) return;
 
+	const chance = Math.floor(Math.random() * 10) + 1;
+
+	if (chance >= 1 && chance <= 6) {
+		const coinsGiven = Math.floor(Math.random() * 200) + 70;
+		await client.db.addWallet(message.author.id, coinsGiven);
+
+		const bankSpace = Math.floor(Math.random() * 350) + 80;
+		await client.db.addBankSpace(message.author.id, bankSpace);
+	}
+
 	const errorEmbed = (msg) => client.makeEmbed({ description: msg, timestamp: message.createdAt });
 
 	if (command.developer && !client.owners.includes(message.author.id)) {

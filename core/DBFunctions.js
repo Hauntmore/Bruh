@@ -2,10 +2,78 @@ const Guild = require('../models/Guild');
 const User = require('../models/User');
 const Ticket = require('../models/Ticket');
 const Tag = require('../models/Tags');
+const Currency = require('../models/Currency');
 
 class DBFunctions {
 	constructor() {
 		throw new TypeError('DBFunctions is a static class and cannot be instantiated.');
+	}
+
+	// Currency database functions.
+
+	static async getBalance(userID) {
+		if (!userID) throw new TypeError('A user ID was not specified');
+
+		const currency = await Currency.findOne({ id: userID });
+
+		if (!currency) {
+			const newCurrency = await new Currency({ id: userID });
+
+			const wallet = newCurrency.wallet;
+			const bank = newCurrency.bank;
+			const bankSpace = newCurrency.bankSpace;
+
+			await newCurrency.save().catch(err => console.log(err));
+			return { wallet, bank, bankSpace };
+		} else {
+			const wallet = currency.wallet;
+			const bank = currency.bank;
+			const bankSpace = currency.bankSpace;
+
+			return { wallet, bank, bankSpace };
+		}
+	}
+
+	static async addWallet(userID, amount) {
+		if (!userID) throw new TypeError('A user ID was not specified');
+		if (!amount) throw new TypeError('An amount was not specified');
+
+		const currency = await Currency.findOne({ id: userID });
+
+		if (!currency) {
+			const newCurrency = await new Currency({ id: userID });
+
+			newCurrency.wallet += amount;
+
+			await newCurrency.save().catch(err => console.log(err));
+			return { amount };
+		} else {
+			currency.wallet += amount;
+
+			await currency.save().catch(err => console.log(err));
+			return { amount };
+		}
+	}
+
+	static async addBankSpace(userID, amount) {
+		if (!userID) throw new TypeError('A user ID was not specified');
+		if (!amount) throw new TypeError('An amount was not specified');
+
+		const currency = await Currency.findOne({ id: userID });
+
+		if (!currency) {
+			const newCurrency = await new Currency({ id: userID });
+
+			newCurrency.bankSpace += amount;
+
+			await newCurrency.save().catch(err => console.log(err));
+			return { amount };
+		} else {
+			currency.bankSpace += amount;
+
+			await currency.save().catch(err => console.log(err));
+			return { amount };
+		}
 	}
 
 	// Guild database functions.
