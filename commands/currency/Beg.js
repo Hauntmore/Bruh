@@ -46,6 +46,7 @@ module.exports = {
 				'**BTS**',
 				'**Karen**',
 				'**Olivia Rodrigo**',
+				'**Captn**',
 			];
 
 			const array = [
@@ -106,6 +107,7 @@ module.exports = {
 				'**BTS**',
 				'**Karen**',
 				'**Olivia Rodrigo**',
+				'**Captn**',
 			];
 
 			const arrays = [

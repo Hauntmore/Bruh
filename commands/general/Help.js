@@ -79,7 +79,7 @@ module.exports = {
 		const msg = await message.reply({ embeds: [embed], components: [ButtonRow] });
 
 		const filter = (interaction) => interaction.customId === '1' && interaction.user.id === message.author.id;
-		msg.awaitMessageComponent({ filter, time: 30000 })
+		msg.awaitMessageComponent({ filter, time: 45000 })
 			// eslint-disable-next-line no-unused-vars
 			.then(interaction => {
 				msg.delete();
