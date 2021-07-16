@@ -235,6 +235,7 @@ client.on('messageCreate', async (message) => {
 		msg = msg.replaceAll('{guild.memberCount}', `${message.guild.members.cache.size.toLocaleString()}`);
 		msg = msg.replaceAll('{message.channel}', `${message.channel.name}`);
 		msg = msg.replaceAll('{user.nickname}', `${message.member.nickname}`);
+		msg = msg.replaceAll('{target.mention}', `${message.mentions.members.last() || message.member}`);
 		message.channel.send({ content: msg });
 	}
 
