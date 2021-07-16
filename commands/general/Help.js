@@ -36,7 +36,7 @@ module.exports = {
 			embed.addField('⚙️ Configure', `\`${client.defaultPrefix} help configure\``, true);
 			embed.addField('😁 Fun', `\`${client.defaultPrefix} help fun\``, true);
 			embed.addField('🔗 General', `\`${client.defaultPrefix} help general\``, true);
-			embed.addField('📷 Image', `\`${client.defaultPrefix}help image\``, true);
+			embed.addField('📷 Image', `\`${client.defaultPrefix} help image\``, true);
 			embed.addField('ℹ️ Information', `\`${client.defaultPrefix} help information\``, true);
 			embed.addField('🔨 Moderation', `\`${client.defaultPrefix} help moderation\``, true);
 			embed.addField('💻 Reddit', `\`${client.defaultPrefix} help reddit\``, true);
