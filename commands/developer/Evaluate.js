@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 const { MessageEmbed, MessageAttachment } = require('discord.js');
+const { timeit, parseCode, typeName } = require('../../core/Utils');
 
 module.exports = {
 	name: 'evaluate',
@@ -11,7 +13,13 @@ module.exports = {
 	args: true,
 	async execute(message, { raw }) {
 		try {
-			const { client } = message;
+			const { client, channel, guild, author, member } = message;
+
+			const utils = require('../../core/Utils');
+
+			const msg = message;
+			const bot = client;
+
 			let code = client.utils.parseCode(raw);
 			code = code.includes('await')
 				? `(async () => { ${code} })();`
