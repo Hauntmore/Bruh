@@ -4,11 +4,10 @@ module.exports = {
 	name: 'sudo',
 	aliases: ['copycat'],
 	usage: '<member> <text>',
-	description: 'This command will allow you to copycat someone.',
+	description: 'Copycat someone.',
 	example: 'sudo @Hauntless#3212 Hi, I\'m so sus.',
 	args: true,
-	botPermissions: ['MANAGE_WEBHOOKS', 'SEND_MESSAGES'],
-	premiumUserOnly: true,
+	botPermissions: ['MANAGE_WEBHOOKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	cooldown: 3,
 	execute(message, { args }) {
 		const member = message.mentions.members.last() || message.guild.members.cache.get(args[0]);
