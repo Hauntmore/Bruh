@@ -158,6 +158,7 @@ client.on('messageCreate', async (message) => {
 	if (message.author.bot || !message.guild) return;
 
 	const guild = await Guild.findOne({ id: message.guild.id });
+	const userDB = await client.db.userDB(message.author.id);
 
 	if (guild?.autoResponse) {
 		if (message.content.match(new RegExp(/^imagine/i))) message.channel.send({ content: 'I can\'t even ' + message.content + ', bro.' });
@@ -178,8 +179,6 @@ client.on('messageCreate', async (message) => {
 
 	if (message.content.match(RegExp(`^<@!?${client.user.id}>$`))) message.reply({ embeds: [embed], allowedMentions: { repliedUser: true } });
 
-	const userDB = await client.db.userDB(message.author.id);
-
 	if (userDB.afk) {
 		if (await User.findOne({ id: message.author.id })) {
 			const afkProfile = await User.findOne({ id: message.author.id });
@@ -194,15 +193,13 @@ client.on('messageCreate', async (message) => {
 	}
 
 	message.mentions.members.forEach(async (m) => {
-		const userDB = await client.db.userDB(m.user.id);
-
 		const embed = client.makeEmbed()
 			.setTitle('AFK')
 			.setAuthor(m.user.tag, m.user.displayAvatarURL({ dynamic: true, size: 1024 }))
 			.setDescription(userDB.afkMessage)
 			.setTimestamp();
 		if (userDB.afk) {
-			try {message.channel.send({ embeds: [embed] });} catch (err) {console.log(err);}
+			try {const afk = await message.channel.send({ embeds: [embed] });client.setTimeout(() => afk.delete(), 7000);} catch (err) {console.log(err);}
 		}
 	});
 
@@ -231,25 +228,15 @@ client.on('messageCreate', async (message) => {
 		msg = msg.replaceAll('{user.tag}', `${message.author.tag}`);
 		msg = msg.replaceAll('{user.username}', `${message.author.username}`);
 		msg = msg.replaceAll('{user.mention}', `${message.author}`);
+		msg = msg.replaceAll('{user.nickname}', `${message.member.nickname}`);
 		msg = msg.replaceAll('{guild.name}', `${message.guild.name}`);
 		msg = msg.replaceAll('{guild.memberCount}', `${message.guild.members.cache.size.toLocaleString()}`);
 		msg = msg.replaceAll('{message.channel}', `${message.channel.name}`);
-		msg = msg.replaceAll('{user.nickname}', `${message.member.nickname}`);
 		msg = msg.replaceAll('{target.mention}', `${message.mentions.members.last() || message.member}`);
 		message.channel.send({ content: msg });
 	}
 
 	if (!command) return;
-
-	const chance = Math.floor(Math.random() * 10) + 1;
-
-	if (chance >= 1 && chance <= 6) {
-		const coinsGiven = Math.floor(Math.random() * 200) + 70;
-		await client.db.addWallet(message.author.id, coinsGiven);
-
-		const bankSpace = Math.floor(Math.random() * 350) + 80;
-		await client.db.addBankSpace(message.author.id, bankSpace);
-	}
 
 	const errorEmbed = (msg) => client.makeEmbed({ description: msg, timestamp: message.createdAt });
 
@@ -286,6 +273,10 @@ client.on('messageCreate', async (message) => {
 	}
 
 	if (command.guildPremium && !guild?.premium) {
+		return message.channel.send({ embeds: [errorEmbed('This command can only be executed in premium servers.')] });
+	}
+
+	if (command.userPremium && !userDB?.premium) {
 		return message.channel.send({ embeds: [errorEmbed('This command can only be executed in premium servers.')] });
 	}
 
@@ -335,6 +326,15 @@ client.on('messageCreate', async (message) => {
 
 	try {
 		command.execute(message, input);
+
+		const chance = Math.floor(Math.random() * 10) + 1;
+		if (chance >= 1 && chance <= 6) {
+			const coinsGiven = Math.floor(Math.random() * 200) + 70;
+			await client.db.addWallet(message.author.id, coinsGiven);
+
+			const bankSpace = Math.floor(Math.random() * 350) + 80;
+			await client.db.addBankSpace(message.author.id, bankSpace);
+		}
 	} catch (error) {
 		console.error(error);
 		message.channel.send({ embeds: [errorEmbed('Something went wrong while executing the command!')] });

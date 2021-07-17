@@ -1,8 +1,8 @@
 module.exports = {
 	name: 'awayfromkeyboard',
 	aliases: ['afk'],
-	description: 'Set your AFK.',
-	usage: '[afk message]',
+	description: 'Set your global AFK.',
+	usage: '[afk-message]',
 	example: ['afk sleeping', 'awayfromkeyboard'],
 	botPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS', 'READ_MESSAGE_HISTORY'],
 	cooldown: 3,
