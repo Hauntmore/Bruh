@@ -193,10 +193,10 @@ client.on('messageCreate', async (message) => {
 		}
 	}
 
-	message.mentions.members.forEach(async (m) => {
+	message.mentions.users.forEach(async (m) => {
 		const embed = client.makeEmbed()
 			.setTitle('AFK')
-			.setAuthor(m.user.tag, m.user.displayAvatarURL({ dynamic: true, size: 1024 }))
+			.setAuthor(m.tag, m.displayAvatarURL({ dynamic: true, size: 1024 }))
 			.setDescription(userDB.afkMessage)
 			.setTimestamp();
 		if (userDB.afk) {
