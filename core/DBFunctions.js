@@ -267,39 +267,6 @@ class DBFunctions {
 		}
 	}
 
-	static async setAFK(userID, toggle, afkMessage) {
-		if (!userID) throw new TypeError('A user ID was not specified.');
-		if (!toggle) throw new TypeError('A toggle was not specified.');
-		if (!afkMessage) throw new TypeError('An afk message was not specified.');
-
-		const user = await User.findOne({ id: userID });
-
-		if (!user) {
-			const newUser = await new User({ id: userID });
-
-			if (toggle == 'true') {
-				newUser.afk = true;
-				newUser.afkMessage = afkMessage;
-			} else {
-				newUser.afk = false;
-				newUser.afkMessage = 'null';
-			}
-
-			await newUser.save().catch(err => console.log(err));
-			return { toggle, afkMessage };
-		} else {
-			if (toggle == 'true') {
-				user.afk = true;
-				user.afkMessage = afkMessage;
-			} else {
-				user.afk = false;
-				user.afkMessage = 'null';
-			}
-			await user.save().catch(err => console.log(err));
-			return { toggle, afkMessage };
-		}
-	}
-
 	static async userPremium(userID, toggle) {
 		if (!userID) throw new TypeError('A user ID was not specified.');
 		if (!toggle) throw new TypeError('A toggle was not specified.');
