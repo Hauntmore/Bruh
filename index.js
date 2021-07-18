@@ -47,7 +47,7 @@ client.manager = new Manager({
 	nodes: [
 		{
 			host: process.env.LAVALINKHOST,
-			port: 2333,
+			port: parseInt(process.env.LAVALINKPORT),
 			password: process.env.LAVALINKPASSWORD,
 		},
 	],
@@ -73,9 +73,7 @@ client.manager = new Manager({
 		client.channels.cache
 			.get(player.textChannel)
 			.send('The queue has ended.');
-		player.destroy().then(() => {
-			nodeWebhook.send('The player has been destroyed.');
-		});
+		player.destroy();
 	});
 
 client.once('ready', async () => {
@@ -102,6 +100,8 @@ client.once('ready', async () => {
 
 	console.log(`Logged in as ${client.user.tag}.`);
 });
+
+client.on('raw', (d) => client.manager.updateVoiceState(d));
 
 client.on('messageUpdate', async (oldMessage, newMessage) => {
 	if (newMessage.author?.bot || !newMessage.guild || newMessage.attachments.size >= 1 || newMessage.embeds.size >= 1) return;
@@ -135,6 +135,7 @@ client.on('messageDelete', async (message) => {
 });
 
 client.on('interactionCreate', async (interaction) => {
+	if (interaction.user.bot || !interaction.guild) return;
 	if (interaction.isButton()) {console.log('A button interaction was triggered.');}
 	if (interaction.inGuild()) {console.log('An interaction was triggered in a guild.');}
 	if (interaction.isCommand()) {console.log('A command interaction was triggered.');}
