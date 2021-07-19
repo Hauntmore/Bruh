@@ -230,14 +230,14 @@ client.on('messageCreate', async (message) => {
 		return message.channel.send({ embeds: [errorEmbed('This command can only be executed in Haunting Development!')] });
 	}
 
-	if (command.userPermissions && !message.member.permissions.any(command.userPermissions.map(perm => Permissions.FLAGS[perm.toUpperCase()]).filter(perm => perm !== undefined), { checkAdmin: true, checkOwner: true })) {
+	if (command.userPermissions && !message.member.permissions.any(command.userPermissions.map(perm => Permissions.FLAGS[perm.toUpperCase()]).filter(perm => perm !== undefined), { checkAdmin: true })) {
 		return message.channel.send({ embeds: [errorEmbed(stripIndents`
             You are missing the required permissions to execute this command.
             Required Permissions: ${command.userPermissions.map(p => client.utils.formatPerm(p)).join(', ')}`,
 		)] });
 	}
 
-	if (command.botPermissions && !message.guild.me.permissions.any(command.botPermissions.map(perm => Permissions.FLAGS[perm.toUpperCase()]).filter(perm => perm !== undefined), { checkAdmin: true, checkOwner: true })) {
+	if (command.botPermissions && !message.guild.me.permissions.any(command.botPermissions.map(perm => Permissions.FLAGS[perm.toUpperCase()]).filter(perm => perm !== undefined), { checkAdmin: true })) {
 		return message.channel.send({ embeds: [errorEmbed(stripIndents`
             I am missing the required permissions to execute this command.
             Required Permissions: ${command.botPermissions.map(p => client.utils.formatPerm(p)).join(', ')}`,
