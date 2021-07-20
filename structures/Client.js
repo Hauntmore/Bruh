@@ -1,22 +1,35 @@
 const { Client, Collection, MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
+const { Manager } = require('erela.js');
 
 class Bruh extends Client {
 	constructor(options) {
 		super(options);
 		this.defaultPrefix = 'bruh';
+
 		this.color = 0x009874;
 		// Hauntless#3212, Cats Are Awesome#3153, Dauntless#0711, Polaris#0525, BotDevelopment#4911
 		this.owners = ['749732650209640529', '679867543066116169', '266432078222983169', '673612822495756354', '840396899139452948'];
-		// Hauntless#3212, Cats Are Awesome#3153, Dauntless#0711, Polaris#0525, DuskyLunar#4205, Beast.#3430, 🌸 𝓢𝓢| ❃ West ♡#4950
-		this.botmoderators = ['749732650209640529', '679867543066116169', '266432078222983169', '673612822495756354', '783103759626534942', '460622620522446867', '277969198401978379', '745848018514870404'];
+		// Hauntless#3212, Cats Are Awesome#3153, Dauntless#0711, Polaris#0525, DuskyLunar#4205, Beast.#3430, 🌸 𝓢𝓢| ❃ West ♡#4950, BotDevelopment#4911
+		this.botmoderators = ['749732650209640529', '679867543066116169', '266432078222983169', '673612822495756354', '783103759626534942', '460622620522446867', '277969198401978379', '745848018514870404', '840396899139452948'];
+
 		this.colors = require('../lib/json/colors.json');
 		this.config = require('../lib/json/config.json');
+
 		this.prefixCache = {};
 		this.utils = require('../core/Utils');
 		this.db = require('../core/DBFunctions');
+
 		this.commands = new Collection();
 		this.cooldowns = new Collection();
+
+		this.manager = new Manager({
+			nodes: [{ host: process.env.LAVALINKHOST, port: parseInt(process.env.LAVALINKPORT), password: process.env.LAVALINKPASS }],
+			send(id, payload) {const guild = this.guilds.cache.get(id);if (guild) guild.shard.send(payload);} })
+			.on('nodeConnect', (node) => {console.log(`Node ${node.options.identifier} has connected.`);})
+			.on('nodeError', (node, error) => {console.log(`Node ${node.options.identifier} emitted an error:\n${error.message}`);})
+			.on('trackStart', (player, track) => {this.channels.cache.get(player.textChannel).send(`Now playing: ${track.title}.`);})
+			.on('queueEnd', (player) => {this.channels.cache.get(player.textChannel).send('The queue has ended.');player.destroy();});
 	}
 
 	loadCommands() {
@@ -33,6 +46,18 @@ class Bruh extends Client {
 		}
 	}
 
+	loadEvents() {
+		const eventFiles = readdirSync('events');
+		for (const file of eventFiles) {
+			const event = require(`../events/${file}`);
+			if (event.once) {
+				this.once(event.name, (...args) => event.execute(...args, this));
+			} else {
+				this.on(event.name, (...args) => event.execute(...args, this));
+			}
+		}
+	}
+
 	makeEmbed(data) {
 		return new MessageEmbed(data)
 			.setColor(this.color);
@@ -40,6 +65,7 @@ class Bruh extends Client {
 
 	login(token) {
 		this.loadCommands();
+		this.loadEvents();
 
 		super.login(token);
 	}

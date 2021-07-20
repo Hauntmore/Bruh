@@ -81,8 +81,8 @@ module.exports = {
 			return message.channel.send({ embeds: [errorEmbed('Only the bot\'s bot moderators can execute this command!')] });
 		}
 
-		if (command.privateServer && message.guild.id !== config.HauntingDevelopment.id) {
-			return message.channel.send({ embeds: [errorEmbed('This command can only be executed in Haunting Development!')] });
+		if (command.privateServer && message.guild.id !== process.env.TESTINGSERVER) {
+			return message.channel.send({ embeds: [errorEmbed('This command can only be executed in the bot\'s native testing server!')] });
 		}
 
 		if (command.userPermissions && !message.member.permissions.any(command.userPermissions.map(perm => Permissions.FLAGS[perm.toUpperCase()]).filter(perm => perm !== undefined), { checkAdmin: true })) {

@@ -14,6 +14,12 @@ const flags = {
 	VERIFIED_BOT: 'Verified Bot',
 	VERIFIED_DEVELOPER: 'Verified Bot Developer',
 };
+const presences = {
+	online: 'Online',
+	dnd: 'Do Not Disturb',
+	idle: 'Idle',
+	offline: 'Offline',
+};
 
 module.exports = {
 	name: 'userinformation',
@@ -37,11 +43,15 @@ module.exports = {
 			.addField('**❯ Username -**', `${member.user.tag}`, false)
 			.addField('**❯ Badges -**', `${userFlags.length ? userFlags.map(flag => flags[flag]).join(', ') : 'None'}`, false)
 			.addField('**❯ Created at -**', `${member.user.createdAt.toUTCString().substr(0, 16)}`, false)
-			.addField('**❯ Bot -**', `${client.utils.checkOrCross(member.user.bot)}`, false)
-			.addField('**❯ Nickname -**', `${member.nickname ? member.nickname : 'No nickname.'}`, false)
 			.addField('**❯ Joined at -**', `${member.joinedAt.toUTCString().substr(0, 16)}`, false)
 			.addField('**❯ Hoisted Role -**', `${member.roles.hoist ? member.roles.hoist.name : 'None'}`, false)
-			.addField('**❯ Permissions -**', `${member.permissions.toArray().map(p => client.utils.formatPerm(p)).join(', ').title()}`);
-		message.channel.send({ embeds: [embed] });
+			.addField('**❯ Permissions -**', `${member.permissions.toArray().map(p => client.utils.formatPerm(p)).join(', ').title()}`)
+			.addField('**❯ Bot -**', `${client.utils.checkOrCross(member.user.bot)}`, false)
+			.addField('**❯ Nickname -**', `${member.nickname ? member.nickname : 'No nickname.'}`, false);
+		if (member.user.bot) {
+			message.channel.send({ embeds: [embed] });
+		} else {
+			message.channel.send({ embeds: [embed.addField('**❯ User Precense -**', `${presences[member.presence.status]}`, false)] });
+		}
 	},
 };

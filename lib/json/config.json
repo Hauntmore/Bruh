@@ -1,7 +1,4 @@
 {
-    "HauntingDevelopment": {
-        "id": "809684598866444289"
-    },
     "botmoderators": ["DuskyLunar#4205", "Beast.#3430", "🌸 𝓢𝓢| ❃ West ♡#4950", "***𝔰𝔥𝔞𝔬***#9778"],
     "disabledCommands": [],
     "botinvite": "https://discord.com/api/oauth2/authorize?client_id=861084943794438165&permissions=8&scope=bot%20applications.commands",
