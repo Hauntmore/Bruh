@@ -7,10 +7,14 @@ module.exports = {
 	args: true,
 	cooldown: 2,
 	execute(message, { args }) {
+		const { client } = message;
+
+		const errorEmbed = (msg) => client.makeEmbed({ description: msg, timestamp: message.createdAt });
+
 		const clap = args.slice(0).join(' ').split(' ').join(' :clap: ');
 
-		if (clap.length < 1) return message.channel.send({ content: 'Please input text.' });
-		if (clap.length > 600) return message.channel.send({ content: 'Please keep the text below 600 Characters.' });
+		if (clap.length < 1) return message.reply({ embeds: [errorEmbed('Please input text.')] });
+		if (clap.length > 600) return message.reply({ embeds: [errorEmbed('Please keep the text below 600 Characters.')] });
 
 		message.channel.send({ content: `:clap: ${clap} :clap:` });
 	},

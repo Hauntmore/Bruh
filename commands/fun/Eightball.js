@@ -9,6 +9,7 @@ module.exports = {
 	cooldown: 5,
 	execute(message, { args }) {
 		const { client } = message;
+
 		const question = args.slice(0).join(' ');
 
 		const responses = ['As I see it, yes.', 'Ask again later.', 'Better not tell you now.', 'Cannot predict now.', 'Concentrate and ask again.',

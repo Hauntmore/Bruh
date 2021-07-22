@@ -8,6 +8,7 @@ module.exports = {
 	cooldown: 5,
 	async execute(message, { args }) {
 		const { client } = message;
+
 		const user = message.mentions.members.last() || message.guild.members.cache.get(args[0]);
 		let hacked;
 		if (user) {
@@ -15,8 +16,11 @@ module.exports = {
 		} else {
 			hacked = args.slice(0).join(' ');
 		}
+
 		const prompt = await message.channel.send({ content: `Hacking ${user ? hacked.user.username : hacked} now...` });
+
 		await client.utils.delay(1500);
+
 		if (user) {
 			await prompt.edit('Finding Discord login (attempting to bypass 2FA)...');
 			await client.utils.delay(1700);
@@ -37,6 +41,7 @@ module.exports = {
 			await prompt.edit('Inspecting all of the user\'s developer apps..');
 			await client.utils.delay(5000);
 		}
+
 		await prompt.edit('Awaiting to fetch all findable passwords.');
 		await client.utils.delay(4000);
 		await prompt.edit('Passwords found.. Copying data..');
@@ -56,6 +61,7 @@ module.exports = {
 		await prompt.edit('Selling data to Facebook...');
 		await client.utils.delay(1000);
 		await prompt.edit(`Finished hacking ${user ? hacked.user.username : hacked}.`);
+
 		message.channel.send({ content: 'The *totally* real and dangerous hack is complete.' });
 	},
 };

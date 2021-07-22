@@ -367,6 +367,12 @@ const link = (name, url) => {
 	return `[${name}](${url})`;
 };
 
+/**
+ * Enter text into a hastebin.
+ * @param {string} input - The inputed text.
+ * @param {*} options - Hastebin options.
+ * @returns Hastebin with the given text.
+ */
 const hastebin = async (input, options = {}) => {
 	if (!input) throw new TypeError('The input is a required argument.');
 

@@ -1,7 +1,7 @@
 const Client = require('./structures/Client');
 const chalk = require('chalk');
 
-require('./core/Extentions');
+require('./core/Extensions');
 require('dotenv').config();
 
 process.on('unhandledRejection', err => console.error(`${chalk.red.bold('Unhandled Promise Rejection:')}\n${err.stack}`));

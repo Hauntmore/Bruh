@@ -11,6 +11,7 @@ module.exports = {
 	cooldown: 10,
 	execute(message, { args }) {
 		const { client } = message;
+
 		const embed = client.makeEmbed()
 			.setDescription(`\n${message.author.username}: ${args.slice(0).join(' ')}\n\nDonald Trump: ${trumpResponses[Math.floor(Math.random() * trumpResponses.length)].toUpperCase()}`)
 			.setThumbnail(trumpPhotos[Math.floor(Math.random() * trumpPhotos.length)])

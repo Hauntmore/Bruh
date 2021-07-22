@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'beg',
 	aliases: ['poor'],
-	description: 'Beg for some coins',
+	description: 'Beg for some coins.',
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	cooldown: 15,
 	async execute(message) {
@@ -10,45 +10,46 @@ module.exports = {
 		const chance = Math.floor(Math.random() * 10) + 1;
 		const coinsGiven = Math.floor(Math.random() * 2000) + 70;
 
-		if (chance >= 1 && chance <= 6) {
-			const people = [
-				'**Jeff Bezos**',
-				'**Donald Trump**',
-				'**Charli**',
-				'**Donald Duck**',
-				'**Polo G**',
-				'**Cats**',
-				'**Amity**',
-				'**Dauntless**',
-				'**Hauntless**',
-				'**Some random hobo**',
-				'**Your nigerian prince uncle**',
-				'**Lana Rhoades**',
-				'**Lana Rhoades\'s kid**',
-				'**Polaris**',
-				'**Warren Buffet**',
-				'**Elon Musk**',
-				'**Obama**',
-				'**Barack Obama**',
-				'**Oprah Winfrey**',
-				'**The Rock**',
-				'**Kim Kardashian**',
-				'**Joe Biden**',
-				'**Lil Tjay**',
-				'**Tom Cruise**',
-				'**Keanu Reeves**',
-				'**Some random school principle**',
-				'**Discord**',
-				'**Adam**',
-				'**Emily**',
-				'**Some random girl you hooked up with**',
-				'**Ryan**',
-				'**BTS**',
-				'**Karen**',
-				'**Olivia Rodrigo**',
-				'**Captn**',
-			];
+		const people = [
+			'**Jeff Bezos**',
+			'**Madison Beer**',
+			'**Donald Trump**',
+			'**Charli**',
+			'**Donald Duck**',
+			'**Polo G**',
+			'**Cats**',
+			'**Amity**',
+			'**Dauntless**',
+			'**Hauntless**',
+			'**Some random hobo**',
+			'**Your nigerian prince uncle**',
+			'**Lana Rhoades**',
+			'**Lana Rhoades\'s kid**',
+			'**Polaris**',
+			'**Warren Buffet**',
+			'**Elon Musk**',
+			'**Obama**',
+			'**Barack Obama**',
+			'**Oprah Winfrey**',
+			'**The Rock**',
+			'**Kim Kardashian**',
+			'**Joe Biden**',
+			'**Lil Tjay**',
+			'**Tom Cruise**',
+			'**Keanu Reeves**',
+			'**Some random school principle**',
+			'**Discord**',
+			'**Adam**',
+			'**Emily**',
+			'**Some random girl you hooked up with**',
+			'**Ryan**',
+			'**BTS**',
+			'**Karen**',
+			'**Olivia Rodrigo**',
+			'**Captn**',
+		];
 
+		if (chance >= 1 && chance <= 6) {
 			const array = [
 				`They donated \`$${coinsGiven.toLocaleString()}\` coins to you.`,
 				`They gave you \`$${coinsGiven.toLocaleString()}\` coins.`,
@@ -72,44 +73,6 @@ module.exports = {
 
 			await client.db.addWallet(message.author.id, coinsGiven);
 		} else {
-			const people = [
-				'**Jeff Bezos**',
-				'**Donald Trump**',
-				'**Charli**',
-				'**Donald Duck**',
-				'**Polo G**',
-				'**Cats**',
-				'**Amity**',
-				'**Dauntless**',
-				'**Hauntless**',
-				'**Some random hobo**',
-				'**Your nigerian prince uncle**',
-				'**Lana Rhoades**',
-				'**Lana Rhoades\'s kid**',
-				'**Polaris**',
-				'**Warren Buffet**',
-				'**Elon Musk**',
-				'**Obama**',
-				'**Barack Obama**',
-				'**Oprah Winfrey**',
-				'**The Rock**',
-				'**Kim Kardashian**',
-				'**Joe Biden**',
-				'**Lil Tjay**',
-				'**Tom Cruise**',
-				'**Keanu Reeves**',
-				'**Some random school principle**',
-				'**Discord**',
-				'**Adam**',
-				'**Emily**',
-				'**Some random girl you hooked up with**',
-				'**Ryan**',
-				'**BTS**',
-				'**Karen**',
-				'**Olivia Rodrigo**',
-				'**Captn**',
-			];
-
 			const arrays = [
 				'No thanks, frick off kindly.',
 				'Can you like not be a hobo? Go away.',
@@ -131,7 +94,7 @@ module.exports = {
 				.setDescription(arrays[Math.floor(Math.random() * arrays.length)])
 				.setFooter('imagine begging, such as 2016 thing tbh.')
 				.setTimestamp();
-			message.channel.send({ embeds: [embed] });
+			message.reply({ embeds: [embed] });
 		}
 	},
 };

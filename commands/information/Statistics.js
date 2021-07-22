@@ -15,7 +15,7 @@ module.exports = {
 					value:
                 `**Channels**: ${client.channels.cache.size.toLocaleString()
                 }\n` +
-                `**Emotes**: ${client.emojis.cache.size}\n` +
+                `**Emotes**: ${client.emojis.cache.size.toLocaleString()}\n` +
                 `**Guilds**: ${client.guilds.cache.size.toLocaleString()}\n` +
                 `**Users**: ${client.users.cache.size.toLocaleString()}\n`,
 					inline: false,

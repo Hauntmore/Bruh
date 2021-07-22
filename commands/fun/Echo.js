@@ -7,7 +7,9 @@ module.exports = {
 	args: true,
 	async execute(message, { args }) {
 		const { client } = message;
+
 		const content = args.slice(0).join(' ');
+
 		if (!client.owners.includes(message.author.id)) {
 			message.channel.send({ content: `${content}\n\n- **${message.author.tag}**` });
 			await message.react('✅');

@@ -17,6 +17,7 @@ module.exports = {
 		if (!member) return message.reply({ content: 'Down bad bro.. You thought you could yomama yo self!' });
 
 		const { joke } = await fetch('http://api.yomomma.info').then((res) => res.json());
+
 		const embed = client.makeEmbed()
 			.setDescription(`${member}, ${joke}.`);
 		message.reply({ embeds: [embed] });

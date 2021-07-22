@@ -55,6 +55,69 @@ class DBFunctions {
 		}
 	}
 
+	static async removeWallet(userID, amount) {
+		if (!userID) throw new TypeError('A user ID was not specified');
+		if (!amount) throw new TypeError('An amount was not specified');
+
+		const currency = await Currency.findOne({ id: userID });
+
+		if (!currency) {
+			const newCurrency = await new Currency({ id: userID });
+
+			newCurrency.wallet -= amount;
+
+			await newCurrency.save().catch(err => console.log(err));
+			return { amount };
+		} else {
+			currency.wallet -= amount;
+
+			await currency.save().catch(err => console.log(err));
+			return { amount };
+		}
+	}
+
+	static async addBank(userID, amount) {
+		if (!userID) throw new TypeError('A user ID was not specified');
+		if (!amount) throw new TypeError('An amount was not specified');
+
+		const currency = await Currency.findOne({ id: userID });
+
+		if (!currency) {
+			const newCurrency = await new Currency({ id: userID });
+
+			newCurrency.bank += amount;
+
+			await newCurrency.save().catch(err => console.log(err));
+			return { amount };
+		} else {
+			currency.bank += amount;
+
+			await currency.save().catch(err => console.log(err));
+			return { amount };
+		}
+	}
+
+	static async removeBank(userID, amount) {
+		if (!userID) throw new TypeError('A user ID was not specified');
+		if (!amount) throw new TypeError('An amount was not specified');
+
+		const currency = await Currency.findOne({ id: userID });
+
+		if (!currency) {
+			const newCurrency = await new Currency({ id: userID });
+
+			newCurrency.bank -= amount;
+
+			await newCurrency.save().catch(err => console.log(err));
+			return { amount };
+		} else {
+			currency.bank -= amount;
+
+			await currency.save().catch(err => console.log(err));
+			return { amount };
+		}
+	}
+
 	static async addBankSpace(userID, amount) {
 		if (!userID) throw new TypeError('A user ID was not specified');
 		if (!amount) throw new TypeError('An amount was not specified');

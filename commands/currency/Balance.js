@@ -15,9 +15,11 @@ module.exports = {
 
 		const currency = await client.db.getBalance(user.id);
 
+		const totalBalance = currency.bank + currency.wallet;
+
 		const embed = new MessageEmbed()
 			.setTitle(`${user.username}'s Balance`)
-			.setDescription(`**Wallet**: ${currency.wallet.toLocaleString()}\n**Bank**: ${currency.bank.toLocaleString()}/${currency.bankSpace.toLocaleString()}`)
+			.setDescription(`**Wallet**: ${currency.wallet.toLocaleString()}\n**Bank**: ${currency.bank.toLocaleString()}\n**Total**: ${totalBalance.toLocaleString()}`)
 			.setFooter('😏💰')
 			.setTimestamp()
 			.setColor('GREEN');

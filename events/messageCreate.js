@@ -3,7 +3,6 @@ const { stripIndents } = require('common-tags');
 
 const Guild = require('../models/Guild');
 const Tags = require('../models/Tags');
-const config = require('../lib/json/config.json');
 
 const errorWebhook = new WebhookClient(process.env.ERRORWEBHOOKID, process.env.ERRORWEBHOOKTOKEN);
 
@@ -75,7 +74,7 @@ module.exports = {
 			return message.channel.send({ embeds: [errorEmbed('Only the bot owners can execute this command!')] });
 		}
 
-		if (!message.client.owners.includes(message.author.id) && config.disabledCommands.includes(command.name)) return message.channel.send({ content: 'Globally disabled command moment normies:' });
+		if (!message.client.owners.includes(message.author.id) && message.client.config.disabledCommands.includes(command.name)) return message.channel.send({ content: 'Globally disabled command moment normies:' });
 
 		if (command.botModerator && !message.client.botmoderators.includes(message.author.id)) {
 			return message.channel.send({ embeds: [errorEmbed('Only the bot\'s bot moderators can execute this command!')] });

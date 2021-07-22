@@ -6,10 +6,11 @@ class Bruh extends Client {
 	constructor(options) {
 		super(options);
 		this.defaultPrefix = 'bruh';
-
 		this.color = 0x009874;
+
 		// Hauntless#3212, Cats Are Awesome#3153, Dauntless#0711, Polaris#0525, BotDevelopment#4911
 		this.owners = ['749732650209640529', '679867543066116169', '266432078222983169', '673612822495756354', '840396899139452948'];
+
 		// Hauntless#3212, Cats Are Awesome#3153, Dauntless#0711, Polaris#0525, DuskyLunar#4205, Beast.#3430, 🌸 𝓢𝓢| ❃ West ♡#4950, BotDevelopment#4911
 		this.botmoderators = ['749732650209640529', '679867543066116169', '266432078222983169', '673612822495756354', '783103759626534942', '460622620522446867', '277969198401978379', '745848018514870404', '840396899139452948'];
 
@@ -17,6 +18,7 @@ class Bruh extends Client {
 		this.config = require('../lib/json/config.json');
 
 		this.prefixCache = {};
+
 		this.utils = require('../core/Utils');
 		this.db = require('../core/DBFunctions');
 
@@ -48,8 +50,10 @@ class Bruh extends Client {
 
 	loadEvents() {
 		const eventFiles = readdirSync('events');
+
 		for (const file of eventFiles) {
 			const event = require(`../events/${file}`);
+
 			if (event.once) {
 				this.once(event.name, (...args) => event.execute(...args, this));
 			} else {
