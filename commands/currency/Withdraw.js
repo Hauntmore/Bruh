@@ -3,7 +3,7 @@ module.exports = {
 	aliases: ['with'],
 	description: 'Withdraw an amount of coins.',
 	usage: '<amount>',
-	example: ['with 4385', 'withdraw 100', 'with all', 'withdraw half'],
+	example: ['with 4385', 'withdraw 100', 'withdraw half', 'withdraw max'],
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	cooldown: 7,
 	async execute(message, { args }) {
@@ -16,7 +16,7 @@ module.exports = {
 
 		if (amount > currency.bank) return message.reply({ embeds: [errorEmbed('You cannot withdraw an amount of which you don\'t own loser.')] });
 
-		if (args[0].toLowerCase() === 'all' || 'max' && isNaN(amount)) {
+		if (args[0].toLowerCase() === 'max' && isNaN(amount)) {
 			await client.db.addWallet(message.author.id, Math.round(currency.bank));
 
 			await client.db.removeBank(message.author.id, Math.round(currency.bank));

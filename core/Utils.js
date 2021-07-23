@@ -255,9 +255,9 @@ const timeleft = (timestamp) => {
 	const mseconds = (timeLeft / 1000) - (days * 86400) - (hours * 3600) - (minutes * 60);
 	let string = '';
 	if (days) string = string + `${days} ${days == 1 ? 'Day' : 'Days'}`;
-	if (hours) string = string + `${hours} ${hours == 1 ? 'Hour' : 'Hours'}`;
-	if (minutes) string = string + `${minutes} ${minutes == 1 ? 'Minute' : 'Minutes'}`;
-	if (seconds) string = string + `${seconds} ${seconds == 1 ? 'Second' : 'Seconds'}`;
+	if (hours) string = string + ` ${hours} ${hours == 1 ? 'Hour' : 'Hours'}`;
+	if (minutes) string = string + ` ${minutes} ${minutes == 1 ? 'Minute' : 'Minutes'}`;
+	if (seconds) string = string + ` ${seconds} ${seconds == 1 ? 'Second' : 'Seconds'}`;
 	if (!string.length) string = `${mseconds.toFixed(1)} Second(s)`;
 	return string;
 };
@@ -313,9 +313,8 @@ const pluralize = (num, unitSingular, unitplural) => {
 	return text;
 };
 
-// From Dauntless7's GitHub repository: https://github.com/Dauntless7/CommunityBot/blob/main/src/utils/parse.js
 /**
- * Parse a time.
+ * Parse a time. From Dauntless7's GitHub repository: https://github.com/Dauntless7/CommunityBot/blob/main/src/utils/parse.js
  * @param {string} time - The time.
  * @returns {string}
  */
@@ -340,9 +339,8 @@ const parseTime = (time) => {
 	return timeStr.filter((t) => !t.startsWith('0')).join(' ');
 };
 
-// From Dauntless7's GitHub repository: https://github.com/Dauntless7/CommunityBot/blob/main/src/utils/parse.js
 /**
- * Parse a date.
+ * Parse a date. From Dauntless7's GitHub repository: https://github.com/Dauntless7/CommunityBot/blob/main/src/utils/parse.js
  * @param {string} date - The date.
  * @returns {string}
  */

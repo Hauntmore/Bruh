@@ -3,7 +3,7 @@ module.exports = {
 	aliases: ['scout'],
 	description: 'Search for some coins.',
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
-	cooldown: 30,
+	cooldown: 47,
 	async execute(message) {
 		const { client } = message;
 

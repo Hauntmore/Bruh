@@ -25,5 +25,15 @@ module.exports = {
 		client.user.setPresence({ activities: [{ name: `${client.defaultPrefix} help`, type: 'PLAYING' }], status: 'online' });
 
 		console.log(`Logged in as ${client.user.tag}.`);
+
+		const data = [
+			{
+				name: 'ping',
+				description: 'Replies with the client websocket ping.',
+			},
+		];
+		const commands = await client.application?.commands.set(data);
+		// Set to an empty array to delete all interaction commands.
+		console.log(commands);
 	},
 };

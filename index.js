@@ -12,6 +12,4 @@ const client = new Client({
 	partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER'],
 });
 
-client.on('raw', (d) => client.manager.updateVoiceState(d));
-
 client.login(process.env.TOKEN);

@@ -3,7 +3,7 @@ module.exports = {
 	aliases: ['dep'],
 	description: 'Deposit an amount of coins.',
 	usage: '<amount>',
-	example: ['dep 4385', 'deposit 100', 'dep all', 'deposit half'],
+	example: ['dep 4385', 'deposit 100', 'dep max', 'deposit half'],
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	cooldown: 7,
 	async execute(message, { args }) {
@@ -16,7 +16,7 @@ module.exports = {
 
 		if (amount > currency.bank) return message.reply({ embeds: [errorEmbed('You cannot deposit an amount of which you don\'t own loser.')] });
 
-		if (args[0].toLowerCase() === 'all' || 'max' && isNaN(amount)) {
+		if (args[0].toLowerCase() === 'max' && isNaN(amount)) {
 			await client.db.removeWallet(message.author.id, Math.round(currency.wallet));
 
 			await client.db.addBank(message.author.id, Math.round(currency.wallet));

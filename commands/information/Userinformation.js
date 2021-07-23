@@ -34,6 +34,8 @@ module.exports = {
 
 		const member = message.mentions.members.last() || message.guild.members.cache.get(args[0]) || message.member;
 		const userFlags = member.user.flags.toArray();
+		let presence = presences[member.presence?.status];
+		if (typeof presence === 'undefined') presence = 'Offline';
 
 		const embed = new MessageEmbed()
 			.setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
@@ -44,14 +46,12 @@ module.exports = {
 			.addField('**❯ Badges -**', `${userFlags.length ? userFlags.map(flag => flags[flag]).join(', ') : 'None'}`, false)
 			.addField('**❯ Created at -**', `${member.user.createdAt.toUTCString().substr(0, 16)}`, false)
 			.addField('**❯ Joined at -**', `${member.joinedAt.toUTCString().substr(0, 16)}`, false)
-			.addField('**❯ Hoisted Role -**', `${member.roles.hoist ? member.roles.hoist.name : 'None'}`, false)
-			.addField('**❯ Permissions -**', `${member.permissions.toArray().map(p => client.utils.formatPerm(p)).join(', ').title()}`)
 			.addField('**❯ Bot -**', `${client.utils.checkOrCross(member.user.bot)}`, false)
-			.addField('**❯ Nickname -**', `${member.nickname ? member.nickname : 'No nickname.'}`, false);
-		if (member.user.bot) {
-			message.channel.send({ embeds: [embed] });
-		} else {
-			message.channel.send({ embeds: [embed.addField('**❯ User Precense -**', `${presences[member.presence.status]}`, false)] });
-		}
+			.addField('**❯ Nickname -**', `${member.nickname ? member.nickname : 'No nickname.'}`, false)
+			.addField('**❯ Hoisted Role -**', `${member.roles.hoist ? member.roles.hoist.name : 'None'}`, false)
+			.addField('**❯ User Precense -**', `${presence}`, false)
+			.addField('**❯ Permissions -**', `${member.permissions.toArray().map(p => client.utils.formatPerm(p)).join(', ').title()}`);
+
+		message.channel.send({ embeds: [embed] });
 	},
 };

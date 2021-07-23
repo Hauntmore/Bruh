@@ -3,7 +3,7 @@ module.exports = {
 	aliases: ['poor'],
 	description: 'Beg for some coins.',
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
-	cooldown: 15,
+	cooldown: 35,
 	async execute(message) {
 		const { client } = message;
 

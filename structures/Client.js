@@ -42,7 +42,7 @@ class Bruh extends Client {
 
 			for (const file of commandFiles) {
 				const command = require(`../commands/${category}/${file}`);
-				if (!command.name) {console.error(`The file \`${category}/${file}\` missing a command name.`);} else if (!command.execute) {console.error(`The file \`${category}/${file}\` is missing an \`execute\` function.`);} else {command.category = category;}
+				if (!command.name) {console.error(`The file \`${category}/${file}\` is missing a command name.`);} else if (!command.execute) {console.error(`The file \`${category}/${file}\` is missing an \`execute\` function.`);} else {command.category = category;}
 				this.commands.set(command.name, command);
 			}
 		}
@@ -53,6 +53,8 @@ class Bruh extends Client {
 
 		for (const file of eventFiles) {
 			const event = require(`../events/${file}`);
+			if (!event.name) {console.error(`The file \`${file}\` is missing an event name.`);}
+			if (!event.execute) {console.error(`The file \`${file}\` is missing an \`execute\` function.`);}
 
 			if (event.once) {
 				this.once(event.name, (...args) => event.execute(...args, this));
