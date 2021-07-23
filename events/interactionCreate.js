@@ -9,7 +9,7 @@ module.exports = {
 		if (interaction.isMessageComponent()) {console.log('A message component interaction was triggered.');}
 		if (interaction.isSelectMenu()) {console.log('A select menu interaction was triggered.');}
 
-		if (interaction.commandName === 'ping') {await interaction.reply({ content: `**Websocket Ping**: \`${Math.round(interaction.client.ws.ping)}ms\`.` });}
+		if (interaction.commandName === 'ping') {await interaction.reply({ content: `**Ping**: \`${Math.round(interaction.client.ws.ping)}ms\`.` });}
 
 		if (interaction.commandName === 'uptime') {await interaction.reply({ content: `**Uptime**: \`${interaction.client.utils.parseTime(Math.round(interaction.client.uptime / 1000))}\`.` });}
 	},
