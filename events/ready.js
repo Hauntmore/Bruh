@@ -31,9 +31,15 @@ module.exports = {
 				name: 'ping',
 				description: 'Replies with the client websocket ping.',
 			},
+			{
+				name: 'uptime',
+				description: 'Replies with the client\'s current uptime.',
+			},
 		];
+
 		const commands = await client.application?.commands.set(data);
 		// Set to an empty array to delete all interaction commands.
+
 		console.log(commands);
 	},
 };
