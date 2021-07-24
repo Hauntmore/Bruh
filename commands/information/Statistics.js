@@ -2,7 +2,7 @@ const { version: djsversion } = require('discord.js');
 
 module.exports = {
 	name: 'statistics',
-	aliases: ['stats', 'stat'],
+	aliases: ['stats', 'stat', 'botinfo', 'botinformation'],
 	description: 'View some basic bot statistics.',
 	botPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS', 'READ_MESSAGE_HISTORY'],
 	execute(message) {
@@ -21,11 +21,12 @@ module.exports = {
 					inline: false,
 				},
 				{
-					name: 'Latency',
+					name: 'Data',
 					value:
                 `**Uptime**: ${client.utils.parseTime(Math.round(client.uptime / 1000),
                 )}\n` +
-                `**Ping**: ${Math.round(client.ws.ping)}ms\n`,
+                `**Ping**: ${Math.round(client.ws.ping)}ms\n` +
+				`**RAM**: ${client.utils.formatBytes(process.memoryUsage().heapUsed)}\n`,
 				},
 			],
 			color: 0x009874,

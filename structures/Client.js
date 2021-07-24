@@ -14,17 +14,24 @@ class Bruh extends Client {
 		// Hauntless#3212, Cats Are Awesome#3153, Dauntless#0711, Polaris#0525, DuskyLunar#4205, Beast.#3430, 🌸 𝓢𝓢| ❃ West ♡#4950, BotDevelopment#4911
 		this.botmoderators = ['749732650209640529', '679867543066116169', '266432078222983169', '673612822495756354', '783103759626534942', '460622620522446867', '277969198401978379', '745848018514870404', '840396899139452948'];
 
+		// Colors and the config file.
 		this.colors = require('../lib/json/colors.json');
 		this.config = require('../lib/json/config.json');
 
+		// The prefix cache.
 		this.prefixCache = {};
 
+		// The bot's utilities.
 		this.utils = require('../core/Utils');
+
+		// Database functions.
 		this.db = require('../core/DBFunctions');
 
+		// Command and cooldown collections.
 		this.commands = new Collection();
 		this.cooldowns = new Collection();
 
+		// Lavalink Erela.js manager.
 		this.manager = new Manager({
 			nodes: [{ host: process.env.LAVALINKHOST, port: parseInt(process.env.LAVALINKPORT), password: process.env.LAVALINKPASS }],
 			send(id, payload) {const guild = this.guilds.cache.get(id);if (guild) guild.shard.send(payload);} })
@@ -34,6 +41,7 @@ class Bruh extends Client {
 			.on('queueEnd', (player) => {this.channels.cache.get(player.textChannel).send('The queue has ended.');player.destroy();});
 	}
 
+	// Load the client's commands.
 	loadCommands() {
 		const commandFolders = readdirSync('commands');
 
@@ -48,6 +56,7 @@ class Bruh extends Client {
 		}
 	}
 
+	// Loads the bot's events.
 	loadEvents() {
 		const eventFiles = readdirSync('events');
 
@@ -64,11 +73,13 @@ class Bruh extends Client {
 		}
 	}
 
+	// Create an embed.
 	makeEmbed(data) {
 		return new MessageEmbed(data)
 			.setColor(this.color);
 	}
 
+	// The login method to initiate the bot.
 	login(token) {
 		this.loadCommands();
 		this.loadEvents();

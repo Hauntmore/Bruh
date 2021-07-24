@@ -4,6 +4,7 @@ module.exports = {
 	name: 'ready',
 	once: true,
 	async execute(client) {
+		// Connect to the MongoDB database.
 		await mongoose.connect(`mongodb+srv://${process.env.MONGODBUSER}:${process.env.MONGODBPASS}@${process.env.MONGODBNAME}.5urdg.mongodb.net/Data`, {
 			keepAlive: true,
 			useCreateIndex: true,
@@ -12,6 +13,7 @@ module.exports = {
 			useFindAndModify: false,
 		});
 
+		// Initiate the Lavalink manager.
 		client.manager.init(client.user.id);
 
 		mongoose.connection.on('error', (error) => console.log(`A mongoose error has occurred!\n${error}`));
@@ -22,10 +24,12 @@ module.exports = {
 
 		mongoose.connection.on('reconnect', () => console.log('The client has reconnected to the database.'));
 
+		// Set the presence of the client.
 		client.user.setPresence({ activities: [{ name: `${client.defaultPrefix} help`, type: 'PLAYING' }], status: 'online' });
 
 		console.log(`Logged in as ${client.user.tag}.`);
 
+		// Slash command data.
 		const data = [
 			{
 				name: 'ping',
@@ -37,9 +41,7 @@ module.exports = {
 			},
 		];
 
-		const commands = await client.application?.commands.set(data);
 		// Set to an empty array to delete all interaction commands.
-
-		console.log(commands);
+		await client.application?.commands.set(data);
 	},
 };

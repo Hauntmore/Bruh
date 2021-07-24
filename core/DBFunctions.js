@@ -358,7 +358,7 @@ class DBFunctions {
 		}
 	}
 
-	// Ticket database functions
+	// Ticket database functions.
 
 	static async addUserTicketsCreated(userID, ticketId) {
 		if (!userID) throw new TypeError('A user ID was not specified.');
@@ -395,6 +395,8 @@ class DBFunctions {
 		await ticket.save().catch(err => console.log(err));
 		return { ticketContent, ticketID };
 	}
+
+	// Tag database functions.
 
 	static async createGuildTag(guildID, cmd, response) {
 		if (!guildID) throw new TypeError('A guild ID was not specified.');
