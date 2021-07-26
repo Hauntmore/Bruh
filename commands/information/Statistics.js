@@ -25,7 +25,8 @@ module.exports = {
 					value:
                 `**Uptime**: ${client.utils.parseTime(Math.round(client.uptime / 1000),
                 )}\n` +
-                `**Ping**: ${Math.round(client.ws.ping)}ms\n` +
+                `**Discord API Websocket Ping**: ${Math.round(client.ws.ping)}ms\n` +
+				`**Message Latency**: ${Date.now() - message.createdTimestamp}ms\n` +
 				`**RAM**: ${client.utils.formatBytes(process.memoryUsage().heapUsed)}\n`,
 				},
 			],

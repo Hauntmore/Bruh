@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { initialize } = require('../structures/Top-gg');
 
 module.exports = {
 	name: 'ready',
@@ -15,6 +16,9 @@ module.exports = {
 
 		// Initiate the Lavalink manager.
 		client.manager.init(client.user.id);
+
+		// Initiate the Top.gg app server.
+		initialize();
 
 		mongoose.connection.on('error', (error) => console.log(`A mongoose error has occurred!\n${error}`));
 
@@ -33,7 +37,7 @@ module.exports = {
 		const data = [
 			{
 				name: 'ping',
-				description: 'Replies with the client websocket ping.',
+				description: 'Replies with the client\'s Discord API websocket ping and message latency.',
 			},
 			{
 				name: 'uptime',
