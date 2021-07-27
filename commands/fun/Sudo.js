@@ -8,9 +8,9 @@ module.exports = {
 	args: true,
 	cooldown: 3,
 	async execute(message, { args }) {
-		const { client, channel } = message;
+		const { client } = message;
 
-		const webhooks = await channel.fetchWebhooks();
+		const webhooks = await message.channel.fetchWebhooks();
 
 		const errorEmbed = (msg) => client.makeEmbed({ description: msg, timestamp: message.createdAt });
 
@@ -20,8 +20,8 @@ module.exports = {
 		const msg = args.slice(1).join(' ');
 		if (!msg) return message.reply({ embeds: [errorEmbed('You need to add some text for the command!')] });
 
-		if (!webhooks.size || webhooks.size === 0) {
-			const newWebhook = await channel.createWebhook('Bruh-Bot', { avatar: client.user.displayAvatarURL() });
+		if (!webhooks.size) {
+			const newWebhook = await message.channel.createWebhook('Bruh-Bot', { avatar: client.user.displayAvatarURL(), reason: 'For the sudo command.' });
 			newWebhook.send({ username: member.user.username, avatarURL: member.user.displayAvatarURL({ dynamic: true }), content: msg });
 		} else {
 			const webhook = webhooks.first();
