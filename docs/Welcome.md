@@ -1,4 +1,4 @@
-## Bruh-Bot | Guild member join event variables.
+## Bruh-Bot | Guild Member Add
 
 The "welcome" command in the "configure" category supports four tag blocks.
 
