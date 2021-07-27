@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	name: 'messageDelete',
 	async execute(oldMessage, newMessage) {
-		if (newMessage.author.bot || !newMessage.guild || newMessage.attachments.size >= 1 || newMessage.embeds.size >= 1) return;
+		if (newMessage.author?.bot || !newMessage.guild || newMessage.attachments.size >= 1 || newMessage.embeds.size >= 1) return;
 
 		const guildDB = await newMessage.client.db.guildDB(newMessage.guild.id);
 
