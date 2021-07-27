@@ -47,9 +47,19 @@ module.exports = {
 				name: 'invite',
 				description: 'Replies with the bot invite.',
 			},
+			{
+				name: 'echo',
+				description: 'Replies back with the inputed text.',
+				options: [{
+					name: 'input',
+					type: 'STRING',
+					description: 'The text to reply back with.',
+					required: true,
+				}],
+			},
 		];
 
-		// Set to an empty array to delete all interaction commands.
+		// Set the application commands; set to an empty array to delete all interaction commands.
 		await client.application?.commands.set(data);
 	},
 };

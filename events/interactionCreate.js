@@ -29,5 +29,7 @@ module.exports = {
 
 			await interaction.reply({ embeds: [embed], components: [ButtonRow] });
 		}
+
+		if (interaction.commandName === 'echo') {await interaction.reply({ content: `${interaction.options.getString('input', true)}\n\n- **${interaction.user.tag}**` });}
 	},
 };
