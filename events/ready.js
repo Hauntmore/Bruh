@@ -37,7 +37,7 @@ module.exports = {
 		const data = [
 			{
 				name: 'ping',
-				description: 'Replies with the client\'s Discord API websocket ping and message latency.',
+				description: 'Replies with the client\'s Discord API websocket ping and interaction latency.',
 			},
 			{
 				name: 'uptime',
