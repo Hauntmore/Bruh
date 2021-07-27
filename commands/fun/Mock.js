@@ -7,13 +7,12 @@ module.exports = {
 	args: true,
 	cooldown: 3,
 	execute(message, { args }) {
-		message.channel.send({ content: args.slice(0)
-			.join(' ')
-			.replace(/c/gi, 'k')
-			.replace(/v/gi, 'c')
-			.split('')
-			.map((c, i) => i % 2 ? c.toUpperCase() : c)
-			.join(''),
-		});
+		const { client } = message;
+
+		const errorEmbed = (msg) => client.makeEmbed({ description: msg, timestamp: message.createdAt });
+
+		if (message.mentions.members.first()) return message.reply({ embeds: [errorEmbed('NO NO, You cannot mention someone while doing this command.')] });
+
+		message.channel.send({ content: `${args.slice(0).join(' ').replace(/c/gi, 'k').replace(/v/gi, 'c').split('').map((c, i) => i % 2 ? c.toUpperCase() : c).join('')}` });
 	},
 };

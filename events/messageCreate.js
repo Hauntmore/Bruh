@@ -1,10 +1,8 @@
-const { Collection, MessageEmbed, WebhookClient, Permissions } = require('discord.js');
+const { Collection, MessageEmbed, Permissions } = require('discord.js');
 const { stripIndents } = require('common-tags');
 
 const Guild = require('../models/Guild');
 const Tags = require('../models/Tags');
-
-const errorWebhook = new WebhookClient(process.env.ERRORWEBHOOKID, process.env.ERRORWEBHOOKTOKEN);
 
 module.exports = {
 	name: 'messageCreate',
@@ -166,9 +164,9 @@ module.exports = {
 				await message.client.db.addBankSpace(message.author.id, bankSpace);
 			}
 		} catch (error) {
-			console.error(error);
+			console.error(`[Client] ${error}`);
 			message.channel.send({ embeds: [errorEmbed('Something went wrong while executing the command!')] });
-			errorWebhook.send({ content: `An error occured with ${message.client.user} at ${message.guild.name} (${message.guild.id}).\n\nTime: ${new Date()}\n\n${message.author.tag} (${message.author.id}) was the user that tried to execute the command.\n\nCommand name: ${message.client.utils.capitalize(command.name)}\n\nMessage content: ${message.content}\n\n\n**Error:**\n\`\`\`js\n${error}\n\`\`\`` });
+			message.client.errorWebhook.send({ content: `An error occured with ${message.client.user} at ${message.guild.name} (${message.guild.id}).\n\nTime: ${new Date()}\n\n${message.author.tag} (${message.author.id}) was the user that tried to execute the command.\n\nCommand name: ${message.client.utils.capitalize(command.name)}\n\nMessage content: ${message.content}\n\n\n**Error:**\n\`\`\`js\n${error}\n\`\`\`` });
 		}
 	},
 };

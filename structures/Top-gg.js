@@ -1,18 +1,16 @@
 const express = require('express');
-const { Webhook } = require('@top-gg/sdk');
+const TopGG = require('@top-gg/sdk');
 
 const initialize = () => {
-	const wh = new Webhook(process.env.TOPGGWEBHOOKAUTH);
+	const webhook = new TopGG.Webhook(process.env.TOPGGWEBHOOKAUTH);
 
 	const app = express();
 
-	app.post('/dbl', wh.listener((vote) => {
-		// dblwebhook
-
-		console.log(vote.user);
+	app.post('/dblwebhook', webhook.listener((vote) => {
+		console.log(`[DBL Webhook Vote] : ${vote.user}.`);
 	}));
 
-	app.listen(process.env.TOPGGAPPPORT, () => console.log('[Express] The server is running.'));
+	app.listen(process.env.TOPGGAPPPORT, () => console.log('[Express] The web server is now running.'));
 };
 
 module.exports.initialize = initialize;

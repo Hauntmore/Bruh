@@ -13,7 +13,7 @@ module.exports = {
 
 		const embed = client.makeEmbed()
 			.setTitle(client.user.username)
-			.setURL(client.user.displayAvatarURL({ format: 'png' }))
+			.setURL(client.user.displayAvatarURL())
 			.setThumbnail(client.user.displayAvatarURL({ dynamic: true, format: 'png' }))
 			.setTimestamp()
 			.setDescription(`Click here to view the bot's source. ${client.utils.link('GitHub', client.config.botgithub)}`)

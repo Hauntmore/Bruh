@@ -13,7 +13,7 @@ module.exports = {
 
 		const embed = client.makeEmbed()
 			.setTitle(client.user.username)
-			.setURL(client.user.displayAvatarURL({ format: 'png' }))
+			.setURL(client.user.displayAvatarURL())
 			.setThumbnail(client.user.displayAvatarURL({ dynamic: true, format: 'png' }))
 			.setTimestamp()
 			.setDescription(`We appreciate you for inviting ${client.user.username}! Thank you for supporting the bot development!\n\n**Click on the button to invite the bot!**`)

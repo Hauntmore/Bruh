@@ -49,7 +49,7 @@ module.exports = {
 			.addField('**❯ Bot -**', `${client.utils.checkOrCross(member.user.bot)}`, false)
 			.addField('**❯ Nickname -**', `${member.nickname ? member.nickname : 'No nickname.'}`, false)
 			.addField('**❯ Hoisted Role -**', `${member.roles.hoist ? member.roles.hoist.name : 'None'}`, false)
-			.addField('**❯ User Precense -**', `${presence}`, false)
+			.addField('**❯ User Presence -**', `${presence}`, false)
 			.addField('**❯ Permissions -**', `${member.permissions.toArray().map(p => client.utils.formatPerm(p)).join(', ').title()}`);
 
 		message.channel.send({ embeds: [embed] });

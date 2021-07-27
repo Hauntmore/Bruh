@@ -1,6 +1,16 @@
 const channelType = {
 	GUILD_TEXT: 'text',
 	GUILD_VOICE: 'voice',
+	GUILD_CATEGORY: 'category',
+	GUILD_NEWS: 'news',
+	GUILD_STORE: 'store',
+	GUILD_NEWS_THREAD: 'news Thread',
+	GUILD_PUBLIC_THREAD: 'public Thread',
+	GUILD_PRIVATE_THREAD: 'private Thread',
+	GUILD_STAGE_VOICE: 'stage',
+	UNKNOWN: 'unknown',
+	DM: 'dM',
+	GROUP_DM: 'group DM',
 };
 
 module.exports = {

@@ -1,4 +1,4 @@
-const { Client, Collection, MessageEmbed } = require('discord.js');
+const { Client, Collection, MessageEmbed, WebhookClient } = require('discord.js');
 const { readdirSync } = require('fs');
 const { Manager } = require('erela.js');
 
@@ -31,12 +31,16 @@ class Bruh extends Client {
 		this.commands = new Collection();
 		this.cooldowns = new Collection();
 
+		// Webhooks
+		this.errorWebhook = new WebhookClient(process.env.ERRORWEBHOOKID, process.env.ERRORWEBHOOKTOKEN);
+		this.ticketWebhook = new WebhookClient(process.env.TICKETWEBHOOKID, process.env.TICKETWEBHOOKTOKEN);
+
 		// Lavalink Erela.js manager.
 		this.manager = new Manager({
 			nodes: [{ host: process.env.LAVALINKHOST, port: parseInt(process.env.LAVALINKPORT), password: process.env.LAVALINKPASS }],
 			send(id, payload) {const guild = this.guilds.cache.get(id);if (guild) guild.shard.send(payload);} })
-			.on('nodeConnect', (node) => {console.log(`Node ${node.options.identifier} has connected.`);})
-			.on('nodeError', (node, error) => {console.log(`Node ${node.options.identifier} emitted an error:\n${error.message}`);})
+			.on('nodeConnect', (node) => {console.log(`[Node Lavalink Connection] The node: ${node.options.identifier} has connected on port ${process.env.LAVALINKPORT}.`);})
+			.on('nodeError', (node, error) => {console.log(`[Node Lavalink Error] The node: ${node.options.identifier} emitted an error on port ${process.env.LAVALINKPORT}:\n${error.message}`);})
 			.on('trackStart', (player, track) => {this.channels.cache.get(player.textChannel).send(`Now playing: ${track.title}.`);})
 			.on('queueEnd', (player) => {this.channels.cache.get(player.textChannel).send('The queue has ended.');player.destroy();});
 	}
@@ -50,6 +54,7 @@ class Bruh extends Client {
 
 			for (const file of commandFiles) {
 				const command = require(`../commands/${category}/${file}`);
+
 				if (!command.name) {console.error(`The file \`${category}/${file}\` is missing a command name.`);} else if (!command.execute) {console.error(`The file \`${category}/${file}\` is missing an \`execute\` function.`);} else {command.category = category;}
 				this.commands.set(command.name, command);
 			}
@@ -62,6 +67,7 @@ class Bruh extends Client {
 
 		for (const file of eventFiles) {
 			const event = require(`../events/${file}`);
+
 			if (!event.name) {console.error(`The file \`${file}\` is missing an event name.`);}
 			if (!event.execute) {console.error(`The file \`${file}\` is missing an \`execute\` function.`);}
 
