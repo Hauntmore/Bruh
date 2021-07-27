@@ -20,7 +20,7 @@ module.exports = {
 		const msg = args.slice(1).join(' ');
 		if (!msg) return message.reply({ embeds: [errorEmbed('You need to add some text for the command!')] });
 
-		if (!webhooks.size) {
+		if (!webhooks.size || webhooks.size === 0) {
 			const newWebhook = await channel.createWebhook('Bruh-Bot', { avatar: client.user.displayAvatarURL() });
 			newWebhook.send({ username: member.user.username, avatarURL: member.user.displayAvatarURL({ dynamic: true }), content: msg });
 		} else {
