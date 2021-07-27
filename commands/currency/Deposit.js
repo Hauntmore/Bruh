@@ -14,8 +14,6 @@ module.exports = {
 
 		const amount = parseFloat(args[0]);
 
-		if (amount > currency.bank) return message.reply({ embeds: [errorEmbed('You cannot deposit an amount of which you don\'t own loser.')] });
-
 		if (args[0].toLowerCase() === 'max' && isNaN(amount)) {
 			await client.db.removeWallet(message.author.id, Math.round(currency.wallet));
 
