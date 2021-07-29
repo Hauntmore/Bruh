@@ -16,14 +16,14 @@ module.exports = {
 
 		if (args[0].toLowerCase() === 'delete') {
 			if (!args[1]) return message.channel.send({ content: 'Pls entering content to delete.' });
-			client.db.deleteGuildTag(message.guild.id, args[1]);
+			await client.db.deleteGuildTag(message.guild.id, args[1]);
 			message.channel.send({ content: `You have deleted the tag with the name \`${args[1]}\`.` });
 		}
 
 		if (args[0].toLowerCase() === 'create') {
 			if (!args.slice(2).join(' ')) return message.channel.send({ content: 'This tag cannot have no content.' });
 			if (!args[1]) return message.channel.send({ content: 'Please please enter in a tag name...' });
-			client.db.createGuildTag(message.guild.id, args[1], args.slice(2).join(' '));
+			await client.db.createGuildTag(message.guild.id, args[1], args.slice(2).join(' '));
 			message.channel.send({ content: `You have created the tag with the name \`${args[1]}\` with the following content:\n\n${args.slice(2).join(' ')}` });
 		}
 

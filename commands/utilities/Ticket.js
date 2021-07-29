@@ -20,9 +20,9 @@ module.exports = {
 			const content = args.slice(1).join(' ');
 			if (!content) return message.reply({ embeds: [errorEmbed('You need to add a ticket query, or else opening a ticket is useless.')] });
 
-			client.db.createUserTicket(message.author.id, content, ticketId);
+			await client.db.createUserTicket(message.author.id, content, ticketId);
 
-			client.db.addUserTicketsCreated(message.author.id, ticketId);
+			await client.db.addUserTicketsCreated(message.author.id, ticketId);
 
 			message.channel.send({ content: `You have successfully opened a query ticket. Your ticket ID is \`${ticketId}\`.` });
 			client.ticketWebhook.send({ embeds: [new MessageEmbed().setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true })).setDescription(`${message.author.tag} (${message.author.id}) has created a ticket with ${client.user}.`).addField('Created at', `${new Date()}`, true).addField('Ticket Query', `${content}`, true).addField('Ticket ID', `\`${ticketId}\``, true).setTimestamp().setColor('RANDOM')] });

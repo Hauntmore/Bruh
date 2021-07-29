@@ -11,6 +11,6 @@ module.exports = {
 
 		await client.db.addWallet(message.author.id, coinsGiven);
 
-		message.channel.send({ content: `You have claimed your daily reward of ${coinsGiven}.` });
+		message.channel.send({ content: `You have claimed your daily reward of ${coinsGiven.toLocaleString()}.` });
 	},
 };
