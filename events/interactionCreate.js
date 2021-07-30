@@ -11,49 +11,37 @@ module.exports = {
 		if (interaction.isMessageComponent()) {console.log('A message component interaction was triggered.');}
 		if (interaction.isSelectMenu()) {console.log('A select menu interaction was triggered.');}
 
-		if (interaction.guild.id === interaction.client.config.spydankers) {
-			let role;
-
-			if (interaction.customId === 'SpydYellow') role = interaction.guild.roles.cache.get('768064450241626142');
-
-			if (interaction.customId === 'SpydWhite') role = interaction.guild.roles.cache.get('768065464500617216');
-
-			if (interaction.customId === 'SpydRed') role = interaction.guild.roles.cache.get('768071501424492552');
-
-			if (interaction.customId === 'SpydPink') role = interaction.guild.roles.cache.get('768070887751548999');
-
-			if (interaction.customId === 'SpydOrange') role = interaction.guild.roles.cache.get('768063264663011328');
-
-			if (interaction.customId === 'SpydLightGreen') role = interaction.guild.roles.cache.get('768064713958490130');
-
-			if (interaction.customId === 'SpydCyan') role = interaction.guild.roles.cache.get('762209560877334539');
-
-			if (interaction.customId === 'SpydDarkBlue') role = interaction.guild.roles.cache.get('768061529970442260');
-
-			if (interaction.customId === 'SpydPurple') role = interaction.guild.roles.cache.get('762208885352169472');
-
-			if (interaction.customId === 'SpydBrown') role = interaction.guild.roles.cache.get('768064580491411478');
-
-			if (interaction.customId === 'SpydDarkGreen') role = interaction.guild.roles.cache.get('768061263183740958');
-
-			if (interaction.customId === 'SpydBlack') role = interaction.guild.roles.cache.get('768062001825579028');
-
-			if (interaction.customId === 'SpydRandom') role = interaction.guild.roles.cache.get('768523513299468329');
-
-			if (interaction.member.roles.cache.get(role.id)) {
-				try {
-					interaction.member.roles.remove(role.id);
-					interaction.reply({ content: `**${interaction.member.user.tag}** was removed from the role **${role.name}**.`, ephemeral: true });
-				} catch (err) {
-					console.error(err);
+		const { spydankers } = interaction.client.config;
+		if (interaction.isButton() && interaction.guild.id === spydankers) {
+			let roles = {
+				SpydYellow: '768064450241626142',
+				SpydWhite: '768065464500617216',
+				SpydRed: '768071501424492552',
+				SpydPink: '768070887751548999',
+				SpydOrange: '768063264663011328',
+				SpydLightGreen: '768064713958490130',
+				SpydCyan: '762209560877334539',
+				SpydDarkBlue: '768061529970442260',
+				SpydPurple: '762208885352169472',
+				SpydBrown: '768064580491411478',
+				SpydDarkGreen: '768061263183740958',
+				SpydBlack: '768062001825579028',
+				SpydRandom: '768523513299468329'
+			};
+			let role = interaction.guild.roles.cache.get(roles[interaction.customId]);
+			if (!role) return;
+			
+			try {
+				if (interaction.member.roles.cache.get(role.id)) {
+					await interaction.member.roles.remove(role.id);
+					await interaction.reply({ content: `${role} was removed from you.`, ephemeral: true });
+				} else {
+					await interaction.member.roles.add(role.id);
+					await interaction.reply({ content: `${role} was added to you.`, ephemeral: true });
 				}
-			} else {
-				try {
-					interaction.member.roles.add(role.id);
-					interaction.reply({ content: `**${interaction.member.user.tag}** was assigned the role **${role.name}**.`, ephemeral: true });
-				} catch (err) {
-					console.error(err);
-				}
+			} catch (err) {
+				await interaction.reply({ content: 'Something went wrong. This was reported to the developer.' });
+				console.error(err);
 			}
 		}
 
@@ -85,7 +73,7 @@ module.exports = {
 		}
 
 		if (interaction.commandName === 'asktrump') {
-			const { trumpPhotos, trumpResponses } = require('../lib/json/trump.json');
+			const { trumpPhotos, trumpResponses } = require('../../lib/json/trump.json');
 
 			const embed = interaction.client.makeEmbed()
 				.setDescription(`\n${interaction.user.username}: ${interaction.options.getString('input', true)}\n\nDonald Trump: ${trumpResponses[Math.floor(Math.random() * trumpResponses.length)].toUpperCase()}`)
