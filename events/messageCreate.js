@@ -146,7 +146,7 @@ module.exports = {
 		if (message.client.owners.includes(message.author.id)) {
 			timestamps.set(message.author.id, now);
 			setTimeout(() => timestamps.delete(message.author.id), ocooldownAmount);
-		} else if (user.premium) {
+		} else if (user?.premium) {
 			timestamps.set(message.author.id, now);
 			setTimeout(() => timestamps.delete(message.author.id), pcooldownAmount);
 		} else {
