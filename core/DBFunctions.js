@@ -291,21 +291,15 @@ class DBFunctions {
 			const newUser = await new User({ id: userID });
 
 			const ticketsCreated = newUser.ticketsCreated;
-			const afk = newUser.afk;
-			const afkMessage = newUser.afkMessage;
-			const afkMessagesLeft = newUser.afkMessagesLeft;
 			const premium = newUser.premium;
 
 			await newUser.save().catch(err => console.log(err));
-			return { ticketsCreated, afk, afkMessage, afkMessagesLeft, premium };
+			return { ticketsCreated, premium };
 		} else {
 			const ticketsCreated = user.ticketsCreated;
-			const afk = user.afk;
-			const afkMessage = user.afkMessage;
-			const afkMessagesLeft = user.afkMessagesLeft;
 			const premium = user.premium;
 
-			return { ticketsCreated, afk, afkMessage, afkMessagesLeft, premium };
+			return { ticketsCreated, premium };
 		}
 	}
 

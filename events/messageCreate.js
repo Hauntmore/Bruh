@@ -3,6 +3,7 @@ const { stripIndents } = require('common-tags');
 
 const Guild = require('../models/Guild');
 const Tags = require('../models/Tags');
+const User = require('../models/User');
 
 module.exports = {
 	name: 'messageCreate',
@@ -10,7 +11,7 @@ module.exports = {
 		if (message.author.bot || !message.guild) return;
 
 		const guild = await Guild.findOne({ id: message.guild.id });
-		const userDB = await message.client.db.userDB(message.author.id);
+		const user = await User.findOne({ id: message.author.id });
 
 		if (guild?.autoResponse) {
 			if (message.content.match(new RegExp(/^imagine/i))) message.channel.send({ content: 'I can\'t even ' + message.content + ', bro.' });
@@ -105,7 +106,7 @@ module.exports = {
 			return message.channel.send({ embeds: [errorEmbed('This command can only be executed in premium servers.')] });
 		}
 
-		if (command.userPremium && !userDB?.premium) {
+		if (command.userPremium && !user?.premium) {
 			return message.channel.send({ embeds: [errorEmbed('This command can only be executed in premium servers.')] });
 		}
 
@@ -127,7 +128,7 @@ module.exports = {
 		if (timestamps.has(message.author.id)) {
 			if (message.client.owners.includes(message.author.id)) {
 				timestamps.get(message.author.id) + ocooldownAmount;
-			} else if (userDB.premium) {
+			} else if (user.premium) {
 				const expirationTime = timestamps.get(message.author.id) + pcooldownAmount;
 				if (now < expirationTime) {
 					const timeLeft = message.client.utils.timeleft(expirationTime);
@@ -145,7 +146,7 @@ module.exports = {
 		if (message.client.owners.includes(message.author.id)) {
 			timestamps.set(message.author.id, now);
 			setTimeout(() => timestamps.delete(message.author.id), ocooldownAmount);
-		} else if (userDB.premium) {
+		} else if (user.premium) {
 			timestamps.set(message.author.id, now);
 			setTimeout(() => timestamps.delete(message.author.id), pcooldownAmount);
 		} else {
