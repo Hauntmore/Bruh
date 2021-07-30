@@ -11,6 +11,52 @@ module.exports = {
 		if (interaction.isMessageComponent()) {console.log('A message component interaction was triggered.');}
 		if (interaction.isSelectMenu()) {console.log('A select menu interaction was triggered.');}
 
+		if (interaction.guild.id === interaction.client.config.spydankers) {
+			let role;
+
+			if (interaction.customId === 'SpydYellow') role = interaction.guild.roles.cache.get('768064450241626142');
+
+			if (interaction.customId === 'SpydWhite') role = interaction.guild.roles.cache.get('768065464500617216');
+
+			if (interaction.customId === 'SpydRed') role = interaction.guild.roles.cache.get('768071501424492552');
+
+			if (interaction.customId === 'SpydPink') role = interaction.guild.roles.cache.get('768070887751548999');
+
+			if (interaction.customId === 'SpydOrange') role = interaction.guild.roles.cache.get('768063264663011328');
+
+			if (interaction.customId === 'SpydLightGreen') role = interaction.guild.roles.cache.get('768064713958490130');
+
+			if (interaction.customId === 'SpydCyan') role = interaction.guild.roles.cache.get('762209560877334539');
+
+			if (interaction.customId === 'SpydDarkBlue') role = interaction.guild.roles.cache.get('768061529970442260');
+
+			if (interaction.customId === 'SpydPurple') role = interaction.guild.roles.cache.get('762208885352169472');
+
+			if (interaction.customId === 'SpydBrown') role = interaction.guild.roles.cache.get('768064580491411478');
+
+			if (interaction.customId === 'SpydDarkGreen') role = interaction.guild.roles.cache.get('768061263183740958');
+
+			if (interaction.customId === 'SpydBlack') role = interaction.guild.roles.cache.get('768062001825579028');
+
+			if (interaction.customId === 'SpydRandom') role = interaction.guild.roles.cache.get('768523513299468329');
+
+			if (interaction.member.roles.cache.get(role.id)) {
+				try {
+					interaction.member.roles.remove(role.id);
+					interaction.reply({ content: `**${interaction.member.user.tag}** was removed from the role **${role.name}**.`, ephemeral: true });
+				} catch (err) {
+					console.error(err);
+				}
+			} else {
+				try {
+					interaction.member.roles.add(role.id);
+					interaction.reply({ content: `**${interaction.member.user.tag}** was assigned the role **${role.name}**.`, ephemeral: true });
+				} catch (err) {
+					console.error(err);
+				}
+			}
+		}
+
 		if (interaction.commandName === 'ping') {
 			await interaction.reply({ content: `**Discord API Websocket Ping**: \`${Math.round(interaction.client.ws.ping)}ms\`.\n**Interaction Latency**: \`${Date.now() - interaction.createdTimestamp}ms\`.` });
 		}

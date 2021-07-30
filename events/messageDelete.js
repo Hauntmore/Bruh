@@ -16,8 +16,6 @@ module.exports = {
 
 		const channel = message.guild.channels.cache.get(guildDB.messageLogsChannel);
 
-		if (channel) {
-			channel.send({ embeds: [embed] });
-		}
+		channel?.send({ embeds: [embed] });
 	},
 };
