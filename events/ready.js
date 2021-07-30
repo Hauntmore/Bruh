@@ -57,6 +57,26 @@ module.exports = {
 					required: true,
 				}],
 			},
+			{
+				name: 'asktrump',
+				description: 'Ask 45th United States president Donald Trump something!',
+				options: [{
+					name: 'input',
+					type: 'STRING',
+					description: 'The question to ask Donald Trump.',
+					required: true,
+				}],
+			},
+			{
+				name: '8ball',
+				description: 'Ask the magical 8ball something.',
+				options: [{
+					name: 'input',
+					type: 'STRING',
+					description: 'The question to ask the 8ball.',
+					required: true,
+				}],
+			},
 		];
 
 		// Set the application commands; set to an empty array to delete all interaction commands.

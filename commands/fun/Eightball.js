@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'eightball',
 	aliases: ['8ball'],
-	description: 'FInd your luck with this 8ball command.',
+	description: 'Ask the magical 8ball something.',
 	usage: '<question>',
 	example: ['8ball is @Hauntless#3212 gay', 'eightball will i be rich?'],
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],

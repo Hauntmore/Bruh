@@ -3,7 +3,7 @@ const { trumpPhotos, trumpResponses } = require('../../lib/json/trump.json');
 module.exports = {
 	name: 'asktrump',
 	aliases: ['askdonald', 'whatdoestrumpthinkabout', 'whatdoesdonaldtrumpthinkabout', 'askdonaldtrump'],
-	description: 'Ask trump something!',
+	description: 'Ask 45th United States president Donald Trump something!',
 	usage: '<question>',
 	example: ['asktrump Do you like pie?', 'asktrump am I sus?'],
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],

@@ -11,7 +11,7 @@ const client = new Client({
 });
 
 process.on('unhandledRejection', (err) => {
-	console.error(`${chalk.red.bold(`[Node Error] Unhandled Promise Rejection:\n\n${err.stack}`)}`);
+	console.error(`${chalk.red.bold('[Node Error] Unhandled Promise Rejection:')}\n${err.stack}`);
 	client.errorWebhook.send({ content: `[Node Error] Unhandled Promise Rejection:\n\n\n${err.stack}` });
 });
 

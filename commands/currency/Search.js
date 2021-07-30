@@ -46,6 +46,7 @@ module.exports = {
 			'**A Safe**',
 			'**A Yarrrr Pirate Ship**',
 			'**A Fridge**',
+			'**Captn\'s Bedroom**',
 		];
 
 		if (chance >= 1 && chance <= 5) {
@@ -86,6 +87,8 @@ module.exports = {
 				'Money says "GO AWAY!"',
 				'Yer almost got found by police, luckily you got away bozo...',
 				'A clown scared you off away from the free money!',
+				'A psycho chased you off away from their money!',
+				'A literal skunk scared yer away, such a chicken smh.',
 			];
 
 			const embed = client.makeEmbed()

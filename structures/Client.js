@@ -63,7 +63,7 @@ class Bruh extends Client {
 
 	// Loads the bot's events.
 	loadEvents() {
-		const eventFiles = readdirSync('events');
+		const eventFiles = readdirSync('events').filter(file => file.endsWith('.js'));
 
 		for (const file of eventFiles) {
 			const event = require(`../events/${file}`);

@@ -3,7 +3,7 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	name: 'messageDelete',
 	async execute(oldMessage, newMessage) {
-		if (newMessage.author?.bot || !newMessage.guild || newMessage.attachments.size >= 1 || newMessage.embeds.size >= 1) return;
+		if (oldMessage.partial || newMessage.partial || newMessage.author?.bot || !newMessage.guild || newMessage.attachments.size >= 1 || newMessage.embeds.size >= 1) return;
 
 		const guildDB = await newMessage.client.db.guildDB(newMessage.guild.id);
 
@@ -14,7 +14,11 @@ module.exports = {
 			.addField('**After**:', `${newMessage.content}`, false)
 			.setColor('BLUE')
 			.setFooter(`ID: ${newMessage.author.id}`);
+
 		const channel = newMessage.guild.channels.cache.get(guildDB.messageLogsChannel);
-		if (channel) {channel.send({ embeds: [embed] });}
+
+		if (channel) {
+			channel.send({ embeds: [embed] });
+		}
 	},
 };

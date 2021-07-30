@@ -118,27 +118,6 @@ class DBFunctions {
 		}
 	}
 
-	static async addBankSpace(userID, amount) {
-		if (!userID) throw new TypeError('A user ID was not specified');
-		if (!amount) throw new TypeError('An amount was not specified');
-
-		const currency = await Currency.findOne({ id: userID });
-
-		if (!currency) {
-			const newCurrency = await new Currency({ id: userID });
-
-			newCurrency.bankSpace += amount;
-
-			await newCurrency.save().catch(err => console.log(err));
-			return { amount };
-		} else {
-			currency.bankSpace += amount;
-
-			await currency.save().catch(err => console.log(err));
-			return { amount };
-		}
-	}
-
 	// Guild database functions.
 
 	static async guildDB(guildID) {

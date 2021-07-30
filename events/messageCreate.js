@@ -61,6 +61,7 @@ module.exports = {
 			msg = msg.replaceAll('{guild.memberCount}', `${message.guild.members.cache.size.toLocaleString()}`);
 			msg = msg.replaceAll('{message.channel}', `${message.channel.name}`);
 			msg = msg.replaceAll('{target.mention}', `${message.mentions.members.last() || message.member}`);
+			msg = msg.replaceAll('{target.tag}', `${message.mentions.members.last().user.tag || message.author.tag}`);
 			message.channel.send({ content: msg });
 		}
 
@@ -156,12 +157,10 @@ module.exports = {
 			command.execute(message, input);
 
 			const chance = Math.floor(Math.random() * 10) + 1;
+
 			if (chance >= 1 && chance <= 6) {
 				const coinsGiven = Math.floor(Math.random() * 200) + 70;
 				await message.client.db.addWallet(message.author.id, coinsGiven);
-
-				const bankSpace = Math.floor(Math.random() * 350) + 80;
-				await message.client.db.addBankSpace(message.author.id, bankSpace);
 			}
 		} catch (error) {
 			console.error(`[Client] ${error}`);
