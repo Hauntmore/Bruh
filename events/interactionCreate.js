@@ -73,7 +73,7 @@ module.exports = {
 		}
 
 		if (interaction.commandName === 'asktrump') {
-			const { trumpPhotos, trumpResponses } = require('../../lib/json/trump.json');
+			const { trumpPhotos, trumpResponses } = require('../lib/json/trump.json');
 
 			const embed = interaction.client.makeEmbed()
 				.setDescription(`\n${interaction.user.username}: ${interaction.options.getString('input', true)}\n\nDonald Trump: ${trumpResponses[Math.floor(Math.random() * trumpResponses.length)].toUpperCase()}`)

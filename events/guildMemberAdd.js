@@ -5,7 +5,7 @@ module.exports = {
 
 		let msg = guildDB.joinLogsMessage;
 		msg = msg.replaceAll('{user.tag}', member.user.tag);
-		msg = msg.replaceAll('{user.mention}', member);
+		msg = msg.replaceAll('{user.mention}', member.toString());
 		msg = msg.replaceAll('{guild.name}', member.guild.name);
 		msg = msg.replaceAll('{guild.memberCount}', member.guild.members.cache.size.toLocaleString());
 
