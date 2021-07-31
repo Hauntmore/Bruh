@@ -4,6 +4,7 @@ const TopGG = require('@top-gg/sdk');
 const initialize = () => {
 	const webhook = new TopGG.Webhook(process.env.TOPGGWEBHOOKAUTH);
 
+	// Create the server.
 	const app = express();
 
 	app.post('/dblwebhook', webhook.listener((vote) => {
