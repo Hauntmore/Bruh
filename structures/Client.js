@@ -32,7 +32,6 @@ class Bruh extends Client {
 		this.cooldowns = new Collection();
 
 		// Webhooks
-		this.errorWebhook = new WebhookClient(process.env.ERRORWEBHOOKID, process.env.ERRORWEBHOOKTOKEN);
 		this.ticketWebhook = new WebhookClient(process.env.TICKETWEBHOOKID, process.env.TICKETWEBHOOKTOKEN);
 
 		// Lavalink Erela.js manager.

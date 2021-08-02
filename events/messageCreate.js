@@ -175,7 +175,6 @@ module.exports = {
 		} catch (error) {
 			console.error(`[Client] ${error}`);
 			message.channel.send({ embeds: [errorEmbed('Something went wrong while executing the command!')] });
-			message.client.errorWebhook.send({ content: `An error occured with ${message.client.user} at ${message.guild.name} (${message.guild.id}).\n\nTime: ${new Date()}\n\n${message.author.tag} (${message.author.id}) was the user that tried to execute the command.\n\nCommand name: ${message.client.utils.capitalize(command.name)}\n\nMessage content: ${message.content}\n\n\n**Error:**\n\`\`\`js\n${error}\n\`\`\`` });
 		}
 	},
 };
