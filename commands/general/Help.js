@@ -76,7 +76,7 @@ module.exports = {
 		const ButtonRow = new MessageActionRow()
 			.addComponents(new MessageButton().setCustomId('1').setLabel('🗑️').setStyle('SECONDARY'));
 
-		const msg = await message.reply({ embeds: [embed], components: [ButtonRow] });
+		const msg = await message.channel.send({ embeds: [embed], components: [ButtonRow] });
 
 		const filter = (interaction) => interaction.customId === '1' && interaction.user.id === message.author.id;
 		msg.awaitMessageComponent({ filter, time: 45000 })

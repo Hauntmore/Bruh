@@ -37,8 +37,8 @@ class Bruh extends Client {
 			send(id, payload) {const guild = this.guilds.cache.get(id);if (guild) guild.shard.send(payload);} })
 			.on('nodeConnect', (node) => {console.log(`[Node Lavalink Connection] The node: ${node.options.identifier} has connected on port ${process.env.LAVALINKPORT}.`);})
 			.on('nodeError', (node, error) => {console.log(`[Node Lavalink Error] The node: ${node.options.identifier} emitted an error on port ${process.env.LAVALINKPORT}:\n${error.message}`);})
-			.on('trackStart', (player, track) => {this.channels.cache.get(player.textChannel).send(`Now playing: ${track.title}.`);})
-			.on('queueEnd', (player) => {this.channels.cache.get(player.textChannel).send('The queue has ended.');player.destroy();});
+			.on('trackStart', (player, track) => {this.channels.cache.get(player.textChannel).send({ content: `Now playing: ${track.title}.` });})
+			.on('queueEnd', (player) => {this.channels.cache.get(player.textChannel).send({ content: 'The queue has ended.' });player.destroy();});
 	}
 
 	// Load the client's commands.

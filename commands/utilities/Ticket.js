@@ -1,6 +1,5 @@
 const Ticket = require('../../models/Ticket');
 const User = require('../../models/User');
-const { MessageEmbed } = require('discord.js');
 
 module.exports = {
 	name: 'ticket',

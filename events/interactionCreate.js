@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { trumpPhotos, trumpResponses } = require('../lib/json/trump.json');
 
 module.exports = {
 	name: 'interactionCreate',
@@ -73,8 +74,6 @@ module.exports = {
 		}
 
 		if (interaction.commandName === 'asktrump') {
-			const { trumpPhotos, trumpResponses } = require('../lib/json/trump.json');
-
 			const embed = interaction.client.makeEmbed()
 				.setDescription(`\n${interaction.user.username}: ${interaction.options.getString('input', true)}\n\nDonald Trump: ${trumpResponses[Math.floor(Math.random() * trumpResponses.length)].toUpperCase()}`)
 				.setThumbnail(trumpPhotos[Math.floor(Math.random() * trumpPhotos.length)])
