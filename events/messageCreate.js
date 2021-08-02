@@ -72,7 +72,7 @@ module.exports = {
 		msg = msg?.replaceAll('{guild.memberCount}', message.guild.members.cache.size.toLocaleString());
 		msg = msg?.replaceAll('{message.channel}', message.channel.name);
 		msg = msg?.replaceAll('{target.mention}', message.mentions.members.last() || message.member);
-		msg = msg?.replaceAll('{target.tag}', message.mentions.members.last().user?.tag || message.member.user?.tag);
+		msg = msg?.replaceAll('{target.tag}', message.mentions.members.last()?.user.tag || message.member?.user.tag);
 		message.channel.send({ content: msg });
 
 		if (!command) return;
