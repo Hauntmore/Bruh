@@ -92,7 +92,7 @@ module.exports = {
 			const embed = client.makeEmbed()
 				.setTitle(people[Math.floor(Math.random() * people.length)])
 				.setDescription(arrays[Math.floor(Math.random() * arrays.length)])
-				.setFooter('imagine begging, such as 2016 thing tbh.')
+				.setFooter('imagine begging, such a 2016 thing tbh.')
 				.setTimestamp();
 			message.reply({ embeds: [embed] });
 		}

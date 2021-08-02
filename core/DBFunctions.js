@@ -3,6 +3,7 @@ const User = require('../models/User');
 const Ticket = require('../models/Ticket');
 const Tag = require('../models/Tags');
 const Currency = require('../models/Currency');
+const Trigger = require('../models/Autoresponse');
 
 class DBFunctions {
 	constructor() {
@@ -390,13 +391,45 @@ class DBFunctions {
 		if (!guildID) throw new TypeError('A guild ID was not specified.');
 		if (!cmd) throw new TypeError('A tag name was not specified.');
 
-		const tag = await Tag.findOne({ cmd: cmd });
+		const tag = await Tag.findOne({ id: guildID, cmd: cmd });
 		if (!tag) {
 			return;
 		} else {
 			await tag.deleteOne();
 		}
+
 		return { cmd };
+	}
+
+	// Trigger database functions.
+
+	static async createGuildTrigger(guildID, trigger, content) {
+		if (!guildID) throw new TypeError('A guild ID was not specified.');
+		if (!trigger) throw new TypeError('A trigger name was not specified.');
+		if (!content) throw new TypeError('The trigger content was not specified.');
+
+		const autoresponse = await new Trigger({
+			id: guildID,
+			trigger: trigger,
+			content: content,
+		});
+
+		await autoresponse.save().catch(err => console.log(err));
+		return { trigger, content };
+	}
+
+	static async deleteGuildTrigger(guildID, trigger) {
+		if (!guildID) throw new TypeError('A guild ID was not specified.');
+		if (!trigger) throw new TypeError('A trigger name was not specified.');
+
+		const autoresponse = await Trigger.findOne({ id: guildID, trigger: trigger });
+		if (!autoresponse) {
+			return;
+		} else {
+			await autoresponse.deleteOne();
+		}
+
+		return { trigger };
 	}
 }
 

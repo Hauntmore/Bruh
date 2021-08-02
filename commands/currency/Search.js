@@ -94,7 +94,7 @@ module.exports = {
 			const embed = client.makeEmbed()
 				.setTitle(places[Math.floor(Math.random() * places.length)])
 				.setDescription(arrays[Math.floor(Math.random() * arrays.length)])
-				.setFooter('imagine searching, such as 2019 thing tbh.')
+				.setFooter('imagine searching, such a 2019 thing tbh.')
 				.setTimestamp();
 			message.reply({ embeds: [embed] });
 		}

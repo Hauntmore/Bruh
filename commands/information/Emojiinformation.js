@@ -6,7 +6,7 @@ module.exports = {
 	description: 'Get data about the given emoji.',
 	usage: '<emoji>',
 	example: 'emojiinformation :KEK:',
-	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'MANAGE_EMOJIS', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
+	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'MANAGE_EMOJIS_AND_STICKERS', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	args: true,
 	cooldown: 5,
 	async execute(message, { args }) {

@@ -5,7 +5,7 @@ module.exports = {
 	name: 'tag',
 	aliases: ['cc', 'tags'],
 	description: 'Configure guild tags.',
-	usage: '<create=content|delete|list|raw> <cmd>',
+	usage: '<create=content|delete|list=array|raw> <cmd>',
 	botPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS', 'READ_MESSAGE_HISTORY'],
 	userPermissions: ['MANAGE_GUILD'],
 	args: true,

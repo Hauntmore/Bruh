@@ -4,6 +4,7 @@ const { stripIndents } = require('common-tags');
 const Guild = require('../models/Guild');
 const Tags = require('../models/Tags');
 const User = require('../models/User');
+const Autoresponse = require('../models/Autoresponse');
 
 module.exports = {
 	name: 'messageCreate',
@@ -12,6 +13,15 @@ module.exports = {
 
 		const guild = await Guild.findOne({ id: message.guild.id });
 		const user = await User.findOne({ id: message.author.id });
+
+		await Autoresponse.find({ id: message.guild.id }, (err, docs) => {
+			if (err) {console.log(err);}
+			docs.map(doc => {
+				if (message.content.includes(doc.trigger)) {
+					message.channel.send({ content: doc.content });
+				}
+			});
+		});
 
 		if (guild?.autoResponse) {
 			if (message.content.match(new RegExp(/^imagine/i))) message.channel.send({ content: 'I can\'t even ' + message.content + ', bro.' });
@@ -52,19 +62,18 @@ module.exports = {
         || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
 		const data = await Tags.findOne({ id: message.guild.id, cmd: cmd });
-		if (data) {
-			let msg = data.response;
-			msg = msg.replaceAll('{user.tag}', `${message.author.tag}`);
-			msg = msg.replaceAll('{user.username}', `${message.author.username}`);
-			msg = msg.replaceAll('{user.mention}', `${message.author}`);
-			msg = msg.replaceAll('{user.nickname}', `${message.member.nickname}`);
-			msg = msg.replaceAll('{guild.name}', `${message.guild.name}`);
-			msg = msg.replaceAll('{guild.memberCount}', `${message.guild.members.cache.size.toLocaleString()}`);
-			msg = msg.replaceAll('{message.channel}', `${message.channel.name}`);
-			msg = msg.replaceAll('{target.mention}', `${message.mentions.members.last() || message.member}`);
-			msg = msg.replaceAll('{target.tag}', `${message.mentions.members.last().user.tag || message.author.tag}`);
-			message.channel.send({ content: msg });
-		}
+
+		let msg = data?.response;
+		msg = msg.replaceAll('{user.tag}', message.author.tag);
+		msg = msg.replaceAll('{user.username}', message.author.username);
+		msg = msg.replaceAll('{user.mention}', message.author);
+		msg = msg.replaceAll('{user.nickname}', message.member.nickname);
+		msg = msg.replaceAll('{guild.name}', message.guild.name);
+		msg = msg.replaceAll('{guild.memberCount}', message.guild.members.cache.size.toLocaleString());
+		msg = msg.replaceAll('{message.channel}', message.channel.name);
+		msg = msg.replaceAll('{target.mention}', message.mentions.members.last() || message.member);
+		msg = msg.replaceAll('{target.tag}', message.mentions.members.last().user.tag || message.member.user.tag);
+		message.channel.send({ content: msg });
 
 		if (!command) return;
 
