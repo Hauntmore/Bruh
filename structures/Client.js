@@ -1,4 +1,4 @@
-const { Client, Collection, MessageEmbed, WebhookClient } = require('discord.js');
+const { Client, Collection, MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
 const { Manager } = require('erela.js');
 
@@ -30,9 +30,6 @@ class Bruh extends Client {
 		// Command and cooldown collections.
 		this.commands = new Collection();
 		this.cooldowns = new Collection();
-
-		// Webhooks
-		this.ticketWebhook = new WebhookClient(process.env.TICKETWEBHOOKID, process.env.TICKETWEBHOOKTOKEN);
 
 		// Lavalink Erela.js manager.
 		this.manager = new Manager({

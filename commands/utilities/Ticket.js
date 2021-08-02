@@ -25,7 +25,6 @@ module.exports = {
 			await client.db.addUserTicketsCreated(message.author.id, ticketId);
 
 			message.channel.send({ content: `You have successfully opened a query ticket. Your ticket ID is \`${ticketId}\`.` });
-			client.ticketWebhook.send({ embeds: [new MessageEmbed().setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true })).setDescription(`${message.author.tag} (${message.author.id}) has created a ticket with ${client.user}.`).addField('Created at', `${new Date()}`, true).addField('Ticket Query', `${content}`, true).addField('Ticket ID', `\`${ticketId}\``, true).setTimestamp().setColor('RANDOM')] });
 
 		} else if (args[0].toLowerCase() === 'view' && client.botmoderators.includes(message.author.id)) {
 			const ticketID = args[1];
@@ -67,7 +66,6 @@ module.exports = {
 			} else {
 				await ticket.deleteOne();
 				message.channel.send({ content: `You have successfully deleted the ticket with the assigned ID \`${ticketID}\`!` });
-				client.ticketWebhook.send({ content: `${message.author.tag} (${message.author.id}) has deleted the ticket \`${ticketID}\`.` });
 			}
 		}
 	},
