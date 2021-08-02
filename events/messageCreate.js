@@ -64,15 +64,15 @@ module.exports = {
 		const data = await Tags.findOne({ id: message.guild.id, cmd: cmd });
 
 		let msg = data?.response;
-		msg = msg?.replaceAll('{user.tag}', message.author.tag);
-		msg = msg?.replaceAll('{user.username}', message.author.username);
-		msg = msg?.replaceAll('{user.mention}', message.author);
-		msg = msg?.replaceAll('{user.nickname}', message.member.nickname);
-		msg = msg?.replaceAll('{guild.name}', message.guild.name);
-		msg = msg?.replaceAll('{guild.memberCount}', message.guild.members.cache.size.toLocaleString());
-		msg = msg?.replaceAll('{message.channel}', message.channel.name);
-		msg = msg?.replaceAll('{target.mention}', message.mentions.members.last() || message.member);
-		msg = msg?.replaceAll('{target.tag}', message.mentions.members.last().user.tag || message.member.user.tag);
+		msg = msg.replaceAll('{user.tag}', message.author.tag);
+		msg = msg.replaceAll('{user.username}', message.author.username);
+		msg = msg.replaceAll('{user.mention}', message.author);
+		msg = msg.replaceAll('{user.nickname}', message.member.nickname);
+		msg = msg.replaceAll('{guild.name}', message.guild.name);
+		msg = msg.replaceAll('{guild.memberCount}', message.guild.members.cache.size.toLocaleString());
+		msg = msg.replaceAll('{message.channel}', message.channel.name);
+		msg = msg.replaceAll('{target.mention}', message.mentions.members.last() || message.member);
+		msg = msg.replaceAll('{target.tag}', message.mentions.members.last().user.tag || message.member.user.tag);
 		message.channel.send({ content: msg });
 
 		if (!command) return;
