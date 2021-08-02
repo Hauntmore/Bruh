@@ -29,9 +29,7 @@ module.exports = {
 
 		} else if (args[0].toLowerCase() === 'view' && client.botmoderators.includes(message.author.id)) {
 			const ticketID = args[1];
-			const ticket = await Ticket.findOne({
-				ticketID: ticketID,
-			});
+			const ticket = await Ticket.findOne({ ticketID: ticketID });
 
 			if (!ticket) {
 				message.reply({ embeds: [errorEmbed(`No ticket was found with the ID: \`${ticketID}\`. What are you even doing man?`)] });
@@ -62,9 +60,7 @@ module.exports = {
 			message.channel.send({ embeds: [embed] });
 		} else if (args[0].toLowerCase() === 'delete' && client.botmoderators.includes(message.author.id)) {
 			const ticketID = args[1];
-			const ticket = await Ticket.findOne({
-				ticketID: ticketID,
-			});
+			const ticket = await Ticket.findOne({ ticketID: ticketID });
 
 			if (!ticket) {
 				message.reply({ embeds: [errorEmbed(`No ticket was found with the ID: \`${ticketID}\`. I'm trying to calculate your dumbass logic right now..`)] });

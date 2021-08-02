@@ -23,20 +23,16 @@ module.exports = {
 
 		if (role.position >= message.guild.me.roles.highest.position) return message.channel.send({ embeds: [errorEmbed('I can\'t reassign that role.')] });
 
-		if (target.roles.cache.get(role.id)) {
-			try {
+		try {
+			if (target.roles.cache.get(role.id)) {
 				target.roles.remove(role.id);
 				return message.channel.send({ content: `**${target.user.tag}** was removed from the role **${role.name}**.` });
-			} catch (err) {
-				console.log(err);
-			}
-		} else {
-			try {
+			} else {
 				target.roles.add(role.id);
 				return message.channel.send({ content: `**${target.user.tag}** was assigned the role **${role.name}**.` });
-			} catch (err) {
-				console.log(err);
 			}
+		} catch (err) {
+			console.log(err);
 		}
 	},
 };
