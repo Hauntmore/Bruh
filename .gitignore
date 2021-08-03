@@ -15,9 +15,6 @@ pids
 # macOS binary file
 .DS_Store
 
-# testing
-/commands/developer/Test.js
-
 # typescript complied file(s) and folder(s)
 dist/
 

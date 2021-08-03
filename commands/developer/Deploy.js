@@ -64,6 +64,6 @@ module.exports = {
 		// Set the application commands; set to an empty array to delete all interaction commands.
 		await client.application?.commands.set(data);
 
-		message.channel.send({ content: 'The application commands are now deploying. Do note it does take approximately one hour to cache all command interactions.' });
+		message.channel.send({ content: 'The application commands are now deploying. Do note it does take approximately **one hour** to cache all global command interactions.' });
 	},
 };

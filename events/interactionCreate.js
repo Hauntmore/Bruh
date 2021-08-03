@@ -88,8 +88,6 @@ module.exports = {
 			embed = await embed.json();
 			embed['color'] = 0x5865F2;
 
-			if (embed[0].fields[2].value > 1024) return await interaction.reply({ content: 'The results of your query has exceeded the field amount of 1024. Please try a different query!' });
-
 			await interaction.reply({ embeds: [embed] });
 		}
 

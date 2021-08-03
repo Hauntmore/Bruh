@@ -18,8 +18,6 @@ module.exports = {
 		const ButtonRow = new MessageActionRow()
 			.addComponents(new MessageButton().setCustomId('1').setLabel('🗑️').setStyle('SECONDARY'));
 
-		if (embed[0].fields[2].value > 1024) return message.reply({ content: 'The results of your query has exceeded the field amount of 1024. Please try a different query!' });
-
 		const msg = await message.reply({ embeds: [embed], allowedMentions: { repliedUser: true }, components: [ButtonRow] });
 
 		const filter = (interaction) => interaction.customId === '1' && interaction.user.id === message.author.id;
