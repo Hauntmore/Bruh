@@ -32,7 +32,7 @@ module.exports = {
 		const PartnerRole = new MessageButton()
 			.setCustomId('SpydPartner')
 			.setStyle('SECONDARY')
-			.setEmoji('<a:PartnerShine:872171572193034270>')
+			.setEmoji('<a:PartnerShine:872172947257835590>')
 			.setLabel('Partnership Ping');
 
 		const PollRole = new MessageButton()
@@ -92,7 +92,7 @@ module.exports = {
 		const MudaeRole = new MessageButton()
 			.setCustomId('SpydMudae')
 			.setStyle('SECONDARY')
-			.setEmoji('U+1F375')
+			.setEmoji('🍵')
 			.setLabel('Mudae');
 
 		const GuessTheNumberRole = new MessageButton()
@@ -116,13 +116,13 @@ module.exports = {
 		const OwOAnnouncementsRole = new MessageButton()
 			.setCustomId('SpydOwOAnnouncements')
 			.setStyle('SECONDARY')
-			.setEmoji('U+1F4E1')
+			.setEmoji('📡')
 			.setLabel('OwO Announcements');
 
 		const OwOShopRole = new MessageButton()
 			.setCustomId('SpydOwOShop')
 			.setStyle('SECONDARY')
-			.setEmoji('U+1F6D2')
+			.setEmoji('🛒')
 			.setLabel('OwO Shop');
 
 		const OwOGiveawayRole = new MessageButton()
