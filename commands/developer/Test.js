@@ -33,7 +33,7 @@ module.exports = {
 			.setCustomId('SpydPartner')
 			.setStyle('SECONDARY')
 			.setEmoji('<a:PartnerShine:872171572193034270>')
-			.setLabel('Announcements');
+			.setLabel('Partnership Ping');
 
 		const PollRole = new MessageButton()
 			.setCustomId('SpydPoll')
@@ -98,7 +98,7 @@ module.exports = {
 		const GuessTheNumberRole = new MessageButton()
 			.setCustomId('SpydGTN')
 			.setStyle('SECONDARY')
-			.setEmoji('<:thinkcollapse:872178993258954802>')
+			.setEmoji('<a:thinkcollapse:872178993258954802>')
 			.setLabel('Guess the Number');
 
 		const ButtonRow4 = new MessageActionRow()
@@ -134,7 +134,7 @@ module.exports = {
 		const OwODistortedRole = new MessageButton()
 			.setCustomId('SpydOwODistorted')
 			.setStyle('SECONDARY')
-			.setEmoji('<:distorted:872182438850338816>')
+			.setEmoji('<a:distorted:872182438850338816>')
 			.setLabel('Guess the Number');
 
 		const ButtonRow6 = new MessageActionRow()
@@ -150,6 +150,6 @@ module.exports = {
 
 		if (args[0] === '5') message.channel.send({ content: 'Grab the Bro Bot Player role!', components: [ButtonRow5] });
 
-		if (args[0] === '6') message.channel.send({ content: 'Grab the OwO roles!', components: [ButtonRow6] });
+		if (args[0] === '6') message.channel.send({ content: 'Grab some OwO roles!', components: [ButtonRow6] });
 	},
 };
