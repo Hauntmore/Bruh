@@ -135,7 +135,7 @@ module.exports = {
 			.setCustomId('SpydOwODistorted')
 			.setStyle('SECONDARY')
 			.setEmoji('<a:distorted:872182438850338816>')
-			.setLabel('Guess the Number');
+			.setLabel('OwO Distorted');
 
 		const ButtonRow6 = new MessageActionRow()
 			.addComponents(OwOAnnouncementsRole, OwOShopRole, OwOGiveawayRole, OwODistortedRole);
