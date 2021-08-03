@@ -112,7 +112,7 @@ module.exports = {
 				await interaction.reply({ embeds: [embed] });
 			} catch (err) {
 				console.log(err);
-				await interaction.reply({ content: 'The results from your query has exceeded the field limit of 1024 characters.' });
+				await interaction.reply({ content: 'The results from your query has exceeded the field limit of 1024 characters.', ephemeral: true });
 			}
 		}
 
