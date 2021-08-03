@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { trumpPhotos, trumpResponses } = require('../lib/json/trump.json');
+const fetch = require('node-fetch');
 
 module.exports = {
 	name: 'interactionCreate',
@@ -78,6 +79,14 @@ module.exports = {
 				.setDescription(`\n${interaction.user.username}: ${interaction.options.getString('input', true)}\n\nDonald Trump: ${trumpResponses[Math.floor(Math.random() * trumpResponses.length)].toUpperCase()}`)
 				.setThumbnail(trumpPhotos[Math.floor(Math.random() * trumpPhotos.length)])
 				.setTimestamp();
+
+			await interaction.reply({ embeds: [embed] });
+		}
+
+		if (interaction.commandName === 'docs') {
+			let embed = await fetch(`https://djsdocs.sorta.moe/v2/embed?src=master&q=${interaction.options.getString('input', true)}`);
+			embed = await embed.json();
+			embed['color'] = 0x5865F2;
 
 			await interaction.reply({ embeds: [embed] });
 		}

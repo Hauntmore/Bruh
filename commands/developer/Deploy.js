@@ -49,6 +49,16 @@ module.exports = {
 					required: true,
 				}],
 			},
+			{
+				name: 'docs',
+				description: 'Search the official Discord.js documentation.',
+				options: [{
+					name: 'input',
+					type: 'STRING',
+					description: 'The query to search for in the docs.',
+					required: true,
+				}],
+			},
 		];
 
 		// Set the application commands; set to an empty array to delete all interaction commands.

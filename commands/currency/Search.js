@@ -20,7 +20,7 @@ module.exports = {
 			'**Dauntless#0711\' DMs**',
 			'**Hauntless\'s Computer**',
 			'**FBI\'s Database**',
-			'**An Old Lady\'s Purse*',
+			'**An Old Lady\'s Purse**',
 			'**Your Nigerian Prince\'s Castle**',
 			'**Public School 69\'s Staff Room**',
 			'**Discord Headquarters\'s Developer Room**',
@@ -47,6 +47,8 @@ module.exports = {
 			'**A Yarrrr Pirate Ship**',
 			'**A Fridge**',
 			'**Captn\'s Bedroom**',
+			'**Tas\'s Closet**',
+			'**Linda\'s Garage**',
 		];
 
 		if (chance >= 1 && chance <= 5) {

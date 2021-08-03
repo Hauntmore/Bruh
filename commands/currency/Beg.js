@@ -47,6 +47,8 @@ module.exports = {
 			'**Karen**',
 			'**Olivia Rodrigo**',
 			'**Captn**',
+			'**Tas**',
+			'**Linda**',
 		];
 
 		if (chance >= 1 && chance <= 6) {
