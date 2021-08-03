@@ -14,6 +14,7 @@ module.exports = {
 		if (interaction.isSelectMenu()) {console.log('A select menu interaction was triggered.');}
 
 		const { spydankers } = interaction.client.config;
+
 		if (interaction.isButton() && interaction.guild.id === spydankers) {
 			const roles = {
 				SpydYellow: '768064450241626142',
@@ -107,7 +108,12 @@ module.exports = {
 			embed = await embed.json();
 			embed['color'] = 0x5865F2;
 
-			await interaction.reply({ embeds: [embed] });
+			try {
+				await interaction.reply({ embeds: [embed] });
+			} catch (err) {
+				console.log(err);
+				await interaction.reply({ content: 'The results from your query has exceeded the field limit of 1024 characters.' });
+			}
 		}
 
 		if (interaction.commandName === '8ball') {
