@@ -49,7 +49,15 @@ module.exports = {
 				SpydOwOShop: '839937811993591839',
 				SpydOwODistorted: '839888920320933899',
 				SpydOwOGiveaway: '840545001939271700',
+				SpydMagenta: '817510941079633941',
+				SpydLavender: '817511114131767326',
+				SpydPeach: '817510357362540595',
+				SpydPetalGreen: '817515613131374612',
+				SpydBabyBlue: '817510530390294588',
+				SpydLemon: '817511001729269782',
+				SpydPinky: '868811396580773929',
 			};
+
 			const role = interaction.guild.roles.cache.get(roles[interaction.customId]);
 			if (!role) return;
 
@@ -112,7 +120,7 @@ module.exports = {
 				await interaction.reply({ embeds: [embed] });
 			} catch (err) {
 				console.log(err);
-				await interaction.reply({ content: 'The results from your query has exceeded the field limit of 1024 characters.', ephemeral: true });
+				await interaction.reply({ content: 'This command has failed. Please try again.' });
 			}
 		}
 

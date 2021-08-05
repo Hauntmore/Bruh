@@ -111,7 +111,7 @@ module.exports = {
 		}
 
 		if (command.args && !input.args.length) {
-			return message.channel.send({ embeds: [errorEmbed(`You are missing an argument!\nUsage: ${message.client.user} ${command.usage}`)] });
+			return message.channel.send({ embeds: [errorEmbed(`You are missing an argument!\nUsage: ${message.client.user} ${command.name} ${command.usage}`)] });
 		}
 
 		if (command.guildPremium && !guild?.premium) {
@@ -119,7 +119,7 @@ module.exports = {
 		}
 
 		if (command.userPremium && !user?.premium) {
-			return message.channel.send({ embeds: [errorEmbed('This command can only be executed in premium servers.')] });
+			return message.channel.send({ embeds: [errorEmbed('This command can only be executed by premium users.')] });
 		}
 
 		if (command.nsfw && !message.channel.nsfw) {
@@ -140,17 +140,17 @@ module.exports = {
 		if (timestamps.has(message.author.id)) {
 			if (message.client.owners.includes(message.author.id)) {
 				timestamps.get(message.author.id) + ocooldownAmount;
-			} else if (user.premium) {
+			} else if (user?.premium) {
 				const expirationTime = timestamps.get(message.author.id) + pcooldownAmount;
 				if (now < expirationTime) {
 					const timeLeft = message.client.utils.timeleft(expirationTime);
-					return message.channel.send({ content: `<@!${message.author.id}>`, embeds: [errorEmbed(`You are on a premium cooldown of ${timeLeft}!`)] });
+					return message.reply({ content: `You are on a premium cooldown of ${timeLeft}!` });
 				}
 			} else {
 				const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 				if (now < expirationTime) {
 					const timeLeft = message.client.utils.timeleft(expirationTime);
-					return message.channel.send({ content: `<@!${message.author.id}>`, embeds: [errorEmbed(`You are on a cooldown of ${timeLeft}!`)] });
+					return message.reply({ content: `You are on a cooldown of ${timeLeft}!` });
 				}
 			}
 		}
@@ -177,7 +177,7 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`[Client] ${error}`);
-			message.channel.send({ embeds: [errorEmbed('Something went wrong while executing the command!')] });
+			message.channel.send({ content:'Something went wrong while executing the command!' });
 		}
 	},
 };
