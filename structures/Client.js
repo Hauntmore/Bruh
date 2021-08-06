@@ -83,7 +83,7 @@ class Bruh extends Client {
 			try {
 				console.log('[Discord] Refreshing application command interactions.');
 				await rest.put(
-					Routes.applicationGuildCommands(this.user.id, '809684598866444289'),
+					Routes.applicationGuildCommands(process.env.CLIENTID, process.env.TESTINGSERVER),
 					{ body: command },
 				);
 				// For global command interactions: .applicationCommands(CLIENT_ID)
