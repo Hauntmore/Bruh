@@ -1,6 +1,6 @@
-const Discord = require('discord.js');
+/* const Discord = require('discord.js');
 const { trumpPhotos, trumpResponses } = require('../lib/json/trump.json');
-const fetch = require('node-fetch');
+const fetch = require('node-fetch'); */
 
 module.exports = {
 	name: 'interactionCreate',
@@ -75,7 +75,16 @@ module.exports = {
 			}
 		}
 
-		if (interaction.commandName === 'ping') {
+		if (!interaction.client.guildApplicationCommands.has(interaction.commandName)) return;
+
+		try {
+			await interaction.client.guildApplicationCommands.get(interaction.commandName).execute(interaction);
+		} catch (error) {
+			console.error(`[Application Interaction] ${error}`);
+			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		}
+
+		/* if (interaction.commandName === 'ping') {
 			await interaction.reply({ content: `**Discord API Websocket Ping**: \`${Math.round(interaction.client.ws.ping)}ms\`.\n**Interaction Latency**: \`${Date.now() - interaction.createdTimestamp}ms\`.` });
 		}
 
@@ -120,7 +129,7 @@ module.exports = {
 				await interaction.reply({ embeds: [embed] });
 			} catch (err) {
 				console.log(err);
-				await interaction.reply({ content: 'This command has failed. Please try again.' });
+				await interaction.reply({ content: 'This command has failed. Please try again.', ephemeral: true });
 			}
 		}
 
@@ -138,6 +147,6 @@ module.exports = {
 				.setTimestamp();
 
 			await interaction.reply({ embeds: [embed] });
-		}
+		} */
 	},
 };

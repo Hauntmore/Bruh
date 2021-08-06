@@ -30,7 +30,7 @@ module.exports = {
 				});
 		} catch (err) {
 			console.log(err);
-			const msg = await message.channel.send({ content: 'The results from your query has exceeded the field limit of 1024 characters.' });
+			const msg = await message.channel.send({ content: 'This command has failed. Please try again.' });
 			setTimeout(() => msg.delete(), 4000);
 		}
 	},

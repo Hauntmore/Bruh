@@ -1,6 +1,8 @@
 const { Client, Collection, MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
 const { Manager } = require('erela.js');
+const { REST } = require('@discordjs/rest');
+const { Routes } = require('discord-api-types/v9');
 
 class Bruh extends Client {
 	constructor(options) {
@@ -27,8 +29,9 @@ class Bruh extends Client {
 		// Database functions.
 		this.db = require('../core/DBFunctions');
 
-		// Command and cooldown collections.
+		// Commands and cooldown collections.
 		this.commands = new Collection();
+		this.guildApplicationCommands = new Collection();
 		this.cooldowns = new Collection();
 
 		// Lavalink Erela.js manager.
@@ -55,6 +58,40 @@ class Bruh extends Client {
 				this.commands.set(command.name, command);
 			}
 		}
+	}
+
+	// Load the client's application command interactions.
+	loadApplicationGuildCommands() {
+		const commandFiles = readdirSync('interactions').filter(file => file.endsWith('.js'));
+
+		for (const file of commandFiles) {
+			const command = require(`../interactions/${file}`);
+
+			if (!command.name) {console.error(`The file \`${file}\` is missing a command name.`);}
+			if (!command.description) {console.error(`The file \`${file}\` is missing an \`description\`.`);}
+			if (!command.execute) {console.error(`The file \`${file}\` is missing an \`execute\` function.`);}
+
+			this.guildApplicationCommands.set(command.name, command);
+		}
+
+		// eslint-disable-next-line no-unused-vars
+		const command = this.guildApplicationCommands.map(({ execute, ...data }) => data);
+
+		const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
+
+		(async () => {
+			try {
+				console.log('[Discord] Refreshing application command interactions.');
+				await rest.put(
+					Routes.applicationGuildCommands(this.user.id, '809684598866444289'),
+					{ body: command },
+				);
+				// For global command interactions: .applicationCommands(CLIENT_ID)
+				console.log('[Discord] Reloaded application command interactions.');
+			} catch (error) {
+				console.error(`[Discord] ${error.stack}`);
+			}
+		})();
 	}
 
 	// Loads the bot's events.
@@ -84,6 +121,7 @@ class Bruh extends Client {
 	// The login method to initiate the bot.
 	login(token) {
 		this.loadCommands();
+		this.loadApplicationGuildCommands();
 		this.loadEvents();
 
 		super.login(token);
