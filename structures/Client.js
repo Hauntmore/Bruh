@@ -122,7 +122,7 @@ class Bruh extends Client {
 	// The login method to initiate the bot.
 	login(token) {
 		this.loadCommands();
-		this.loadApplicationGuildCommands();
+		this.loadGlobalApplicationCommands();
 		this.loadEvents();
 
 		super.login(token);
