@@ -13,13 +13,13 @@ module.exports = {
 	}],
 	async execute(interaction) {
 		const match = interaction.options.getString('color', true).match(/#?[a-fA-F0-9]{6}/);
-		if (!match) {return await interaction.reply({ content: 'An invalid hex code was provided!' });}
+		if (!match) {return await interaction.reply({ content: 'An invalid hex code was provided!', ephemeral: true });}
 
 		const query = match[0];
 		const hex = query.startsWith('#') ? query.toUpperCase() : '#' + query.toUpperCase();
 		const color = getcolor(hex);
 
-		if (color[1].startsWith('Invalid Color')) {return await interaction.reply({ content: 'Something went wrong while parsing your hex code.' });}
+		if (color[1].startsWith('Invalid Color')) {return await interaction.reply({ content: 'Something went wrong while parsing your hex code.', ephemeral: true });}
 
 		const buf = await sharp(Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.14 96.36" height="128" width="128">
             <style>

@@ -14,6 +14,11 @@ module.exports = {
 		embed = await embed.json();
 		embed['color'] = 0x5865F2;
 
-		await interaction.reply({ embeds: [embed] });
+		try {
+			await interaction.reply({ embeds: [embed] });
+		} catch (err) {
+			console.error(err);
+			await interaction.reply({ content: 'This command has failed. Please try again!', ephemeral: true });
+		}
 	},
 };
