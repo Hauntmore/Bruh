@@ -3,7 +3,7 @@ module.exports = {
 	description: 'Ask the magical 8ball something.',
 	options: [{
 		name: 'question',
-		type: 'STRING',
+		type: 3,
 		description: 'The question to ask the 8ball.',
 		required: true,
 	}],
