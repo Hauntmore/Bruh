@@ -31,7 +31,7 @@ class Bruh extends Client {
 
 		// Commands and cooldown collections.
 		this.commands = new Collection();
-		this.guildApplicationCommands = new Collection();
+		this.applicationCommands = new Collection();
 		this.cooldowns = new Collection();
 
 		// Lavalink Erela.js manager.
@@ -61,7 +61,7 @@ class Bruh extends Client {
 	}
 
 	// Load the client's application command interactions.
-	loadApplicationGuildCommands() {
+	loadGlobalApplicationCommands() {
 		const commandFiles = readdirSync('interactions').filter(file => file.endsWith('.js'));
 
 		for (const file of commandFiles) {
@@ -71,22 +71,23 @@ class Bruh extends Client {
 			if (!command.description) {console.error(`The file \`${file}\` is missing an \`description\`.`);}
 			if (!command.execute) {console.error(`The file \`${file}\` is missing an \`execute\` function.`);}
 
-			this.guildApplicationCommands.set(command.name, command);
+			this.applicationCommands.set(command.name, command);
 		}
 
 		// eslint-disable-next-line no-unused-vars
-		const command = this.guildApplicationCommands.map(({ execute, ...data }) => data);
+		const command = this.applicationCommands.map(({ execute, ...data }) => data);
 
 		const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
 		(async () => {
 			try {
 				console.log('[Discord] Refreshing application command interactions.');
+
 				await rest.put(
-					Routes.applicationGuildCommands(process.env.CLIENTID, process.env.TESTINGSERVER),
+					Routes.applicationCommands(process.env.CLIENTID),
 					{ body: command },
 				);
-				// For global command interactions: .applicationCommands(CLIENT_ID)
+
 				console.log('[Discord] Reloaded application command interactions.');
 			} catch (error) {
 				console.error(`[Discord] ${error.stack}`);
