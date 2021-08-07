@@ -60,7 +60,7 @@ class Bruh extends Client {
 		}
 	}
 
-	// Load the client's application command interactions.
+	// Load the client's global application command interactions.
 	loadGlobalApplicationCommands() {
 		const commandFiles = readdirSync('interactions').filter(file => file.endsWith('.js'));
 
@@ -81,14 +81,14 @@ class Bruh extends Client {
 
 		(async () => {
 			try {
-				console.log('[Discord] Refreshing application command interactions.');
+				console.log('[Discord] Refreshing global application command interactions.');
 
 				await rest.put(
 					Routes.applicationCommands(process.env.CLIENTID),
 					{ body: command },
 				);
 
-				console.log('[Discord] Reloaded application command interactions.');
+				console.log('[Discord] Reloaded global application command interactions.');
 			} catch (error) {
 				console.error(`[Discord] ${error.stack}`);
 			}
