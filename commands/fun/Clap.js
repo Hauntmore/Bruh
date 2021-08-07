@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	name: 'clap',
 	description: 'Clap something.',
@@ -16,6 +18,6 @@ module.exports = {
 		if (clap.length < 1) return message.reply({ embeds: [errorEmbed('Please input text.')] });
 		if (clap.length > 600) return message.reply({ embeds: [errorEmbed('Please keep the text below 600 Characters.')] });
 
-		message.channel.send({ content: `:clap: ${clap} :clap:` });
+		message.channel.send({ content: `:clap: ${Discord.Util.removeMentions(clap)} :clap:` });
 	},
 };

@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	name: 'echo',
 	description: 'Echo a message.',
@@ -11,7 +13,7 @@ module.exports = {
 		const content = args.slice(0).join(' ');
 
 		if (!client.owners.includes(message.author.id)) {
-			message.channel.send({ content: `${content}\n\n- **${message.author.tag}**` });
+			message.channel.send({ content: `${Discord.Util.removeMentions(content)}\n\n- **${message.author.tag}**` });
 			await message.react('✅');
 		} else if (client.owners.includes(message.author.id)) {
 			message.delete();

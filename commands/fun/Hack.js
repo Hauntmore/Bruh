@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	name: 'hack',
 	description: 'Hack a user. (For Discord API Terms of Service reasons, yes this is a joke). Also found and modified from [Dank Memer v5 Source Code](https://dankmemer.lol/source).',
@@ -14,7 +16,7 @@ module.exports = {
 		if (user) {
 			hacked = user;
 		} else {
-			hacked = args.slice(0).join(' ');
+			hacked = Discord.Util.removeMentions(args.slice(0).join(' '));
 		}
 
 		const prompt = await message.channel.send({ content: `Hacking ${user ? hacked.user.username : hacked} now...` });

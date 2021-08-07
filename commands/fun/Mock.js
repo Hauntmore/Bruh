@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	name: 'mock',
 	description: 'Do some mocking. (Code found and modified from [Dank Memer v5 Source Code](https://dankmemer.lol/source).',
@@ -13,6 +15,6 @@ module.exports = {
 
 		if (message.mentions.members.first()) return message.reply({ embeds: [errorEmbed('NO NO, You cannot mention someone while doing this command.')] });
 
-		message.channel.send({ content: `${args.slice(0).join(' ').replace(/c/gi, 'k').replace(/v/gi, 'c').split('').map((c, i) => i % 2 ? c.toUpperCase() : c).join('')}` });
+		message.channel.send({ content: Discord.Util.removeMentions(args.slice(0).join(' ').replace(/c/gi, 'k').replace(/v/gi, 'c').split('').map((c, i) => i % 2 ? c.toUpperCase() : c).join('')) });
 	},
 };

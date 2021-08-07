@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	name: 'sudo',
 	aliases: ['copycat'],
@@ -17,7 +19,7 @@ module.exports = {
 		const member = message.mentions.members.last() || message.guild.members.cache.get(args[0]);
 		if (!member) return message.reply({ embeds: [errorEmbed('Unknown member.')] });
 
-		const msg = args.slice(1).join(' ');
+		const msg = Discord.Util.removeMentions(args.slice(1).join(' '));
 		if (!msg) return message.reply({ embeds: [errorEmbed('You need to add some text for the command!')] });
 
 		if (!webhooks.size) {
