@@ -71,10 +71,10 @@ module.exports = {
 			}
 		}
 
-		if (!interaction.client.guildApplicationCommands.has(interaction.commandName)) return;
+		if (!interaction.client.applicationCommands.has(interaction.commandName)) return;
 
 		try {
-			await interaction.client.guildApplicationCommands.get(interaction.commandName).execute(interaction);
+			await interaction.client.applicationCommands.get(interaction.commandName).execute(interaction);
 		} catch (error) {
 			console.error(`[Application Interaction] ${error}`);
 			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
