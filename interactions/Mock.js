@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
 	name: 'mock',
-	description: 'Do some mocking. The code is modified from [Dank Memer v5 Source Code](https://dankmemer.lol/source).',
+	description: 'Do some mocking.',
 	options: [{
 		name: 'text',
 		type: 3,

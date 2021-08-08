@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'hack',
-	description: '*Hack* a user. The code is modified from [Dank Memer v5 Source Code](https://dankmemer.lol/source).',
+	description: '*Hack* a user. ;)',
 	options: [{
 		name: 'member',
 		type: 6,
