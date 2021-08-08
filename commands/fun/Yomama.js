@@ -20,6 +20,7 @@ module.exports = {
 
 		const embed = client.makeEmbed()
 			.setDescription(`${member}, ${joke}.`);
+
 		message.reply({ embeds: [embed] });
 	},
 };

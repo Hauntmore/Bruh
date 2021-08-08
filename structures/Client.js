@@ -31,7 +31,7 @@ class Bruh extends Client {
 
 		// Commands and cooldown collections.
 		this.commands = new Collection();
-		this.applicationCommands = new Collection();
+		this.globalApplicationCommands = new Collection();
 		this.cooldowns = new Collection();
 
 		// Lavalink Erela.js manager.
@@ -71,11 +71,11 @@ class Bruh extends Client {
 			if (!command.description) {console.error(`The file \`${file}\` is missing an \`description\`.`);}
 			if (!command.execute) {console.error(`The file \`${file}\` is missing an \`execute\` function.`);}
 
-			this.applicationCommands.set(command.name, command);
+			this.globalApplicationCommands.set(command.name, command);
 		}
 
 		// eslint-disable-next-line no-unused-vars
-		const command = this.applicationCommands.map(({ execute, ...data }) => data);
+		const command = this.globalApplicationCommands.map(({ execute, ...data }) => data);
 
 		const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
@@ -88,9 +88,9 @@ class Bruh extends Client {
 					{ body: command },
 				);
 
-				console.log('[Discord] Reloaded global application command interactions.');
+				console.log('[Rest Discord] Reloaded global application command interactions.');
 			} catch (error) {
-				console.error(`[Discord] ${error.stack}`);
+				console.error(`[Rest Discord] ${error.stack}`);
 			}
 		})();
 	}

@@ -1,3 +1,5 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	name: 'google',
 	description: 'Google something.',
@@ -7,6 +9,6 @@ module.exports = {
 	cooldown: 10,
 	args: true,
 	execute(message, { args }) {
-		message.channel.send({ content: `http://lmgtfy.com/?q=${args.join('+')}` });
+		message.channel.send({ content: `http://lmgtfy.com/?q=${Discord.Util.removeMentions(args.join('+'))}` });
 	},
 };
