@@ -4,11 +4,11 @@ module.exports = {
 	options: [{
 		name: 'member',
 		type: 6,
-		description: 'The member to fetch the avatar from.',
-		required: true,
+		description: 'The member to fetch an avatar from.',
+		required: false,
 	}],
 	async execute(interaction) {
-		const member = interaction.options.getMember('member', true);
+		const member = interaction.options.getMember('member') || interaction.member;
 
 		const embed = interaction.client.makeEmbed()
 			.setTitle(member.user.tag + '\'s Avatar')
