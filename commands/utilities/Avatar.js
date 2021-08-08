@@ -12,7 +12,7 @@ module.exports = {
 		const embed = client.makeEmbed()
 			.setTitle(user.tag + '\'s Avatar')
 			.setImage(user.displayAvatarURL({ dynamic: true, size: 1024 }))
-			.setDescription(`**Link as:**\n[png](${user.displayAvatarURL({ format : 'png' })}) | [gif](${user.displayAvatarURL({ format : 'gif' })}) | [jpg](${user.displayAvatarURL({ format : 'jpg' })}) | [webp](${user.displayAvatarURL({ format : 'webp' })})`);
+			.setDescription(`**Avatar as:**\n[png](${user.displayAvatarURL({ format : 'png' })}) | [gif](${user.displayAvatarURL({ format : 'gif' })}) | [jpg](${user.displayAvatarURL({ format : 'jpg' })}) | [webp](${user.displayAvatarURL({ format : 'webp' })})`);
 		message.reply({ embeds: [embed] });
 	},
 };
