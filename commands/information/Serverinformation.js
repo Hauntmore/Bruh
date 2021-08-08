@@ -26,10 +26,15 @@ module.exports = {
 	cooldown: 5,
 	async execute(message) {
 		const { client } = message;
+
 		const roles = message.guild.roles.cache.sort((a, b) => b.position - a.position).map(role => role.toString());
+
 		const members = message.guild.members.cache;
+
 		const emojis = message.guild.emojis.cache;
+
 		const guildOwner = await message.guild.fetchOwner();
+
 		const embed = client.makeEmbed()
 			.setTitle('Guild information of ' + message.guild.name)
 			.setThumbnail(message.guild.iconURL({ dynamic: true }))
@@ -49,6 +54,7 @@ module.exports = {
 			.addField('**❯ Text Channels -**', `${message.guild.channels.cache.size}`, false)
 			.setFooter(`ID: ${message.guild.id} | ${client.user.tag}`)
 			.setTimestamp();
+
 		message.channel.send({ embeds: [embed] });
 	},
 };
