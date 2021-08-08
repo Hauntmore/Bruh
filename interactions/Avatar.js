@@ -3,7 +3,7 @@ module.exports = {
 	description: 'Replies back with a member\'s avatar.',
 	options: [{
 		name: 'member',
-		type: 3,
+		type: 6,
 		description: 'The member to fetch the avatar from.',
 		required: true,
 	}],
