@@ -4,10 +4,23 @@ const Ticket = require('../models/Ticket');
 const Tag = require('../models/Tags');
 const Currency = require('../models/Currency');
 const Trigger = require('../models/Autoresponse');
+const mongoose = require('mongoose');
 
 class DBFunctions {
 	constructor() {
 		throw new TypeError('DBFunctions is a static class and cannot be instantiated.');
+	}
+
+	// Create a connection with the database.
+	static async connect(connectionURL) {
+		if (!connectionURL) throw new TypeError('A MongoDB connection string was not given.');
+		return await mongoose.connect(connectionURL, {
+			keepAlive: true,
+			useCreateIndex: true,
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+			useFindAndModify: false,
+		});
 	}
 
 	// Currency database functions.

@@ -1,29 +1,7 @@
-const mongoose = require('mongoose');
-
 module.exports = {
 	name: 'ready',
 	once: true,
 	async execute(client) {
-		// Connect to the MongoDB database.
-		await mongoose.connect(`mongodb+srv://${process.env.MONGODBUSER}:${process.env.MONGODBPASS}@${process.env.MONGODBNAME}.5urdg.mongodb.net/Data`, {
-			keepAlive: true,
-			useCreateIndex: true,
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-			useFindAndModify: false,
-		});
-
-		// Initiate the Lavalink manager.
-		client.manager.init(client.user.id);
-
-		mongoose.connection.on('error', (error) => console.log(`[Mongoose Error] A mongoose error has occurred!\n${error}`));
-
-		mongoose.connection.on('disconnected', () => console.log('[Mongoose Disconnection] The client has disconnected from the database.'));
-
-		mongoose.connection.on('connected', () => console.log('[Mongoose Connection] The client has established a connection with the database.'));
-
-		mongoose.connection.on('reconnect', () => console.log('[Mongoose Reconnection] The client has reconnected to the database.'));
-
 		// Set the presence of the client.
 		client.user.setPresence({ activities: [{ name: `${client.defaultPrefix} help`, type: 'PLAYING' }], status: 'online' });
 

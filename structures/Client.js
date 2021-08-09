@@ -120,7 +120,6 @@ class Bruh extends Client {
 			.setColor(this.color);
 	}
 
-	// The login method to initiate the bot.
 	login(token) {
 		// Load all the client's application commands, and regular commandsconst Discord = require('discord.js');
 		this.loadCommands();
@@ -132,6 +131,18 @@ class Bruh extends Client {
 		// Initiate the Top.gg app server.
 		initialize();
 
+		// Connect to the database.
+		this.db.connect(`mongodb+srv://${process.env.MONGODBUSER}:${process.env.MONGODBPASS}@${process.env.MONGODBNAME}.5urdg.mongodb.net/Data`).then(() => {
+			console.log('[Mongo] The client has connected to the database.');
+		}).catch(err => {
+			// If it doesn't connect log the following
+			console.log('[Mongo] The client was unable to connect to the database due to an error:\n' + err);
+		});
+
+		// Initiate the Lavalink manager.
+		this.manager.init(process.env.CLIENTID);
+
+		// Initiate the bot.
 		super.login(token);
 	}
 }
