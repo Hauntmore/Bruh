@@ -3,6 +3,7 @@ const { readdirSync } = require('fs');
 const { Manager } = require('erela.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
+const { initialize } = require('./Top-gg');
 
 class Bruh extends Client {
 	constructor(options) {
@@ -121,9 +122,15 @@ class Bruh extends Client {
 
 	// The login method to initiate the bot.
 	login(token) {
+		// Load all the client's application commands, and regular commandsconst Discord = require('discord.js');
 		this.loadCommands();
 		this.loadGlobalApplicationCommands();
+
+		// Load the client events.
 		this.loadEvents();
+
+		// Initiate the Top.gg app server.
+		initialize();
 
 		super.login(token);
 	}

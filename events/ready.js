@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { initialize } = require('../structures/Top-gg');
 
 module.exports = {
 	name: 'ready',
@@ -16,9 +15,6 @@ module.exports = {
 
 		// Initiate the Lavalink manager.
 		client.manager.init(client.user.id);
-
-		// Initiate the Top.gg app server.
-		initialize();
 
 		mongoose.connection.on('error', (error) => console.log(`[Mongoose Error] A mongoose error has occurred!\n${error}`));
 
