@@ -71,10 +71,21 @@ module.exports = {
 			}
 		}
 
+		// Global commands.
 		if (!interaction.client.globalApplicationCommands.has(interaction.commandName)) return;
 
 		try {
 			await interaction.client.globalApplicationCommands.get(interaction.commandName).execute(interaction);
+		} catch (error) {
+			console.error(`[Application Interaction] ${error}`);
+			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+		}
+
+		// Guild commands.
+		if (!interaction.client.guildApplicationCommands.has(interaction.commandName)) return;
+
+		try {
+			await interaction.client.guildApplicationCommands.get(interaction.commandName).execute(interaction);
 		} catch (error) {
 			console.error(`[Application Interaction] ${error}`);
 			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
