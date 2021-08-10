@@ -72,7 +72,6 @@ module.exports = {
 		}
 
 		// Global commands.
-		if (!interaction.client.globalApplicationCommands.has(interaction.commandName)) return;
 
 		try {
 			await interaction.client.globalApplicationCommands.get(interaction.commandName).execute(interaction);
@@ -82,7 +81,6 @@ module.exports = {
 		}
 
 		// Guild commands.
-		if (!interaction.client.guildApplicationCommands.has(interaction.commandName)) return;
 
 		try {
 			await interaction.client.guildApplicationCommands.get(interaction.commandName).execute(interaction);
