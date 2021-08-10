@@ -73,6 +73,7 @@ module.exports = {
 
 		try {
 			// Global commands.
+			if (!interaction.client.globalApplicationCommands.has(interaction.commandName)) return;
 			await interaction.client.globalApplicationCommands.get(interaction.commandName).execute(interaction);
 		} catch (error) {
 			console.error(`[Application Command Interaction] ${error}`);
