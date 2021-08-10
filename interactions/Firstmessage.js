@@ -5,10 +5,9 @@ module.exports = {
 		name: 'channel',
 		type: 7,
 		description: 'The channel to fetch the first message from.',
-		required: true,
 	}],
 	async execute(interaction) {
-		const channel = interaction.options.getChannel('channel', true) || interaction.channel;
+		const channel = interaction.options.getChannel('channel') || interaction.channel;
 		const fetchMessages = await channel.messages.fetch({ after: 1, limit: 1 });
 
 		const msg = fetchMessages.first();
