@@ -160,6 +160,7 @@ class Bruh extends Client {
 		// Load all the client's application commands, and regular commandsconst Discord = require('discord.js');
 		this.loadCommands();
 		this.loadGlobalApplicationCommands();
+		this.loadGuildApplicationCommands();
 
 		// Load the client events.
 		this.loadEvents();
