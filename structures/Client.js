@@ -33,7 +33,6 @@ class Bruh extends Client {
 		// Commands and cooldown collections.
 		this.commands = new Collection();
 		this.globalApplicationCommands = new Collection();
-		this.guildApplicationCommands = new Collection();
 		this.cooldowns = new Collection();
 
 		// Lavalink Erela.js manager.
@@ -97,41 +96,6 @@ class Bruh extends Client {
 		})();
 	}
 
-	// Load the client's guild application command interactions.
-	loadGuildApplicationCommands() {
-		const commandFiles = readdirSync('test').filter(file => file.endsWith('.js'));
-
-		for (const file of commandFiles) {
-			const command = require(`../test/${file}`);
-
-			if (!command.name) {console.error(`The file \`${file}\` is missing a command name.`);}
-			if (!command.description) {console.error(`The file \`${file}\` is missing an \`description\`.`);}
-			if (!command.execute) {console.error(`The file \`${file}\` is missing an \`execute\` function.`);}
-
-			this.guildApplicationCommands.set(command.name, command);
-		}
-
-		// eslint-disable-next-line no-unused-vars
-		const command = this.guildApplicationCommands.map(({ execute, ...data }) => data);
-
-		const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
-
-		(async () => {
-			try {
-				console.log('[Discord] Refreshing guild application command interactions.');
-
-				await rest.put(
-					Routes.applicationGuildCommands(process.env.CLIENTID, process.env.TESTINGSERVER),
-					{ body: command },
-				);
-
-				console.log('[Rest Discord] Reloaded guild application command interactions.');
-			} catch (error) {
-				console.error(`[Rest Discord] ${error.stack}`);
-			}
-		})();
-	}
-
 	// Loads the bot's events.
 	loadEvents() {
 		const eventFiles = readdirSync('events').filter(file => file.endsWith('.js'));
@@ -160,7 +124,6 @@ class Bruh extends Client {
 		// Load all the client's application commands, and regular commandsconst Discord = require('discord.js');
 		this.loadCommands();
 		this.loadGlobalApplicationCommands();
-		this.loadGuildApplicationCommands();
 
 		// Load the client events.
 		this.loadEvents();
