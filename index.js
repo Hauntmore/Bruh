@@ -8,6 +8,7 @@ const client = new Client({
 	intents: 32767,
 	allowedMentions: { parse: ['users'], repliedUser: false },
 	partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER'],
+	presence: { activities: [{ name: `${process.env.DEFAULTPREFIX} help`, type: 'WATCHING' }], status: 'online' },
 });
 
 process.on('unhandledRejection', (err) => {
