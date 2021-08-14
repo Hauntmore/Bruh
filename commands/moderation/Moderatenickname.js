@@ -12,13 +12,14 @@ module.exports = {
 	async execute(message, { args }) {
 		const { client } = message;
 		const errorEmbed = (msg) => client.makeEmbed({ description: msg, timestamp: message.createdAt });
+
 		const member = message.mentions.members.last() || message.guild.members.cache.get(args[0]);
 		if (!member) return message.reply({ content: 'Your member input is invalid!' });
 
 		if (message.guild.ownerID !== message.member.id) {
 			if (member.roles.highest.position >= message.member.roles.highest.position) return message.reply({ embeds: [errorEmbed('You cannot manage someone with an equal or higher position.')] });
 		}
-		if (member.roles.highest.position >= message.guild.me.roles.highest.position) return message.reply({ embeds: [errorEmbed('I can\'t ban this member due to my position being equal or lower to them.')] });
+		if (member.roles.highest.position >= message.guild.me.roles.highest.position) return message.reply({ embeds: [errorEmbed('I can\'t edit this member due to my position being equal or lower to them.')] });
 
 		const finalNickname = 'Name-Moderated-User ' + client.utils.generateString(5);
 

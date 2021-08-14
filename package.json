@@ -4,7 +4,7 @@
   "description": "Bruh-Bot is a multipurpose Discord bot programmed with the Discord.js library, with the Javascript language.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/index.js"
   },
   "engines": {
     "node": "16.6.1",
