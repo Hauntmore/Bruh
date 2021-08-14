@@ -7,7 +7,7 @@ const initialize = () => {
 	// Create the server.
 	const app = express();
 
-	app.get('/', (req, res) => res.send('Hello World!'));
+	// app.get('/', (req, res) => res.send('Hello World!'));
 
 	app.post('/webhook', webhook.listener((vote) => {
 		console.log(`[Top.gg Webhook Vote] : ${vote}.`);
