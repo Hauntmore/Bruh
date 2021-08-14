@@ -255,9 +255,9 @@ const timeleft = (timestamp) => {
 	const mseconds = (timeLeft / 1000) - (days * 86400) - (hours * 3600) - (minutes * 60);
 	let string = '';
 	if (days) string = string + `${days} ${days == 1 ? 'Day' : 'Days'}`;
-	if (hours) string = string + ` ${hours} ${hours == 1 ? 'Hour' : 'Hours'}`;
-	if (minutes) string = string + ` ${minutes} ${minutes == 1 ? 'Minute' : 'Minutes'}`;
-	if (seconds) string = string + ` ${seconds} ${seconds == 1 ? 'Second' : 'Seconds'}`;
+	if (hours) string = string + `${hours} ${hours == 1 ? 'Hour' : 'Hours'}`;
+	if (minutes) string = string + `${minutes} ${minutes == 1 ? 'Minute' : 'Minutes'}`;
+	if (seconds) string = string + `${seconds} ${seconds == 1 ? 'Second' : 'Seconds'}`;
 	if (!string.length) string = `${mseconds.toFixed(1)} Second(s)`;
 	return string;
 };

@@ -144,13 +144,13 @@ module.exports = {
 				const expirationTime = timestamps.get(message.author.id) + pcooldownAmount;
 				if (now < expirationTime) {
 					const timeLeft = message.client.utils.timeleft(expirationTime);
-					return message.reply({ content: `You are on a premium cooldown of ${timeLeft}!` });
+					return message.channel.send({ embeds: [errorEmbed(`${message.author} You are on premium cooldown!`).setFooter(timeLeft)] });
 				}
 			} else {
 				const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 				if (now < expirationTime) {
 					const timeLeft = message.client.utils.timeleft(expirationTime);
-					return message.reply({ content: `You are on a cooldown of ${timeLeft}!` });
+					return message.channel.send({ embeds: [errorEmbed(`${message.author} You are on cooldown!`).setFooter(timeLeft)] });
 				}
 			}
 		}
