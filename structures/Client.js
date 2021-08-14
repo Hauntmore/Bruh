@@ -3,7 +3,6 @@ const { readdirSync } = require('fs');
 const { Manager } = require('erela.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { initialize } = require('./Top-gg');
 
 class Bruh extends Client {
 	constructor(options) {
@@ -146,9 +145,6 @@ class Bruh extends Client {
 
 		// Load the client events.
 		this.loadEvents();
-
-		// Initiate the Top.gg app server.
-		initialize();
 
 		// Connect to the database.
 		this.db.connect(`mongodb+srv://${process.env.MONGODBUSER}:${process.env.MONGODBPASS}@${process.env.MONGODBNAME}.5urdg.mongodb.net/Data`).then(() => {
