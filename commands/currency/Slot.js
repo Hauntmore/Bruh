@@ -22,7 +22,7 @@ module.exports = {
 
 		const number = [];
 
-		if (isNaN(amount) || amount > currency.wallet || amount > 1000000) return message.reply({ embeds: [errorEmbed('The value you have given me is super bad. Try again noob.')] });
+		if (isNaN(amount) || amount > currency.wallet || amount > 1000000 || amount < 100) return message.reply({ embeds: [errorEmbed('The value you have given me is super bad. Try again noob.')] });
 
 		// eslint-disable-next-line no-undef
 		for (i = 0; i < 3; i++) { number[i] = Math.floor(Math.random() * slots.length); }
@@ -44,7 +44,7 @@ module.exports = {
 			message.channel.send({ embeds: [embed] });
 			await client.db.addWallet(message.author.id, amount);
 		} else {
-			const embeds = new client.makeEmbed()
+			const embeds = client.makeEmbed()
 				.setTitle(`${message.author.tag}'s Slot Machine`)
 				.setDescription(`${slots[number[0]]} | ${slots[number[1]]} | ${slots[number[2]]}\n\nYou lost **${amount}** coins`)
 				.setFooter('You suck!');
