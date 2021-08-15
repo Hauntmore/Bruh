@@ -9,7 +9,7 @@ module.exports = {
 		if (interaction.isMessageComponent()) {console.log('A message component interaction was triggered.');}
 		if (interaction.isSelectMenu()) {console.log('A select menu interaction was triggered.');}
 
-		const { spydankers } = interaction.client.config;
+		const { spydankers, brocommunity } = interaction.client.config;
 
 		if (interaction.isButton() && interaction.guild.id === spydankers) {
 			const roles = {
@@ -52,6 +52,57 @@ module.exports = {
 				SpydBabyBlue: '817510530390294588',
 				SpydLemon: '817511001729269782',
 				SpydPinky: '868811396580773929',
+			};
+
+			const role = interaction.guild.roles.cache.get(roles[interaction.customId]);
+			if (!role) return;
+
+			try {
+				if (interaction.member.roles.cache.get(role.id)) {
+					await interaction.member.roles.remove(role.id);
+					await interaction.reply({ content: `You have been removed from the ${role} role.`, ephemeral: true });
+				} else {
+					await interaction.member.roles.add(role.id);
+					await interaction.reply({ content: `You have been added to the ${role} role.`, ephemeral: true });
+				}
+			} catch (err) {
+				await interaction.reply({ content: 'Something went wrong while attempting to execute this interaction.', ephemeral: true });
+				console.error(err);
+			}
+		}
+
+		if (interaction.isButton() && interaction.guild.id === brocommunity) {
+			const roles = {
+				BroCommunityAnnouncements: '862489867463426058',
+				BroCommunityGiveaways: '862468633724321833',
+				BroCommunityEvents: '862468781628850176',
+				BroCommunityHeists: '862468613998641152',
+				BroCommunityBotUpdates: '862489879502127106',
+				BroCommunityCrimson: '862307659931582464',
+				BroCommunityRaspberry: '862307660219809803',
+				BroCommunityApricot: '862307661206126613',
+				BroCommunityScarlet: '864516405599928350',
+				BroCommunityPumpkin: '864516756864499744',
+				BroCommunityFire: '862307660505153618',
+				BroCommunitySand: '864517904308371457',
+				BroCommunityLemon: '862307661605502997',
+				BroCommunityAmber: '862307661390675968',
+				BroCommunityAsparagus: '863170781914726461',
+				BroCommunitySeafoam: '862307662087192577',
+				BroCommunityEmerald: '862307662939291648',
+				BroCommunityIceberg: '864519101249486879',
+				BroCommunityArctic: '862307663408136272',
+				BroCommunityStratos: '862307663886286859',
+				BroCommunityHeliotrope: '862307664356048916',
+				BroCommunityElectric: '862307664649125908',
+				BroCommunityGrape: '864519114349477888',
+				BroCommunityBlush: '862307664942596116',
+				BroCommunityPunch: '864519485104717874',
+				BroCommunityFuchsia: '862307665252974593',
+				BroCommunityWhiskey: '862307665273946122',
+				BroCommunityGravity: '862463669501296640',
+				BroCommunityPearl: '862463660551438347',
+				BroCommunityEbony: '862463644851896362',
 			};
 
 			const role = interaction.guild.roles.cache.get(roles[interaction.customId]);

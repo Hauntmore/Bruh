@@ -7,7 +7,7 @@
     "test": "node test/index.js"
   },
   "engines": {
-    "node": "16.6.1",
+    "node": "16.6.2",
     "npm": "*"
   },
   "repository": {

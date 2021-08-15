@@ -31,9 +31,6 @@ module.exports = {
 				? 'undefined' : evaled.constructor;
 			const formatted = `Time: \`${time.toFixed(3)} ms\` • Type: \`${type.name || 'undefined'}\``;
 
-			const tokenRegex = new RegExp(process.env.TOKEN, 'gi');
-			evaled = evaled.replace(tokenRegex, 'I think the fuck not bitch.');
-
 			if (type === MessageEmbed || type === MessageAttachment) {return message.channel.send({ content: `${formatted, evaled}` });} else if (typeof evaled !== 'string') {evaled = require('util').inspect(evaled);}
 
 			if (evaled.length > 1900) {

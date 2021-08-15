@@ -23,7 +23,7 @@ module.exports = {
 		if (!msg) return message.reply({ embeds: [errorEmbed('You need to add some text for the command!')] });
 
 		if (!webhooks.size) {
-			const newWebhook = await message.channel.createWebhook('Bruh-Bot', { avatar: client.user.displayAvatarURL(), reason: 'For the sudo command.' });
+			const newWebhook = await message.channel.createWebhook('Bruh-Bot', { avatar: client.user.displayAvatarURL() });
 			newWebhook.send({ username: member.user.username, avatarURL: member.user.displayAvatarURL({ dynamic: true }), content: msg });
 		} else {
 			const webhook = webhooks.first();
