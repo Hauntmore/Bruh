@@ -6,6 +6,7 @@ module.exports = {
 	example: ['with 4385', 'withdraw 100', 'withdraw half', 'withdraw max'],
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	cooldown: 7,
+	args: true,
 	async execute(message, { args }) {
 		const { client } = message;
 

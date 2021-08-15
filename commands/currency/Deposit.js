@@ -6,6 +6,7 @@ module.exports = {
 	example: ['dep 4385', 'deposit 100', 'dep max', 'deposit half'],
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	cooldown: 7,
+	args: true,
 	async execute(message, { args }) {
 		const { client } = message;
 
