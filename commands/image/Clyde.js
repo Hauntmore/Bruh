@@ -11,7 +11,7 @@ module.exports = {
 	args: true,
 	async execute(message, { args }) {
 		const text = args.slice(0).join(' ');
-		if (text.length >= 71) return message.channel.send('Please input text that is under 71 characters.').then(m => m.delete({ timeout: 5000 }));
+		if (text.length >= 71) return message.channel.send({ content: 'Please input text that is under 71 characters.' });
 		const json = await fetch(encodeURI(`https://nekobot.xyz/api/imagegen?type=clyde&text=${text}`)).then(res => res.json());
 		const image = new MessageAttachment(json.message, 'clyde.png');
 		message.channel.send({ files: [image] });

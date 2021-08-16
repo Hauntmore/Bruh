@@ -12,7 +12,7 @@ module.exports = {
 	async execute(message, { args }) {
 		const { client } = message;
 		const user = message.mentions.users.last() || await client.users.fetch(args[0]).catch(() => null);
-		if (!user) return message.reply('I cannot fetch that user.');
+		if (!user) return message.reply({ content: 'I cannot fetch that user.' });
 		const bonk = await jimp.read(`${__dirname}/../../lib/assets/hornyjail.jpeg`);
 		const authorAvatar = await jimp.read(message.author.displayAvatarURL({ format: 'jpeg' }));
 		const userToBonk = await jimp.read(user.displayAvatarURL({ format: 'jpeg' }));
