@@ -1,7 +1,7 @@
 {
   "name": "bruh",
   "version": "1.0.0",
-  "description": "Bruh-Bot is a multipurpose Discord bot programmed with the Discord.js library, with the Javascript language.",
+  "description": "Bruh-Bot is a multipurpose Discord bot packed with lots of features.",
   "main": "index.js",
   "scripts": {
     "bot": "node test/bot/index.js"
