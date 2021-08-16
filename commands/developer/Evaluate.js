@@ -16,11 +16,14 @@ module.exports = {
 			const { client, channel, guild, author, member } = message;
 
 			const utils = require('../../core/Utils');
+			const db = require('../../core/DBFunctions');
 
 			const msg = message;
 			const bot = client;
+			const ctx = client;
 
 			let code = client.utils.parseCode(raw);
+
 			code = code.includes('await')
 				? `(async () => { ${code} })();`
 				: code;
@@ -34,13 +37,13 @@ module.exports = {
 			if (type === MessageEmbed || type === MessageAttachment) {return message.channel.send({ content: `${formatted, evaled}` });} else if (typeof evaled !== 'string') {evaled = require('util').inspect(evaled);}
 
 			if (evaled.length > 1900) {
-				const result = new MessageAttachment(Buffer.from(evaled), 'result.js');
+				const result = new MessageAttachment(Buffer.from(evaled), 'Result.js');
 				message.channel.send({ content: formatted, files: [result] });
 			} else {message.channel.send({ content: `${formatted}, \`\`\`js\n${evaled}\`\`\`` });}
 		} catch (err) {
 			const error = clean(err);
 			if (err.length > 1900) {
-				const result = new MessageAttachment(Buffer.from(error), 'error.js');
+				const result = new MessageAttachment(Buffer.from(error), 'Error.js');
 				message.reply({ content: '**An error has occured:**', files: [result] });
 			} else {message.reply({ content: `**An error has occured:**\n\`\`\`js\n${error}\`\`\`` });}
 			throw err;
