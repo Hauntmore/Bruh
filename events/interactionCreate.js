@@ -128,6 +128,7 @@ module.exports = {
 			await interaction.client.globalApplicationCommands.get(interaction.commandName).execute(interaction);
 		} catch (error) {
 			console.error(`[Application Command Interaction] ${error}`);
+			interaction.client.errorWebhook.send({ content: `The \`interactionCreate\` event emitted an error:\n\n${error}` });
 			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
 		}
 	},

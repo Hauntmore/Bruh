@@ -36,7 +36,7 @@ module.exports = {
 
 			await client.db.addWallet(message.author.id, Math.round(amount));
 
-			message.channel.send(`You have withdrawn ${Math.round(amount).toLocaleString()} coins.`);
+			message.channel.send({ content: `You have withdrawn ${Math.round(amount).toLocaleString()} coins.` });
 		}
 	},
 };

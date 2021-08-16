@@ -85,7 +85,7 @@ module.exports = {
 		}
 
 		if (!message.client.owners.includes(message.author.id) && message.client.config.disabledCommands.includes(command.name)) {
-			return message.channel.send({ content: 'Globally disabled command moment normies:' });
+			return message.channel.send({ embeds: [errorEmbed('Globally disabled command moment normies:')] });
 		}
 
 		if (command.botModerator && !message.client.botmoderators.includes(message.author.id) || !message.client.owners.includes(message.author.id)) {
@@ -144,13 +144,13 @@ module.exports = {
 				const expirationTime = timestamps.get(message.author.id) + pcooldownAmount;
 				if (now < expirationTime) {
 					const timeLeft = message.client.utils.timeleft(expirationTime);
-					return message.channel.send({ embeds: [errorEmbed(`${message.author} You are on premium cooldown!`).setFooter(timeLeft)] });
+					return message.reply({ embeds: [errorEmbed(`${message.author} You are on premium cooldown!`).setFooter(timeLeft)] });
 				}
 			} else {
 				const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 				if (now < expirationTime) {
 					const timeLeft = message.client.utils.timeleft(expirationTime);
-					return message.channel.send({ embeds: [errorEmbed(`${message.author} You are on cooldown!`).setFooter(timeLeft)] });
+					return message.reply({ embeds: [errorEmbed(`${message.author} You are on cooldown!`).setFooter(timeLeft)] });
 				}
 			}
 		}
@@ -177,6 +177,7 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`[Client] ${error}`);
+			message.client.errorWebhook.send({ content: `The \`messageCreate\` event emitted an error:\n\n${error}` });
 			message.channel.send({ content:'Something went wrong while executing the command!' });
 		}
 	},

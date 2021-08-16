@@ -20,7 +20,7 @@ module.exports = {
 		if (!messages.size) return message.reply({ embeds: [errorEmbed('I am unable to find any messages!')] });
 
 		const msgs = await message.channel.bulkDelete(messages, { filterOld: true }).catch(error => console.log(error));
-		const msg = await message.channel.send(`${message.author}, You have bulk deleted a total of ${msgs.size} messages (including the command message) in this channel!`);
+		const msg = await message.channel.send({ content: `${message.author}, You have bulk deleted a total of ${msgs.size} messages (including the command message) in this channel!` });
 
 		setTimeout(() => msg.delete(), 5000);
 	},

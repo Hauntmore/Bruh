@@ -36,7 +36,7 @@ module.exports = {
 
 			await client.db.removeWallet(message.author.id, Math.round(amount));
 
-			message.channel.send(`You have deposited ${Math.round(amount).toLocaleString()} coins.`);
+			message.channel.send({ content: `You have deposited ${Math.round(amount).toLocaleString()} coins.` });
 		}
 	},
 };

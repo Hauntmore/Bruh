@@ -1,4 +1,4 @@
-const { Client, Collection, MessageEmbed } = require('discord.js');
+const { Client, Collection, MessageEmbed, WebhookClient } = require('discord.js');
 const { readdirSync } = require('fs');
 const { Manager } = require('erela.js');
 const { REST } = require('@discordjs/rest');
@@ -22,6 +22,10 @@ class Bruh extends Client {
 
 		// The prefix cache.
 		this.prefixCache = {};
+
+		// Webhooks
+		this.errorWebhook = new WebhookClient({ id: '876881186230779984', token: 'MrKL-k7TVb9pYkxwGYYdGcW1uL12EGURUhCUIn27nUMieKJhmAWRfmlyH_Lf78U0DPsH' });
+		this.ticketWebhook = new WebhookClient({ id: '863134057629351938', token: 'Qt5XXqAsogzg2ZEgwcGY1a3GkEFI2AQqVsv-ZJXmbDb4hTyNeDSr8Xt1SBJJU1hZNtc4' });
 
 		// The bot's utilities.
 		this.utils = require('../core/Utils');

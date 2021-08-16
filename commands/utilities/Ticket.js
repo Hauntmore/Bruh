@@ -12,6 +12,7 @@ module.exports = {
 	async execute(message, { args }) {
 		const { client } = message;
 		const errorEmbed = (msg) => client.makeEmbed({ description: msg, timestamp: message.createdAt });
+
 		if (!['create', 'view', 'list', 'delete'].includes(args[0].toLowerCase())) return message.reply({ embeds: [errorEmbed('The inputed parameter is invalid, please try again.')] });
 
 		if (args[0].toLowerCase() === 'create') {
@@ -23,9 +24,16 @@ module.exports = {
 
 			await client.db.addUserTicketsCreated(message.author.id, ticketId);
 
+			const embed = client.makeEmbed()
+				.setTitle(`${message.author.tag} has created a ticket.`)
+				.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+				.setDescription(`Query: ${content}\nCreated at: <t:${message.createdTimestamp}`);
+
+			client.ticketWebhook.send({ embeds: [embed] });
+
 			message.channel.send({ content: `You have successfully opened a query ticket. Your ticket ID is \`${ticketId}\`.` });
 
-		} else if (args[0].toLowerCase() === 'view' && client.botmoderators.includes(message.author.id)) {
+		} else if (args[0].toLowerCase() === 'view' && client.botmoderators.includes(message.author.id) || client.owners.includes(message.author.id)) {
 			const ticketID = args[1];
 			const ticket = await Ticket.findOne({ ticketID: ticketID });
 
@@ -63,6 +71,13 @@ module.exports = {
 			if (!ticket) {
 				message.reply({ embeds: [errorEmbed(`No ticket was found with the ID: \`${ticketID}\`. I'm trying to calculate your dumbass logic right now..`)] });
 			} else {
+				const embed = client.makeEmbed()
+					.setTitle('A Ticket has been deleted.')
+					.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
+					.setDescription(`${message.author.tag} (\`${message.author.id}\`) has deleted a ticket!\n Deleted at: <t:${message.createdTimestamp}>\nTicket ID: ${args[1]}.`);
+
+				client.ticketWebhook.send({ embeds: [embed] });
+
 				await ticket.deleteOne();
 				message.channel.send({ content: `You have successfully deleted the ticket with the assigned ID \`${ticketID}\`!` });
 			}

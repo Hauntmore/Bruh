@@ -26,6 +26,6 @@ module.exports = {
 
 		await message.guild.members.unban(id, reason);
 
-		message.channel.send(`${user.user.tag} has been unbanned.`);
+		message.channel.send({ content: `${user.user.tag} has been unbanned.` });
 	},
 };
