@@ -27,7 +27,8 @@ module.exports = {
 			const embed = client.makeEmbed()
 				.setTitle(`${message.author.tag} has created a ticket.`)
 				.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-				.setDescription(`Query: ${content}\nCreated at: <t:${message.createdTimestamp}`);
+				.setDescription(`Query: ${content}\nCreated at: <t:${message.createdTimestamp}>`)
+				.setFooter(`Assigned Ticket ID: ${ticketId}`);
 
 			client.ticketWebhook.send({ embeds: [embed] });
 
