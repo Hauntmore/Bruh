@@ -27,14 +27,14 @@ module.exports = {
 			const embed = client.makeEmbed()
 				.setTitle(`${message.author.tag} has created a ticket.`)
 				.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-				.setDescription(`Query: ${content}\nCreated at: <t:${message.createdTimestamp}>`)
+				.setDescription(`Query: ${content}\nCreated at: <t:${message.createdTimestamp}:F>`)
 				.setFooter(`Assigned Ticket ID: ${ticketId}`);
 
 			client.ticketWebhook.send({ embeds: [embed] });
 
 			message.channel.send({ content: `You have successfully opened a query ticket. Your ticket ID is \`${ticketId}\`.` });
 
-		} else if (args[0].toLowerCase() === 'view' && client.botmoderators.includes(message.author.id) || client.owners.includes(message.author.id)) {
+		} else if (args[0].toLowerCase() === 'view' && client.botmoderators.includes(message.author.id)) {
 			const ticketID = args[1];
 			const ticket = await Ticket.findOne({ ticketID: ticketID });
 
@@ -53,7 +53,7 @@ module.exports = {
 					.setTimestamp();
 				message.channel.send({ embeds: [embed] });
 			}
-		} else if (args[0].toLowerCase() === 'list' && client.botmoderators.includes(message.author.id) || client.owners.includes(message.author.id)) {
+		} else if (args[0].toLowerCase() === 'list' && client.botmoderators.includes(message.author.id)) {
 			const user = await client.users.fetch(args[0]).catch(() => null);
 			const ticket = await User.findOne({ id: user?.id });
 
@@ -75,7 +75,7 @@ module.exports = {
 				const embed = client.makeEmbed()
 					.setTitle('A Ticket has been deleted.')
 					.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
-					.setDescription(`${message.author.tag} (\`${message.author.id}\`) has deleted a ticket!\n Deleted at: <t:${message.createdTimestamp}>\nTicket ID: ${args[1]}.`);
+					.setDescription(`${message.author.tag} (\`${message.author.id}\`) has deleted a ticket!\n Deleted at: <t:${message.createdTimestamp}:F>\nTicket ID: ${args[1]}.`);
 
 				client.ticketWebhook.send({ embeds: [embed] });
 
