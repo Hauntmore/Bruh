@@ -88,7 +88,7 @@ module.exports = {
 			return message.channel.send({ embeds: [errorEmbed('Globally disabled command moment normies:')] });
 		}
 
-		if (command.botModerator && !message.client.botmoderators.includes(message.author.id) || !message.client.owners.includes(message.author.id)) {
+		if (command.botModerator && !message.client.botmoderators.includes(message.author.id)) {
 			return message.channel.send({ embeds: [errorEmbed('Only the bot\'s bot moderators can execute this command!')] });
 		}
 
