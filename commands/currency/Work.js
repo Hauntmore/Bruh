@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const jobs = ['Programmer', 'Chef', 'Bank Teller', 'Mechanic', 'Private Cook', 'Police Officer', 'Bus-Boy', 'Discord Moderator', 'Bot Moderator', 'Fornite Streamer', 'Professional Apex Legends Player', 'Mechanic', 'Construction Worker', 'Waiter', 'Taxi Driver'];
+const jobs = ['Programmer', 'Chef', 'Bank Teller', 'Mechanic', 'Private Cook', 'Police Officer', 'Bus-Boy', 'Discord Moderator', 'Bot Moderator', 'Fornite Streamer', 'Professional Apex Legends Player', 'Mechanic', 'Construction Worker', 'Waiter', 'Taxi Driver', 'Computer Builder', 'Techie', 'Discord Developer'];
 
 module.exports = {
 	name: 'work',

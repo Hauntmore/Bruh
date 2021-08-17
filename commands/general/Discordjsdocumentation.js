@@ -23,7 +23,6 @@ module.exports = {
 			msg.awaitMessageComponent({ filter, time: 20000 })
 				.then(() => {
 					msg.delete();
-					message.delete();
 				})
 				.catch(() => {
 					msg.edit({ components: [] });

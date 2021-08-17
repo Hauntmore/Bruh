@@ -83,7 +83,6 @@ module.exports = {
 			// eslint-disable-next-line no-unused-vars
 			.then(interaction => {
 				msg.delete();
-				message.delete();
 			})
 			.catch(() => {
 				msg.edit({ components: [] });

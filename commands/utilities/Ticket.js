@@ -52,7 +52,7 @@ module.exports = {
 					.setTimestamp();
 				message.channel.send({ embeds: [embed] });
 			}
-		} else if (args[0].toLowerCase() === 'list' && client.botmoderators.includes(message.author.id)) {
+		} else if (args[0].toLowerCase() === 'list' && client.botmoderators.includes(message.author.id) || client.owners.includes(message.author.id)) {
 			const user = await client.users.fetch(args[0]).catch(() => null);
 			const ticket = await User.findOne({ id: user?.id });
 
@@ -64,7 +64,7 @@ module.exports = {
 				.setFooter(`User ID: ${user.id}`)
 				.setTimestamp();
 			message.channel.send({ embeds: [embed] });
-		} else if (args[0].toLowerCase() === 'delete' && client.botmoderators.includes(message.author.id)) {
+		} else if (args[0].toLowerCase() === 'delete' && client.botmoderators.includes(message.author.id) || client.owners.includes(message.author.id)) {
 			const ticketID = args[1];
 			const ticket = await Ticket.findOne({ ticketID: ticketID });
 

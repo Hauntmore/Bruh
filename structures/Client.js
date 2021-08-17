@@ -143,7 +143,7 @@ class Bruh extends Client {
 	}
 
 	login(token) {
-		// Load all the client's application commands, and regular commandsconst Discord = require('discord.js');
+		// Load all the client's application commands, and regular commands.
 		this.loadCommands();
 		this.loadGlobalApplicationCommands();
 
@@ -154,7 +154,7 @@ class Bruh extends Client {
 		this.db.connect(`mongodb+srv://${process.env.MONGODBUSER}:${process.env.MONGODBPASS}@${process.env.MONGODBNAME}.5urdg.mongodb.net/Data`).then(() => {
 			console.log('[Mongo] The client has connected to the database.');
 		}).catch(err => {
-			// If it doesn't connect log the following
+			// If it doesn't connect log the following.
 			console.error('[Mongo] The client was unable to connect to the database due to an error:\n' + err);
 		});
 
