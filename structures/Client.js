@@ -1,6 +1,5 @@
 const { Client, Collection, MessageEmbed, WebhookClient } = require('discord.js');
 const { readdirSync } = require('fs');
-const { Manager } = require('erela.js');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
@@ -37,34 +36,6 @@ class Bruh extends Client {
 		this.commands = new Collection();
 		this.globalApplicationCommands = new Collection();
 		this.cooldowns = new Collection();
-
-		// Lavalink Erela.js manager.
-		this.manager = new Manager({
-			nodes: [
-				{
-					host: process.env.LAVALINKHOST,
-					port: parseInt(process.env.LAVALINKPORT),
-					password: process.env.LAVALINKPASS,
-				},
-			],
-			send(id, payload) {
-				const guild = this.guilds.cache.get(id);
-				if (guild) guild.shard.send(payload);
-			} })
-			.on('nodeConnect', (node) => {
-				console.log(`[Node Lavalink Connection] The node: ${node.options.identifier} has connected on port ${process.env.LAVALINKPORT}.`);
-			})
-			.on('nodeError', (node, error) => {
-				console.log(`[Node Lavalink Error] The node: ${node.options.identifier} emitted an error on port ${process.env.LAVALINKPORT}:\n${error.message}`);
-			})
-			.on('trackStart', (player, track) => {
-				this.channels.cache.get(player.textChannel).send({ content: `Now playing: ${track.title}.` });
-			})
-			.on('queueEnd', (player) => {
-				this.channels.cache.get(player.textChannel).send({ content: 'The queue has ended.' });
-
-				player.destroy();
-			});
 	}
 
 	// Load the client's commands.
@@ -157,9 +128,6 @@ class Bruh extends Client {
 			// If it doesn't connect log the following.
 			console.error('[Mongo] The client was unable to connect to the database due to an error:\n' + err);
 		});
-
-		// Initiate the Lavalink manager.
-		this.manager.init(process.env.CLIENTID);
 
 		// Initiate the bot.
 		super.login(token);
