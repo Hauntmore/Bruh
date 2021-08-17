@@ -32,7 +32,7 @@ module.exports = {
 		switch (sub) {
 		case 'remove':
 		case '-':
-			if (!guild.prefixes.includes(prefix)) {return message.reply('That is not an existing prefix!');}
+			if (!guild.prefixes.includes(prefix)) {return message.reply({ content: 'That is not an existing prefix!' });}
 			guild.prefixes.splice(guild.prefixes.indexOf(prefix), 1);
 			await guild.save();
 			message.channel.send({ content: `You have removed \`${prefix}\` from the guild prefix list.` });

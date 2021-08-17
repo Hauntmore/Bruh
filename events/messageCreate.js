@@ -169,6 +169,8 @@ module.exports = {
 		try {
 			command.execute(message, input);
 
+			console.log(`${message.author.tag} (\`${message.author.id}\`) ran ${command.name}.\nGuild: ${message.guild.name}(\`${message.guild.id}\`)\nTime: ${new Date()}\nContent: ${message.content}`);
+
 			const chance = Math.floor(Math.random() * 10) + 1;
 
 			if (chance >= 1 && chance <= 6) {
