@@ -5,7 +5,7 @@ module.exports = {
 	aliases: ['commands'],
 	description: 'View the available bot commands.',
 	usage: '<command|category>',
-	example: ['help reddit', 'help prefix'],
+	example: ['help reddit', 'help prefix', 'help'],
 	botPermissions: ['SEND_MESSAGES', 'VIEW_CHANNEL', 'EMBED_LINKS', 'READ_MESSAGE_HISTORY'],
 	async execute(message, { args }) {
 		const query = args[0]?.toLowerCase(), { client } = message;
