@@ -392,4 +392,7 @@ const hastebin = async (input, options = {}) => {
 	return `${url}/${key}.${extension}`;
 };
 
-module.exports = { parseCommand, findAll, parseArgs, parseCode, formatPerm, trim, random, timeit, timeleft, capitalize, formatBytes, formatArray, removeDuplicates, typeName, checkOrCross, flip, delay, pluralize, generateString, parseTime, parseDate, link, hastebin };
+const commaAnd = (str) => new Intl.ListFormat('en-US', { type: 'conjunction' }).format(str);
+const commaOr = (str) => new Intl.ListFormat('en-US', { type: 'disjunction' }).format(str);
+
+module.exports = { parseCommand, findAll, parseArgs, parseCode, formatPerm, trim, random, timeit, timeleft, capitalize, formatBytes, formatArray, removeDuplicates, typeName, checkOrCross, flip, delay, pluralize, generateString, parseTime, parseDate, link, hastebin, commaAnd, commaOr };
