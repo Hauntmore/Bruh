@@ -5,7 +5,12 @@ const { Routes } = require('discord-api-types/v9');
 
 class Bruh extends Client {
 	constructor(options) {
-		super(options);
+		super({
+			intents: 32767,
+			allowedMentions: { parse: ['users'], repliedUser: false },
+			partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER'],
+			presence: { activities: [{ name: `${process.env.DEFAULTPREFIX} help`, type: 'WATCHING' }], status: 'online' },
+		}, options);
 		this.defaultPrefix = 'bruh';
 		this.color = 0x009874;
 

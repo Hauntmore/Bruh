@@ -4,12 +4,13 @@ const { MessageButton, MessageActionRow } = require('discord.js');
 module.exports = {
 	name: 'discordjsdocumentation',
 	aliases: ['djsdocs', 'djsdoc', 'discordjsdocs', 'discordjsdoc', 'djs'],
-	description: 'Search the discord.js documentation for a query using this API: `https://djsdocs.sorta.moe/v2/embed?src=${project}&q=${Query}`.\nProject options: `stable`, `master`, `rpc`, `commando`, `akairo` or `akairo-master`.\nQuery: Input your documentation query.',
+	description: 'Search the discord.js documentation for a query using this API: `https://djsdocs.sorta.moe/v2/embed?src=${project}&q=QUERY`.',
 	usage: '<query>',
 	example: ['djs Client', 'djsdocs client.ws.ping'],
 	botPermissions: ['EMBED_LINKS', 'SEND_MESSAGES', 'VIEW_CHANNEL', 'READ_MESSAGE_HISTORY'],
 	args: true,
 	async execute(message, { content }) {
+		// Project options: `stable`, `master`, `rpc`, `commando`, `akairo` or `akairo-master`.\nQuery: Input your documentation query.
 		const query = encodeURIComponent(content);
 		let embed = await fetch(`https://djsdocs.sorta.moe/v2/embed?src=master&q=${query}`);
 		embed = await embed.json();
