@@ -179,7 +179,6 @@ module.exports = {
 			}
 		} catch (error) {
 			console.error(`[Client] ${error}`);
-			message.client.errorWebhook.send({ content: `The \`messageCreate\` event emitted an error:\n\n${error}` });
 			message.channel.send({ content:'Something went wrong while executing the command!' });
 		}
 	},

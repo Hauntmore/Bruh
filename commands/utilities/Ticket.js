@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const Ticket = require('../../models/Ticket');
 const User = require('../../models/User');
 
@@ -30,7 +31,6 @@ module.exports = {
 				.setDescription(`Query: ${content}\nCreated at: <t:${message.createdTimestamp}:F>`)
 				.setFooter(`Assigned Ticket ID: ${ticketId}`);
 
-			client.ticketWebhook.send({ embeds: [embed] });
 
 			message.channel.send({ content: `You have successfully opened a query ticket. Your ticket ID is \`${ticketId}\`.` });
 
@@ -77,7 +77,6 @@ module.exports = {
 					.setAuthor(message.author.tag, message.author.displayAvatarURL({ dynamic: true }))
 					.setDescription(`${message.author.tag} (\`${message.author.id}\`) has deleted a ticket!\n Deleted at: <t:${message.createdTimestamp}:F>\nTicket ID: ${args[1]}.`);
 
-				client.ticketWebhook.send({ embeds: [embed] });
 
 				await ticket.deleteOne();
 				message.channel.send({ content: `You have successfully deleted the ticket with the assigned ID \`${ticketID}\`!` });

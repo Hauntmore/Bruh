@@ -1,4 +1,4 @@
-const { Client, Collection, MessageEmbed, WebhookClient } = require('discord.js');
+const { Client, Collection, MessageEmbed } = require('discord.js');
 const { readdirSync } = require('fs');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
@@ -26,10 +26,6 @@ class Bruh extends Client {
 
 		// The prefix cache.
 		this.prefixCache = {};
-
-		// Webhooks
-		this.errorWebhook = new WebhookClient({ id: process.env.ERRORWEBHOOKID, token: process.env.ERRORWEBHOOKTOKEN });
-		this.ticketWebhook = new WebhookClient({ id: process.env.TICKETWEBHOOKID, token: process.env.TICKETWEBHOOKTOKEN });
 
 		// The bot's utilities.
 		this.utils = require('../core/Utils');
