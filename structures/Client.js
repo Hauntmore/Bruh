@@ -34,7 +34,7 @@ class Bruh extends Client {
 		// The bot's utilities.
 		this.utils = require('../core/Utils');
 
-		// Database functions.
+		// Database functions
 		this.db = require('../core/DBFunctions');
 
 		// Commands and cooldown collections.
