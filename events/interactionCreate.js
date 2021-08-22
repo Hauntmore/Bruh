@@ -78,6 +78,8 @@ module.exports = {
 				BroCommunityEvents: '862468781628850176',
 				BroCommunityHeists: '862468613998641152',
 				BroCommunityBotUpdates: '862489879502127106',
+				BroCommunityDankMemerGiveaways: '876896735715262464',
+				BroCommunityDankMemerHeists: '875613785136709642',
 				BroCommunityCrimson: '862307659931582464',
 				BroCommunityRaspberry: '862307660219809803',
 				BroCommunityApricot: '862307661206126613',
