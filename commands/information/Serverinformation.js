@@ -50,7 +50,7 @@ module.exports = {
 			.addField('**❯ Animated Emojis -**', `${emojis.filter(emoji => emoji.animated).size}`, false)
 			.addField('**❯ Total Members -**', `${message.guild.memberCount.toLocaleString()}`, false)
 			.addField('**❯ Humans -**', `${members.filter(member => !member.user.bot).size.toLocaleString()}`, false)
-			.addField('**❯ Bots -**', `${members.filter(member => member.user.bot).size}`, false)
+			.addField('**❯ Bots -**', `${members.filter(member => member.user.bot).size.toLocaleString()}`, false)
 			.addField('**❯ Text Channels -**', `${message.guild.channels.cache.size}`, false)
 			.setFooter(`ID: ${message.guild.id} | ${client.user.tag}`)
 			.setTimestamp();

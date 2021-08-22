@@ -30,6 +30,8 @@ module.exports = {
 			// eslint-disable-next-line prefer-const
 			let { time, result: evaled } = await client.utils.timeit(() => eval(code));
 
+			if (typeof evaled === 'string' && evaled.match(new RegExp(process.env.TOKEN, 'gi'))) evaled = 'I think the fuck not.';
+
 			const type = typeof evaled === 'undefined'
 				? 'undefined' : evaled.constructor;
 			const formatted = `Time: \`${time.toFixed(3)} ms\` • Type: \`${type.name || 'undefined'}\``;
