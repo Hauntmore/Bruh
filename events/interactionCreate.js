@@ -1,6 +1,8 @@
 module.exports = {
 	name: 'interactionCreate',
 	async execute(interaction) {
+		const { client } = interaction;
+
 		if (interaction.user.bot || !interaction.guild) return;
 
 		if (interaction.isButton()) {console.log('A button interaction was triggered.');}
@@ -129,15 +131,15 @@ module.exports = {
 					await interaction.reply({ content: `You have been added to the ${role} role.`, ephemeral: true });
 				}
 			} catch (err) {
-				// await interaction.reply({ content: 'Something went wrong while attempting to execute this interaction.', ephemeral: true });
+				await interaction.reply({ content: 'Something went wrong while attempting to execute this interaction.', ephemeral: true });
 				console.error(err);
 			}
 		}
 
 		try {
 			// Global commands.
-			if (!interaction.client.globalApplicationCommands.has(interaction.commandName)) return;
-			await interaction.client.globalApplicationCommands.get(interaction.commandName).execute(interaction);
+			if (!client.globalApplicationCommands.has(interaction.commandName)) return;
+			await client.globalApplicationCommands.get(interaction.commandName).execute(interaction);
 		} catch (error) {
 			console.error(`[Application Command Interaction] ${error}`);
 			await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
