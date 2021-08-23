@@ -122,7 +122,11 @@ module.exports = {
 						else return await interaction.reply({ content: 'You idiot! You can only have one color role..', ephemeral: true });
 					} */
 
-					if (colors.includes(role.id) && interaction.member.roles.cache.has(colors)) return await interaction.reply({ content: 'Test' });
+					for (const color of colors) {
+						if (colors.includes(role.id) && interaction.member.roles.cache.has(color)) return await interaction.reply({ content: 'Test' });
+						else continue;
+					}
+
 					// End of the checking module.
 
 					await interaction.member.roles.add(role.id);
