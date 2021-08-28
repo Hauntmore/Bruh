@@ -34,7 +34,7 @@ module.exports = {
 
 		const member = message.mentions.members.last() || message.guild.members.cache.get(args[0]) || message.member;
 		const userFlags = member.user.flags.toArray();
-		const presence = presences[member.presence.status] ?? 'Offline';
+		const presence = presences[member.presence?.status] ?? 'Offline';
 
 		const embed = new MessageEmbed()
 			.setThumbnail(member.user.displayAvatarURL({ dynamic: true, size: 512 }))
