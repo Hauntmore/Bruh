@@ -35,7 +35,7 @@ module.exports = {
 		const embed = new MessageEmbed()
 			.setTitle(`Hello ${message.author.username}!`)
 			.setAuthor(message.client.user.tag, message.client.user.displayAvatarURL({ dynamic: true, size: 1024 }))
-			.setDescription(`<a:h_pepeclap:860614973729538048> Thank you for using me! My default prefix is \`${message.client.defaultPrefix}\`! <:h_pepesadsit:860712587141971968> If you have the \`MANAGE_GUILD\` permission in this guild, you can also customize the prefix by running the bot's \`prefix\` command!\n\nCurrent Prefix(es) for ${message.guild.name}: ${guild.prefixes.join(', ')}`)
+			.setDescription(`<a:h_pepeclap:860614973729538048> Thank you for using me! My default prefix is \`${message.client.defaultPrefix}\`! <:h_pepesadsit:860712587141971968> If you have the \`MANAGE_GUILD\` permission in this guild, you can also customize the prefix by running the bot's \`prefix\` command!\n\nCurrent Prefix(es) for ${message.guild.name}: ${guild?.prefixes.join(', ')}`)
 			.setFooter(`Feel free to run "${message.client.defaultPrefix} help" to see all of my commands and categories! :)`)
 			.setTimestamp()
 			.setColor(0xA1F4CA);
@@ -74,7 +74,7 @@ module.exports = {
 		msg = msg?.replaceAll('{target.mention}', message.mentions.members.last() || message.member);
 		msg = msg?.replaceAll('{target.tag}', message.mentions.members.last()?.user.tag || message.member?.user.tag);
 		msg = msg?.replaceAll('{target.username}', message.mentions.members.last()?.user.username || message.member?.user.username);
-		message.channel.send({ content: msg });
+		await message.channel.send({ content: msg });
 
 		if (!command) return;
 
