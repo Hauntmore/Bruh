@@ -39,6 +39,7 @@ module.exports = {
 				SpydFlashGiveaway: '848500396363481119',
 				SpydRaffle: '765949198213447750',
 				SpydOutsideHeist: '806078400053379112',
+				SpydKarutaPlayer: '882977906157035551',
 				SpydBingo: '799738624857473056',
 				SpydMudae: '799719390282121236',
 				SpydGTN: '800004180105494569',
