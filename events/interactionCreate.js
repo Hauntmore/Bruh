@@ -70,6 +70,7 @@ module.exports = {
 				}
 			} catch (err) {
 				await interaction.reply({ content: 'Something went wrong while attempting to execute this interaction.', ephemeral: true });
+				// followUp
 				console.error(err);
 			}
 		}
