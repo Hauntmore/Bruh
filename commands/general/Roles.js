@@ -3,31 +3,6 @@ const { MessageButton, MessageActionRow } = require('discord.js');
 module.exports = {
 	name: 'roles',
 	async execute(message) {
-		// Source code for self roles for Bro Community. https://sourceb.in/KjaSkGpH45
-		/* const { MessageButton, MessageActionRow } = require('discord.js');
-
-		const Button = new MessageButton()
-			.setCustomId('SpydBroBot')
-			.setLabel('Bro Bot Player')
-			.setEmoji('<:brobot:872179580444749865>')
-			.setStyle('SECONDARY');
-
-		const Button2 = new MessageButton()
-			.setCustomId('SpydKarutaPlayer')
-			.setLabel('Karuta Player')
-			.setEmoji('<:Spy_karutaOwO:883185822478774303>')
-			.setStyle('SECONDARY');
-
-		const row = new MessageActionRow()
-
-			.addComponents(Button, Button2);
-
-		message.channel.send({ content: 'Feel free to grab a bot player role!', components: [row] });
-
-		const mmLol = await message.channel.messages.fetch('872195840666665010');
-		mmLol.edit({ content: 'Feel free to grab a bot player role!', components: [row] });
-		console.log(mmLol); */
-
 		const { spydankers } = message.client.config;
 
 		if (message.guild.id !== spydankers) return;
@@ -81,20 +56,6 @@ module.exports = {
 			.setLabel('Flash Giveaways')
 			.setEmoji('<a:moneygaw1:872176277824622713>')
 			.setCustomId('SpydFlashGiveaway');
-
-		/*
-
-        Make role command with the following roles (Requested by Fellintron):
-
-        events ping
-        bro player
-        karuta
-        partnership
-        giveaways
-        heist
-        outside heist
-        flash giveaways
-        */
 
 		const row = new MessageActionRow()
 			.addComponents(button1, button2, button3, button4);
