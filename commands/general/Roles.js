@@ -7,7 +7,7 @@ module.exports = {
 
 		if (message.guild.id !== spydankers) return;
 
-		if (!message.member.roles.cache.some(r => r.id === '868034302720503818') || message.author.id !== '749732650209640529') return;
+		if (!message.member.roles.cache.has('868034302720503818') || message.author.id !== '749732650209640529') return;
 
 		const button1 = new MessageButton()
 			.setStyle('SECONDARY')
