@@ -1,7 +1,6 @@
 import { CommandInteraction, GuildMember } from "discord.js";
 import { ClientBase } from "../structures/Client";
 import { Event, UserType } from "../types";
-import { magenta } from "chalk";
 import { contentTipMessage } from "../helpers/Tips";
 import { UserModel } from "../models/User";
 import prettyms from "pretty-ms";
@@ -12,8 +11,6 @@ export = <Event> {
 	name: "interactionCreate",
 	description: "Emitted when an interaction has been created.",
 	async execute(interaction: CommandInteraction, client: ClientBase) {
-		console.log(magenta(interaction));
-
 		if (interaction.user.bot || !interaction.guild) return;
 
         if (interaction.isButton() && interaction.guild.id === spyDankersGuildId) {

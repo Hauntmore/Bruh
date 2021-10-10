@@ -30,4 +30,26 @@ export abstract class Utils {
 		.replace(/guild/ig, "server")
         .title();
     }
+
+    /**
+     * Tests the performance of a function in miliseconds.
+     * @param {Function} func The function to call.
+     * @param amount The amount of times to execute the function.
+     * @returns {Promise<object>} An object with the time and results.
+     */
+    public static async timeit(func: Function, amount = 1): Promise<object> {
+        const t1: number = performance.now();
+
+        let res: Array<any> = amount === 1 ? undefined : [];
+
+        for (let i = 0; i < amount; i++) {
+            let ret = func();
+            if (ret && ret.constructor === Promise) {ret = await ret;};
+
+            if (amount === 1) {res = ret;} else {res.push(ret);};
+        }
+
+        const t2 = performance.now();
+        return { time: t2 - t1, result: res };
+    }
 }

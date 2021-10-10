@@ -25,6 +25,8 @@ export class ClientBase extends Client {
 
     public customEmojis: typeof customEmojis;
 
+    public delay: (ms: number) => Promise<any>;
+
     public constructor(BaseOptions: ClientOptions) {
         super(BaseOptions);
 
@@ -41,6 +43,8 @@ export class ClientBase extends Client {
         this.color = color;
 
         this.customEmojis = customEmojis;
+
+        this.delay = (ms: number) => new Promise(res => setTimeout(res, ms));
     }
 
     private validate() {
