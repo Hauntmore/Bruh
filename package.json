@@ -17,6 +17,10 @@
     "discord",
     "typescript"
   ],
+  "engines": {
+    "node": "16.10.0",
+    "npm": "7.24.0"
+  },
   "author": "Kevin K. Le ~ Hauntless#3212",
   "license": "MIT",
   "bugs": {
