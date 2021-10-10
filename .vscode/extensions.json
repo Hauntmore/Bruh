@@ -1,5 +1,9 @@
 {
     "recommendations": [
-        "icrawl.discord-vscode"
+        "ms-azuretools.vscode-docker",
+        "github.vscode-pull-request-github",
+        "ms-toolsai.jupyter",
+        "ms-python.python",
+        "msjsdiag.vscode-react-native"
     ]
 }

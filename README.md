@@ -1,2 +1,2 @@
-# Bruh-Bot
-A multipurpose Discord bot packed with lots of features.
+# Bruh Bot
+How was I created after 6 months of rewrites?

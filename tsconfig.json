@@ -1,0 +1,28 @@
+{
+    "exclude": ["node_modules", "dist"],
+    "include": ["src"],
+    "compilerOptions": {
+      "outDir": "dist",
+      "module": "CommonJS",
+      "target": "ES6",
+      "lib": ["DOM", "ES7"],
+      "moduleResolution": "Node",
+      "importHelpers": true,
+      "sourceMap": false,
+      "skipLibCheck": true,
+      "noImplicitAny": true,
+      "strictFunctionTypes": true,
+      "strictBindCallApply": true,
+      "strictPropertyInitialization": false,
+      "resolveJsonModule": true,
+      "noImplicitThis": true,
+      "alwaysStrict": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noFallthroughCasesInSwitch": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "pretty": true,
+      "allowJs": true,
+    }
+}

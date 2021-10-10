@@ -1,14 +1,11 @@
 {
-  "name": "bruh",
-  "version": "1.0.0",
-  "description": "Bruh-Bot is a multipurpose Discord bot packed with lots of features.",
-  "main": "index.js",
+  "name": "bruh-bot-rewrite",
+  "version": "2.0.0",
+  "description": "A multipurpose Discord bot packed with lots of features.",
+  "main": "src/index.ts",
   "scripts": {
-    "bot": "node test/bot/index.js"
-  },
-  "engines": {
-    "node": "16.6.2",
-    "npm": "*"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsc && node dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,9 +14,10 @@
   "keywords": [
     "bruh",
     "bot",
-    "discord"
+    "discord",
+    "typescript"
   ],
-  "author": "Kevin K. Le",
+  "author": "Kevin K. Le ~ Hauntless#3212",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Hauntmore/Bruh/issues"
@@ -27,26 +25,24 @@
   "homepage": "https://github.com/Hauntmore/Bruh#readme",
   "dependencies": {
     "@discordjs/rest": "^0.1.0-canary.0",
-    "axios": "^0.21.1",
-    "chalk": "^4.1.1",
-    "common-tags": "^1.8.0",
-    "discord-api-types": "^0.22.0",
-    "discord.js": "^13.1.0",
+    "@types/express": "^4.17.13",
+    "@types/node-fetch": "^3.0.3",
+    "@types/sharp": "^0.29.2",
+    "chalk": "^4.1.2",
+    "discord-api-types": "^0.23.1",
+    "discord.js": "^13.2.0",
     "dotenv": "^10.0.0",
     "expr-eval": "^2.0.2",
-    "fs": "0.0.1-security",
-    "got": "^11.8.2",
-    "jimp": "^0.16.1",
-    "moment": "^2.29.1",
-    "mongoose": "^5.13.2",
-    "node-fetch": "^2.6.1",
-    "ntc": "0.0.1",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "mongoose": "^6.0.10",
+    "node-fetch": "^2.6.5",
+    "ntc": "^0.0.1",
     "path": "^0.12.7",
-    "perf_hooks": "0.0.1",
-    "plsargs": "^0.1.6",
-    "sharp": "^0.28.3"
-  },
-  "devDependencies": {
-    "eslint": "^7.30.0"
+    "pretty-ms": "^7.0.1",
+    "sharp": "^0.29.1",
+    "sourcebin": "^4.2.5",
+    "tslint-config-fire": "^1.0.1",
+    "typescript": "^4.4.3"
   }
 }
