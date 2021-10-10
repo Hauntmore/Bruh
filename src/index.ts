@@ -20,7 +20,7 @@ const client = new Client({
     presence: {
         activities: [
             {
-                name: "with Elon Musk.",
+                name: "building a business with Elon Musk.",
                 type: "COMPETING",
             },
         ],
