@@ -1,4 +1,4 @@
-import { Client, ClientOptions, Collection, version, ColorResolvable } from "discord.js";
+import { Client, ClientOptions, Collection, version, ColorResolvable, WebhookClient } from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
 import { versions } from "process";
@@ -27,6 +27,8 @@ export class ClientBase extends Client {
 
     public delay: (ms: number) => Promise<any>;
 
+    public errorWebhook: WebhookClient;
+
     public constructor(BaseOptions: ClientOptions) {
         super(BaseOptions);
 
@@ -45,6 +47,8 @@ export class ClientBase extends Client {
         this.customEmojis = customEmojis;
 
         this.delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+        this.errorWebhook = new WebhookClient({ id: process.env.DISCORD_ERROR_WEBHOOK_ID, token: process.env.DISCORD_ERROR_WEBHOOK_TOKEN });
     }
 
     private validate() {

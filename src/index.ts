@@ -6,14 +6,6 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-process.on("unhandledRejection", (error: Error) => {
-	console.error(`${red.bold("Unhandled Rejection:")}\n${error.stack}`);
-});
-
-process.on("uncaughtException", (error: Error) => {
-	console.error(`${red.bold("Uncaught Exception:")}\n${error.stack}`);
-});
-
 const client = new Client({
     intents: [
         Intents.FLAGS.GUILDS,
@@ -28,7 +20,7 @@ const client = new Client({
     presence: {
         activities: [
             {
-                name: `${process.env.DISCORD_BOT_DEFAULT_PREFIX} help`,
+                name: "with Elon Musk.",
                 type: "COMPETING",
             },
         ],
@@ -40,6 +32,16 @@ const client = new Client({
             $browser: "Discord iOS",
         },
     },
+});
+
+process.on("unhandledRejection", (error: Error) => {
+    client.errorWebhook.send({ content: "**Unhandled Rejection:**\n\n" + error.stack });
+	console.error(`${red.bold("Unhandled Rejection:")}\n${error.stack}`);
+});
+
+process.on("uncaughtException", (error: Error) => {
+    client.errorWebhook.send({ content: "**Uncaught Exception:**\n\n" + error.stack });
+	console.error(`${red.bold("Uncaught Exception:")}\n${error.stack}`);
 });
 
 client.start(process.env.DISCORD_BOT_TOKEN);
