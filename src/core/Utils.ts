@@ -52,4 +52,18 @@ export abstract class Utils {
         const t2 = performance.now();
         return { time: t2 - t1, result: res };
     }
+
+    /**
+     * Transform a number of bytes into their valued notation.
+     * @param {number} bytes The number of bytes.
+     * @returns {string} Number of bytes in a notated format.
+     */
+    public static formatBytes(bytes: number): string {
+        if (bytes === 0) return "0 Bytes";
+
+        const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(1024));
+
+        return `${parseFloat((bytes / Math.pow(1024, i)).toFixed(2))} ${sizes[i]}`;
+    };
 }

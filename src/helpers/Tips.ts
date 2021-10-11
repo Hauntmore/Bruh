@@ -4,7 +4,7 @@ import { tips } from "../config/Config";
 const random = Math.floor(Math.random() * 100) + 2;
 const tip = tips.random();
 
-export async function embedTipMessage(interaction: CommandInteraction, embeds: Array<MessageEmbed>, ephemeral?: boolean | false, components?: Array<MessageActionRow> | []) {
+export async function embedTipMessage(interaction: CommandInteraction, embeds: Array<MessageEmbed | Object>, ephemeral?: boolean | false, components?: Array<MessageActionRow> | []) {
     if (random >= 15 && random <= 25) {
         return await interaction.reply({
             content: `**Tip**: ${tip}`,
