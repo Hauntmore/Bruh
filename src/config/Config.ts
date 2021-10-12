@@ -15,10 +15,12 @@ const tips = [
 const spyDankersGuildId = "638001819595046924";
 const spyDankersRoleId = "868034302720503818";
 
+const guildCounterChannelId = "863844212969963540";
+
 const topggVotingLink = "https://top.gg/bot/861084943794438165/vote";
 
 // Assigned typeof Discord Client hex color code (Backup color: 0x4b69fc).
 const color = 0x009874;
 
 // Exporting the variables.
-export { owners, botModerators, tips, color, spyDankersGuildId, spyDankersRoleId, topggVotingLink };
+export { owners, botModerators, tips, color, spyDankersGuildId, spyDankersRoleId, topggVotingLink, guildCounterChannelId };
