@@ -18,8 +18,8 @@
     "typescript"
   ],
   "engines": {
-    "node": "16.10.0",
-    "npm": "7.24.0"
+    "node": "16.11.1",
+    "npm": "8.0.0"
   },
   "author": "Kevin K. Le ~ Hauntless#3212",
   "license": "MIT",
