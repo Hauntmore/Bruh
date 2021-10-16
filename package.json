@@ -1,0 +1,35 @@
+{
+  "name": "bruh-bot",
+  "version": "2.0.0",
+  "description": "A multipurpose Discord bot packed with lots of features.",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsc && node dist/index.js",
+    "build": "tsc",
+    "prettier": "prettier --write \"src/**/*.ts\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hauntmore/Bruh.git"
+  },
+  "keywords": [
+    "bruh",
+    "bot",
+    "discord",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=16.6.0",
+    "npm": ">=7.19.1"
+  },
+  "author": "Kevin K. Le ~ Hauntless#3212",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hauntmore/Bruh/issues"
+  },
+  "homepage": "https://github.com/Hauntmore/Bruh#readme",
+  "devDependencies": {
+    "@sapphire/prettier-config": "^1.2.2",
+    "prettier": "^2.4.1"
+  }
+}
