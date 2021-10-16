@@ -45,6 +45,7 @@
     "node-fetch": "^2.6.5",
     "ntc": "^0.0.1",
     "path": "^0.12.7",
+    "prettier": "^2.4.1",
     "pretty-ms": "^7.0.1",
     "sharp": "^0.29.1",
     "sourcebin": "^4.2.5",
