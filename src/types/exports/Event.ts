@@ -1,5 +1,5 @@
 export interface Event {
-    name: string;
-    description: string;
-    once?: boolean;
+  name: string;
+  description: string;
+  once?: boolean;
 }

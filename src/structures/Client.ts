@@ -1,4 +1,11 @@
-import { Client, ClientOptions, Collection, version, ColorResolvable, WebhookClient } from "discord.js";
+import {
+  Client,
+  ClientOptions,
+  Collection,
+  version,
+  ColorResolvable,
+  WebhookClient,
+} from "discord.js";
 import { readdirSync } from "fs";
 import { join } from "path";
 import { versions } from "process";
@@ -13,110 +20,136 @@ import { customEmojis } from "../config/Emojis";
 import { App } from "../helpers/API/App";
 
 export class ClientBase extends Client {
-    public defaultPrefix: string;
+  public defaultPrefix: string;
 
-    public events: Collection<string, any>;
-    public commands: Collection<string, any>;
+  public events: Collection<string, any>;
+  public commands: Collection<string, any>;
 
-    public owners: Array<string>;
-    public botModerators: Array<string>;
+  public owners: Array<string>;
+  public botModerators: Array<string>;
 
-    public color: ColorResolvable;
+  public color: ColorResolvable;
 
-    public customEmojis: typeof customEmojis;
+  public customEmojis: typeof customEmojis;
 
-    public delay: (ms: number) => Promise<any>;
+  public delay: (ms: number) => Promise<any>;
 
-    public errorWebhook: WebhookClient;
+  public errorWebhook: WebhookClient;
 
-    public constructor(BaseOptions: ClientOptions) {
-        super(BaseOptions);
+  public constructor(BaseOptions: ClientOptions) {
+    super(BaseOptions);
 
-        this.validate();
+    this.validate();
 
-        this.defaultPrefix = env.DISCORD_BOT_DEFAULT_PREFIX;
+    this.defaultPrefix = env.DISCORD_BOT_DEFAULT_PREFIX;
 
-        this.events = new Collection();
-        this.commands = new Collection();
+    this.events = new Collection();
+    this.commands = new Collection();
 
-        this.owners = owners;
-        this.botModerators = botModerators;
+    this.owners = owners;
+    this.botModerators = botModerators;
 
-        this.color = color;
+    this.color = color;
 
-        this.customEmojis = customEmojis;
+    this.customEmojis = customEmojis;
 
-        this.delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+    this.delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-        this.errorWebhook = new WebhookClient({ id: process.env.DISCORD_ERROR_WEBHOOK_ID, token: process.env.DISCORD_ERROR_WEBHOOK_TOKEN });
+    this.errorWebhook = new WebhookClient({
+      id: process.env.DISCORD_ERROR_WEBHOOK_ID,
+      token: process.env.DISCORD_ERROR_WEBHOOK_TOKEN,
+    });
+  }
+
+  private validate() {
+    if (versions.node < "16.10.0")
+      throw new BaseError("Your NodeJS version must be greater than 16.10.0");
+
+    if (version < "13.2.0")
+      throw new BaseError("Your Discord.js version is less than 13.2.0!");
+  }
+
+  private loadEvents() {
+    const files = readdirSync(join(__dirname, "../events")).filter((file) =>
+      file.endsWith(".js")
+    );
+
+    for (const file of files) {
+      const event = require(join(__dirname, `../events/${file}`));
+
+      this.events.set(event.name, event);
+
+      if (event.once) {
+        this.once(event.name, (...args) => event.execute(...args, this));
+      } else {
+        this.on(event.name, (...args) => event.execute(...args, this));
+      }
+    }
+  }
+
+  private loadCommands() {
+    const folders = readdirSync(join(__dirname, "../commands"));
+
+    for (const folder of folders) {
+      const files = readdirSync(join(__dirname, "../commands/", folder)).filter(
+        (file) => file.endsWith(".js") && !file.startsWith("index")
+      );
+
+      for (const file of files) {
+        const command = require(join(
+          __dirname,
+          "../commands/",
+          `${folder}/`,
+          file
+        ));
+
+        command.category = folder;
+
+        this.commands.set(command.name, command);
+      }
     }
 
-    private validate() {
-        if (versions.node < "16.10.0") throw new BaseError("Your NodeJS version must be greater than 16.10.0");
+    const rest = new REST({ version: "9" }).setToken(
+      process.env.DISCORD_BOT_TOKEN
+    );
 
-        if (version < "13.2.0") throw new BaseError("Your Discord.js version is less than 13.2.0!");
-    }
+    (async () => {
+      console.log(
+        `${yellow.bold(
+          "REST API:"
+        )}\nApplication commands are beginning to refresh.`
+      );
 
-    private loadEvents() {
-        const files = readdirSync(join(__dirname, "../events")).filter((file) => file.endsWith(".js"));
+      const commands = this.commands.map(({ execute, ...data }) => data);
 
-        for (const file of files) {
-            const event = require(join(__dirname, `../events/${file}`));
+      await rest.put(
+        Routes.applicationCommands(process.env.DISCORD_BOT_CLIENT_ID),
+        { body: commands }
+      );
 
-            this.events.set(event.name, event);
+      console.log(
+        `${green.bold(
+          "REST API:"
+        )}\nApplication commands have finished refreshing.`
+      );
+    })();
+  }
 
-            if (event.once) {
-                this.once(event.name, (...args) => event.execute(...args, this));
-            } else {
-                this.on(event.name, (...args) => event.execute(...args, this));
-            }
-        }
-    }
+  private async createDBConnection(uri: string, options: object) {
+    return await mongoose.connect(uri, options);
+  }
 
-    private loadCommands() {
-        const folders = readdirSync(join(__dirname, "../commands"));
+  public start(token: string) {
+    this.loadCommands();
+    this.loadEvents();
 
-        for (const folder of folders) {
-            const files = readdirSync(join(__dirname, "../commands/", folder)).filter((file) => file.endsWith(".js") && !file.startsWith("index"));
+    this.createDBConnection(process.env.MONGODB_DATABASE_CONNECTION_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as ConnectOptions);
 
-            for (const file of files) {
-                const command = require(join(__dirname, "../commands/", `${folder}/`, file));
+    App();
 
-                command.category = folder;
-
-                this.commands.set(command.name, command);
-            }
-        }
-
-        const rest = new REST({ version: "9" }).setToken(process.env.DISCORD_BOT_TOKEN);
-
-        (async () => {
-            console.log(`${yellow.bold("REST API:")}\nApplication commands are beginning to refresh.`);
-
-            const commands = this.commands.map(({ execute, ...data }) => data);
-
-            await rest.put(
-                Routes.applicationCommands(process.env.DISCORD_BOT_CLIENT_ID),
-                { body: commands },
-            );
-
-            console.log(`${green.bold("REST API:")}\nApplication commands have finished refreshing.`);
-        })();
-    }
-
-    private async createDBConnection(uri: string, options: object) {
-        return await mongoose.connect(uri, options);
-
-    }
-
-    public start(token: string) {
-        this.loadCommands();
-        this.loadEvents();
-
-        this.createDBConnection(process.env.MONGODB_DATABASE_CONNECTION_URL, ({ useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions));
-
-        App();
-
-        return super.login(token);
-    }
+    return super.login(token);
+  }
 }

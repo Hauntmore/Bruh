@@ -1,9 +1,9 @@
 declare interface Array<T> {
-    random(): Array<T>;
+  random(): Array<T>;
 }
 
 declare interface String {
-    title(): string;
+  title(): string;
 }
 
 declare module "ntc";
