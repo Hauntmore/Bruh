@@ -15,7 +15,16 @@ const client = new SapphireClient({
         'GUILD_MESSAGE_REACTIONS',
         'DIRECT_MESSAGES',
         'DIRECT_MESSAGE_REACTIONS'
-    ]
+    ],
+    presence: {
+        activities: [
+            {
+                name: 'you',
+                type: 'WATCHING'
+            }
+        ],
+        status: 'online'
+    }
 });
 
 const main = async () => {
