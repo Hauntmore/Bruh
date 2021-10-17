@@ -5,7 +5,7 @@ import { BucketScope, SapphireClient } from '@sapphire/framework';
 const client = new SapphireClient({
     defaultPrefix: 'beta ',
     caseInsensitiveCommands: true,
-    defaultCooldown: { // todo: cooldown listener (if any built-in)
+    defaultCooldown: {
         delay: 2000,
         scope: BucketScope.User,
         filteredUsers: ['679867543066116169', '749732650209640529'] // todo: parse owners
