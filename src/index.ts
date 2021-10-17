@@ -1,6 +1,7 @@
 import './lib/setup';
 
 import { BucketScope, SapphireClient } from '@sapphire/framework';
+import { envParseArray } from '#util/env-parser';
 
 const client = new SapphireClient({
     defaultPrefix: 'beta ',
@@ -8,7 +9,7 @@ const client = new SapphireClient({
     defaultCooldown: {
         delay: 2000,
         scope: BucketScope.User,
-        filteredUsers: ['679867543066116169', '749732650209640529'] // todo: parse owners
+        filteredUsers: envParseArray('OWNERS')
     },
     intents: [
         'GUILDS',

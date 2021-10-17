@@ -6,7 +6,8 @@
         "baseUrl": "./src",
         "paths": {
             "#lib/*": ["lib/*"],
-            "#root/*": ["*"]
+            "#root/*": ["*"],
+            "#util/*": ["lib/util/*"]
         }
     },
     "extends": "@sapphire/ts-config",
