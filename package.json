@@ -7,7 +7,7 @@
         "build": "tsc && tsc-alias",
         "watch": "tsc -w & tsc-alias -w",
         "start": "node dist/index.js",
-        "dev": "run-s build",
+        "dev": "run-s build start",
         "prettier": "prettier --write \"**/*.{js,ts,json}\""
     },
     "repository": {
@@ -40,6 +40,8 @@
     },
     "dependencies": {
         "@sapphire/framework": "^2.0.0",
-        "discord.js": "^13.2.0"
+        "@sapphire/plugin-editable-commands": "^1.0.0",
+        "discord.js": "^13.2.0",
+        "dotenv": "^10.0.0"
     }
 }
