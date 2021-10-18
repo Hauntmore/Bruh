@@ -1,7 +1,8 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command, CommandOptions } from '@sapphire/framework';
-import { Message, MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
+import { MessageActionRow, MessageButton, MessageEmbed } from 'discord.js';
 import { Permissions } from 'discord.js';
+import type { Message } from 'discord.js';
 
 @ApplyOptions<CommandOptions>({
     description: 'invite me?!'
