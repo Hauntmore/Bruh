@@ -7,21 +7,21 @@ import type { Message } from 'discord.js';
     description: 'generate a funny pyramid'
 })
 export class UserCommand extends Command {
-    public pyramid(size: number): string {
-        const a = new Array(size)
-            .fill('*')
-            .map((r: string, i: number) => r.repeat(i + 1).padStart(size));
-        return a
-            .map(
-                (r: string, i: number) =>
-                    r + a.map((r) => r.split('').reverse().join('').substring(1))[i]
-            )
-            .join('\n');
-    }
-
     public async messageRun(message: Message, args: Args) {
+        function pyramid(size: number): string {
+            const a = new Array(size)
+                .fill('*')
+                .map((r: string, i: number) => r.repeat(i + 1).padStart(size));
+            return a
+                .map(
+                    (r: string, i: number) =>
+                        r + a.map((r) => r.split('').reverse().join('').substring(1))[i]
+                )
+                .join('\n');
+        }
+
         const size = await args.pick('number').catch(() => 5);
-        const generation = this.pyramid(size);
+        const generation = pyramid(size);
 
         return send(message, `\`\`\`\n${generation}\n\`\`\``);
     }
